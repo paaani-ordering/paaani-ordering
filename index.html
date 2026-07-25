@@ -155,7 +155,7 @@ let cart = {};
 
 async function loadProducts() {
   const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/products?select=*`,
+    `${SUPABASE_URL}/rest/v1/products?select=*&order=sort_order.asc`,
     {
       headers: {
         apikey: SUPABASE_KEY
