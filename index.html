@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paaani Café</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f8f5;
+      color: #222;
+    }
+
+    header {
+      background: #8ed8f8;
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+    }
+
+    .categories {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 18px 15px;
+    }
+
+    .categories button {
+      border: none;
+      background: white;
+      padding: 11px 18px;
+      border-radius: 25px;
+      white-space: nowrap;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .categories button.active {
+      background: #222;
+      color: white;
+    }
+
+    .menu {
+      padding: 0 15px 100px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .product {
+      background: white;
+      border-radius: 18px;
+      padding: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .product img {
+      width: 105px;
+      height: 105px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .info h3 {
+      margin: 0 0 7px;
+    }
+
+    .description {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    .add {
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ffd84d;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .cart {
+      position: fixed;
+      bottom: 18px;
+      left: 15px;
+      right: 15px;
+      max-width: 570px;
+      margin: auto;
+      background: #222;
+      color: white;
+      padding: 16px 20px;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Paaani Café</h1>
+  <p>¿Qué te apetece hoy?</p >
+</header>
+
+<div class="categories">
+  <button class="active">Todos</button>
+  <button>Bebida</button>
+  <button>Postre</button>
+  <button>Desayuno</button>
+  <button>Ensalada</button>
+</div>
+
+<div class="menu">
+
+  <div class="product">
+    <div class="info">
+      <h3>Paaani Café</h3>
+
+      <div class="description">
+        Espresso, leche cremosa y leche de coco con un delicado toque azul.
+      </div>
+
+      <div class="price">3,80 €</div>
+    </div>
+
+    <button class="add">+</button>
+  </div>
+
+</div>
+
+<div class="cart">
+  <span>🛒 Mi pedido</span>
+  <span>0 productos</span>
+</div>
+
+</body>
+</html>
