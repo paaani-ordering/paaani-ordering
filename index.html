@@ -259,13 +259,245 @@ function renderProducts(products) {
     `;
 
     item.querySelector('.add').addEventListener('click', () => {
-      addToCart(product);
-    });
+  handleAddProduct(product);
+});
 
     menu.appendChild(item);
   });
 }
 
+// 点击商品 + 时，检查是否有 Corto / Largo 等选项
+async function handleAddProduct(product) {
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/product_options?product_id=eq.${product.id}&is_available=eq.true&select=*&order=sort_order.asc`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    }
+
+    const options = await response.json();
+
+    // 没有规格，直接加入购物车
+    if (options.length === 0) {
+      addToCart(product);
+      return;
+    }
+
+    // 有规格，打开选择窗口
+    openOptionModal(product, options);
+
+  } catch (error) {
+    console.error('Error al cargar opciones:', error);
+    addToCart(product);
+  }
+}
+
+
+// 打开规格选择窗口
+function openOptionModal(product, options) {
+
+  const oldModal = document.getElementById('optionOverlay');
+
+  if (oldModal) {
+    oldModal.remove();
+  }
+
+  const optionsHTML = options.map((option, index) => {
+
+    const finalPrice =
+      Number(product.price) + Number(option.price_delta || 0);
+
+    return `
+      <label style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:16px;
+        margin-bottom:10px;
+        background:#f8f8f5;
+        border-radius:14px;
+        cursor:pointer;
+      ">
+
+        <div>
+          <input
+            type="radio"
+            name="productOption"
+            value="${index}"
+            ${index === 0 ? 'checked' : ''}
+          >
+
+          <strong style="margin-left:8px;">
+            ${option.option_name}
+          </strong>
+        </div>
+
+        <strong>
+          ${formatPrice(finalPrice)}
+        </strong>
+
+      </label>
+    `;
+  }).join('');
+
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <div
+      id="optionOverlay"
+      style="
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.45);
+        z-index:1000;
+        display:flex;
+        align-items:flex-end;
+        justify-content:center;
+      "
+    >
+
+      <div
+        style="
+          background:white;
+          width:100%;
+          max-width:600px;
+          border-radius:24px 24px 0 0;
+          padding:22px;
+        "
+      >
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          margin-bottom:20px;
+        ">
+
+          <div>
+            <h2 style="margin:0 0 5px;">
+              ${product.name}
+            </h2>
+
+            <div style="color:#777;">
+              Elige el tamaño
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onclick="closeOptionModal()"
+            style="
+              border:none;
+              background:none;
+              font-size:30px;
+              cursor:pointer;
+            "
+          >
+            ×
+          </button>
+
+        </div>
+
+        ${optionsHTML}
+
+        <button
+          id="confirmOptionButton"
+          type="button"
+          style="
+            width:100%;
+            margin-top:10px;
+            padding:17px;
+            border:none;
+            border-radius:16px;
+            background:#FFEAAB;
+            color:#222;
+            font-size:17px;
+            font-weight:bold;
+            cursor:pointer;
+          "
+        >
+          Añadir al pedido
+        </button>
+
+      </div>
+
+    </div>
+  `);
+
+
+  document
+    .getElementById('confirmOptionButton')
+    .addEventListener('click', () => {
+
+      const selected =
+        document.querySelector(
+          'input[name="productOption"]:checked'
+        );
+
+      if (!selected) return;
+
+      const option =
+        options[Number(selected.value)];
+
+      addProductWithOption(product, option);
+
+      closeOptionModal();
+    });
+}
+
+
+// 关闭规格窗口
+function closeOptionModal() {
+  const modal =
+    document.getElementById('optionOverlay');
+
+  if (modal) {
+    modal.remove();
+  }
+}
+
+
+// 把带规格的商品加入购物车
+function addProductWithOption(product, option) {
+
+  const finalPrice =
+    Number(product.price) +
+    Number(option.price_delta || 0);
+
+  // Corto 和 Largo 必须作为两个不同购物车商品
+  const cartId =
+    `${product.id}_${option.id}`;
+
+  if (cart[cartId]) {
+
+    cart[cartId].quantity += 1;
+
+  } else {
+
+    cart[cartId] = {
+      ...product,
+
+      id: cartId,
+
+      original_product_id: product.id,
+
+      option_name: option.option_name,
+
+      price: finalPrice,
+
+      quantity: 1
+    };
+  }
+
+  updateCartBar();
+}
+  
 // 分类按钮
 document.querySelectorAll('.categories button').forEach(button => {
   button.addEventListener('click', () => {
@@ -407,9 +639,22 @@ function renderCart() {
         <div style="flex:1;">
           <strong>${product.name}</strong>
 
-          <div style="margin-top:5px;">
-            ${formatPrice(product.price)}
-          </div>
+${product.option_name
+  ? `
+    <div style="
+      margin-top:4px;
+      font-size:14px;
+      color:#777;
+    ">
+      ${product.option_name}
+    </div>
+  `
+  : ''
+}
+
+<div style="margin-top:5px;">
+  ${formatPrice(product.price)}
+</div>
         </div>
 
         <button
