@@ -168,6 +168,8 @@ const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
 
 let cart = {};
+  
+let allProducts = [];  
 
 async function loadProducts() {
   const response = await fetch(
@@ -181,6 +183,9 @@ async function loadProducts() {
 
   const products = await response.json();
 
+  allProducts = products;
+
+  function renderProducts(products) {
   const menu = document.querySelector('.menu');
   menu.innerHTML = '';
 
@@ -212,6 +217,9 @@ async function loadProducts() {
     item.querySelector('.add').addEventListener('click', () => {
       addToCart(product);
     });
+ }
+
+renderProducts(products);
 
     menu.appendChild(item);
   });
@@ -438,7 +446,29 @@ document.body.insertAdjacentHTML('beforeend', `
     </div>
   </div>
 `);
+document.querySelectorAll('.categories button').forEach(button => {
+  button.addEventListener('click', () => {
 
+    document.querySelectorAll('.categories button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    button.classList.add('active');
+
+    const category = button.dataset.category;
+
+    if (category === 'all') {
+      renderProducts(allProducts);
+    } else {
+      const filteredProducts = allProducts.filter(product =>
+        product.category_id === category
+      );
+
+      renderProducts(filteredProducts);
+    }
+  });
+});
+  
 loadProducts();
 </script>
 </body>
