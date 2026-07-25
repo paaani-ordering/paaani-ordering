@@ -140,20 +140,6 @@
 
 <div class="menu">
 
-  <div class="product">
-    <div class="info">
-      <h3>Paaani Café</h3>
-
-      <div class="description">
-        Espresso, leche cremosa y leche de coco con un delicado toque azul.
-      </div>
-
-      <div class="price">3,80 €</div>
-    </div>
-
-    <button class="add">+</button>
-  </div>
-
 </div>
 
 <div class="cart">
@@ -164,6 +150,7 @@
 <script>
 const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
+
 async function loadProducts() {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
     headers: {
@@ -174,9 +161,31 @@ async function loadProducts() {
   const products = await response.json();
 
   console.log('从Supabase读取到的商品：', products);
+
+  const menu = document.querySelector('.menu');
+  menu.innerHTML = '';
+
+  products.forEach(product => {
+    const item = document.createElement('div');
+    item.className = 'product';
+
+    item.innerHTML = `
+      <div class="info">
+        <h3>${product.name}</h3>
+        <div class="description">
+          ${product.description || ''}
+        </div>
+        <div class="price">${Number(product.price).toFixed(2).replace('.', ',')} €</div>
+      </div>
+
+      <button class="add">+</button>
+    `;
+
+    menu.appendChild(item);
+  });
 }
 
-loadProducts();  
+loadProducts();
 </script>  
 </body>
 </html>
