@@ -152,13 +152,16 @@ const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
 
 let cartCount = 0;
-  
+
 async function loadProducts() {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
-    headers: {
-      apikey: SUPABASE_KEY
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/products?select=*&order=sort_order.asc`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY
+      }
     }
-  });
+  );
 
   const products = await response.json();
 
@@ -168,42 +171,46 @@ async function loadProducts() {
   menu.innerHTML = '';
 
   products.forEach(product => {
-  const item = document.createElement('div');
-  item.className = 'product';
+    const item = document.createElement('div');
+    item.className = 'product';
 
-  item.innerHTML = `
-    ${product.image_url ? `< img src="${product.image_url}" alt="${product.name}">` : ''}
+    item.innerHTML = `
+      ${product.image_url
+        ? `< img src="${product.image_url}" alt="${product.name}">`
+        : ''
+      }
 
-    <div class="info">
-      <h3>${product.name}</h3>
+      <div class="info">
+        <h3>${product.name}</h3>
 
-      <div class="description">
-        ${product.description || ''}
+        <div class="description">
+          ${product.description || ''}
+        </div>
+
+        <div class="price">
+          ${Number(product.price).toFixed(2).replace('.', ',')} €
+        </div>
       </div>
 
-      <div class="price">
-        ${Number(product.price).toFixed(2).replace('.', ',')} €
-      </div>
-    </div>
+      <button class="add" type="button">+</button>
+    `;
 
-    <button class="add">+</button>
-  `;
+    const addButton = item.querySelector('.add');
 
-  const addButton = item.querySelector('.add');
+    addButton.addEventListener('click', () => {
+      cartCount += 1;
 
-  addButton.addEventListener('click', () => {
-    cartCount++;
+      const cartText = document.querySelector('.cart span:last-child');
 
-    document.querySelector('.cart span:last-child').textContent =
-      `${cartCount} ${cartCount === 1 ? 'producto' : 'productos'}`;
-  });
+      cartText.textContent =
+        `${cartCount} ${cartCount === 1 ? 'producto' : 'productos'}`;
+    });
 
-  menu.appendChild(item);
-});
+    menu.appendChild(item);
   });
 }
 
 loadProducts();
-</script>  
+</script> 
 </body>
 </html>
