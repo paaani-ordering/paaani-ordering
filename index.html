@@ -234,9 +234,9 @@ async function loadProducts() {
     console.log('Opciones:', allOptions);
 
     // 默认只显示 Café especiales
-    const defaultProducts = allProducts.filter(product =>
-      product.category_id === defaultCategory
-    );
+    const defaultProducts = allProducts
+  .filter(product => product.category_id === defaultCategory)
+  .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)); 
 
     renderProducts(defaultProducts);
 
@@ -486,12 +486,11 @@ document.querySelectorAll('.categories button').forEach(button => {
       return;
     }
 
-    const filteredProducts =
-      allProducts.filter(product =>
-        product.category_id === category
-      );
+    const filteredProducts = allProducts
+  .filter(product => product.category_id === category)
+  .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
 
-    renderProducts(filteredProducts);
+renderProducts(filteredProducts);
   });
 });
 
