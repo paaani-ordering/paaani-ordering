@@ -183,41 +183,66 @@ const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
 
 let cart = {};
 let allProducts = [];
+let allOptions = [];
+
+// 默认打开 Café especiales
+const defaultCategory = 'a6fca325-d92c-4475-9254-7a9e512cb240';
 
 // 价格格式
 function formatPrice(price) {
   return `${Number(price).toFixed(2).replace('.', ',')} €`;
 }
 
-// 从 Supabase 读取商品
+// =========================
+// 读取商品 + 商品选项
+// =========================
 async function loadProducts() {
   try {
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/products?select=*`,
-      {
-        headers: {
-          apikey: SUPABASE_KEY
-        }
-      }
-    );
 
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}`);
+    const [productsResponse, optionsResponse] = await Promise.all([
+      fetch(
+        `${SUPABASE_URL}/rest/v1/products?select=*`,
+        {
+          headers: {
+            apikey: SUPABASE_KEY
+          }
+        }
+      ),
+
+      fetch(
+        `${SUPABASE_URL}/rest/v1/product_options?select=*&is_available=eq.true&order=sort_order.asc`,
+        {
+          headers: {
+            apikey: SUPABASE_KEY
+          }
+        }
+      )
+    ]);
+
+    if (!productsResponse.ok) {
+      throw new Error(`Products Error ${productsResponse.status}`);
     }
 
-    const products = await response.json();
+    if (!optionsResponse.ok) {
+      throw new Error(`Options Error ${optionsResponse.status}`);
+    }
 
-    allProducts = products;
+    allProducts = await productsResponse.json();
+    allOptions = await optionsResponse.json();
 
-    const defaultCategory = 'a6fca325-d92c-4475-9254-7a9e512cb240';
+    console.log('Productos:', allProducts);
+    console.log('Opciones:', allOptions);
 
-const defaultProducts = allProducts.filter(product =>
-  product.category_id === defaultCategory
-);
+    // 默认只显示 Café especiales
+    const defaultProducts = allProducts.filter(product =>
+      product.category_id === defaultCategory
+    );
 
-renderProducts(defaultProducts);
+    renderProducts(defaultProducts);
+
   } catch (error) {
-    console.error('Error al cargar productos:', error);
+
+    console.error('Error al cargar datos:', error);
 
     document.querySelector('.menu').innerHTML = `
       <p>No se pudieron cargar los productos.</p >
@@ -225,13 +250,18 @@ renderProducts(defaultProducts);
   }
 }
 
+
+// =========================
 // 显示商品
+// =========================
 function renderProducts(products) {
+
   const menu = document.querySelector('.menu');
 
   menu.innerHTML = '';
 
   products.forEach(product => {
+
     const item = document.createElement('div');
 
     item.className = 'product';
@@ -244,6 +274,7 @@ function renderProducts(products) {
       }
 
       <div class="info">
+
         <h3>${product.name}</h3>
 
         <div class="description">
@@ -253,54 +284,45 @@ function renderProducts(products) {
         <div class="price">
           ${formatPrice(product.price)}
         </div>
+
       </div>
 
       <button class="add" type="button">+</button>
     `;
 
     item.querySelector('.add').addEventListener('click', () => {
-  handleAddProduct(product);
-});
+      handleAddProduct(product);
+    });
 
     menu.appendChild(item);
   });
 }
 
-// 点击商品 + 时，检查是否有 Corto / Largo 等选项
-async function handleAddProduct(product) {
-  try {
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/product_options?product_id=eq.${product.id}&is_available=eq.true&select=*&order=sort_order.asc`,
-      {
-        headers: {
-          apikey: SUPABASE_KEY
-        }
-      }
-    );
 
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}`);
-    }
+// =========================
+// 点击商品 +
+// =========================
+function handleAddProduct(product) {
 
-    const options = await response.json();
+  const options = allOptions.filter(option =>
+    option.product_id === product.id &&
+    option.is_available !== false
+  );
 
-    // 没有规格，直接加入购物车
-    if (options.length === 0) {
-      addToCart(product);
-      return;
-    }
-
-    // 有规格，打开选择窗口
-    openOptionModal(product, options);
-
-  } catch (error) {
-    console.error('Error al cargar opciones:', error);
-    addToCart(product);
+  // 没有大小选项 → 直接加入
+  if (options.length === 0) {
+    addToCart(product, null);
+    return;
   }
+
+  // 有选项 → 打开选择窗口
+  openOptionModal(product, options);
 }
 
 
-// 打开规格选择窗口
+// =========================
+// 打开大小选择窗口
+// =========================
 function openOptionModal(product, options) {
 
   const oldModal = document.getElementById('optionOverlay');
@@ -309,197 +331,145 @@ function openOptionModal(product, options) {
     oldModal.remove();
   }
 
-  const optionsHTML = options.map((option, index) => {
+  const groupName =
+    options[0]?.group_name || 'Tamaño';
 
-    const finalPrice =
-      Number(product.price) + Number(option.price_delta || 0);
+  const overlay = document.createElement('div');
 
-    return `
-      <label style="
+  overlay.id = 'optionOverlay';
+
+  overlay.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:2000;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+  `;
+
+  overlay.innerHTML = `
+
+    <div style="
+      background:white;
+      width:100%;
+      max-width:600px;
+      border-radius:24px 24px 0 0;
+      padding:24px 20px 30px;
+    ">
+
+      <div style="
         display:flex;
         justify-content:space-between;
         align-items:center;
-        padding:16px;
-        margin-bottom:10px;
-        background:#f8f8f5;
-        border-radius:14px;
-        cursor:pointer;
+        margin-bottom:8px;
       ">
 
-        <div>
-          <input
-            type="radio"
-            name="productOption"
-            value="${index}"
-            ${index === 0 ? 'checked' : ''}
-          >
-
-          <strong style="margin-left:8px;">
-            ${option.option_name}
-          </strong>
-        </div>
-
-        <strong>
-          ${formatPrice(finalPrice)}
-        </strong>
-
-      </label>
-    `;
-  }).join('');
-
-
-  document.body.insertAdjacentHTML('beforeend', `
-    <div
-      id="optionOverlay"
-      style="
-        position:fixed;
-        inset:0;
-        background:rgba(0,0,0,.45);
-        z-index:1000;
-        display:flex;
-        align-items:flex-end;
-        justify-content:center;
-      "
-    >
-
-      <div
-        style="
-          background:white;
-          width:100%;
-          max-width:600px;
-          border-radius:24px 24px 0 0;
-          padding:22px;
-        "
-      >
-
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          margin-bottom:20px;
+        <h2 style="
+          margin:0;
+          font-size:24px;
         ">
-
-          <div>
-            <h2 style="margin:0 0 5px;">
-              ${product.name}
-            </h2>
-
-            <div style="color:#777;">
-              Elige el tamaño
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onclick="closeOptionModal()"
-            style="
-              border:none;
-              background:none;
-              font-size:30px;
-              cursor:pointer;
-            "
-          >
-            ×
-          </button>
-
-        </div>
-
-        ${optionsHTML}
+          ${product.name}
+        </h2>
 
         <button
-          id="confirmOptionButton"
+          id="closeOptionModal"
           type="button"
           style="
-            width:100%;
-            margin-top:10px;
-            padding:17px;
             border:none;
-            border-radius:16px;
-            background:#FFEAAB;
-            color:#222;
-            font-size:17px;
-            font-weight:bold;
+            background:none;
+            font-size:30px;
             cursor:pointer;
           "
         >
-          Añadir al pedido
+          ×
         </button>
 
       </div>
 
-    </div>
-  `);
+      <div style="
+        font-size:16px;
+        font-weight:bold;
+        margin:20px 0 12px;
+      ">
+        ${groupName}
+      </div>
 
+      <div id="optionButtons"></div>
+
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const buttonsContainer =
+    document.getElementById('optionButtons');
+
+  options.forEach(option => {
+
+    const finalPrice =
+      Number(product.price) +
+      Number(option.price_delta || 0);
+
+    const button =
+      document.createElement('button');
+
+    button.type = 'button';
+
+    button.style.cssText = `
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 18px;
+      margin-bottom:10px;
+      border:2px solid #8ed8f8;
+      border-radius:16px;
+      background:white;
+      color:#222;
+      font-size:17px;
+      cursor:pointer;
+    `;
+
+    button.innerHTML = `
+      <strong>${option.option_name}</strong>
+
+      <span>
+        ${formatPrice(finalPrice)}
+      </span>
+    `;
+
+    button.addEventListener('click', () => {
+
+      addToCart(product, option);
+
+      overlay.remove();
+    });
+
+    buttonsContainer.appendChild(button);
+  });
 
   document
-    .getElementById('confirmOptionButton')
+    .getElementById('closeOptionModal')
     .addEventListener('click', () => {
-
-      const selected =
-        document.querySelector(
-          'input[name="productOption"]:checked'
-        );
-
-      if (!selected) return;
-
-      const option =
-        options[Number(selected.value)];
-
-      addProductWithOption(product, option);
-
-      closeOptionModal();
+      overlay.remove();
     });
+
+  // 点黑色背景关闭
+  overlay.addEventListener('click', event => {
+
+    if (event.target === overlay) {
+      overlay.remove();
+    }
+  });
 }
 
 
-// 关闭规格窗口
-function closeOptionModal() {
-  const modal =
-    document.getElementById('optionOverlay');
-
-  if (modal) {
-    modal.remove();
-  }
-}
-
-
-// 把带规格的商品加入购物车
-function addProductWithOption(product, option) {
-
-  const finalPrice =
-    Number(product.price) +
-    Number(option.price_delta || 0);
-
-  // Corto 和 Largo 必须作为两个不同购物车商品
-  const cartId =
-    `${product.id}_${option.id}`;
-
-  if (cart[cartId]) {
-
-    cart[cartId].quantity += 1;
-
-  } else {
-
-    cart[cartId] = {
-      ...product,
-
-      id: cartId,
-
-      original_product_id: product.id,
-
-      option_name: option.option_name,
-
-      price: finalPrice,
-
-      quantity: 1
-    };
-  }
-
-  updateCartBar();
-}
-  
+// =========================
 // 分类按钮
+// =========================
 document.querySelectorAll('.categories button').forEach(button => {
+
   button.addEventListener('click', () => {
 
     document.querySelectorAll('.categories button').forEach(btn => {
@@ -508,28 +478,71 @@ document.querySelectorAll('.categories button').forEach(button => {
 
     button.classList.add('active');
 
-    const category = button.dataset.category;
+    const category =
+      button.dataset.category;
 
     if (category === 'all') {
       renderProducts(allProducts);
       return;
     }
 
-    const filteredProducts = allProducts.filter(product => {
-      return product.category_id === category;
-    });
+    const filteredProducts =
+      allProducts.filter(product =>
+        product.category_id === category
+      );
 
     renderProducts(filteredProducts);
   });
 });
 
+
+// =========================
 // 加入购物车
-function addToCart(product) {
-  if (cart[product.id]) {
-    cart[product.id].quantity += 1;
+// =========================
+function addToCart(product, option) {
+
+  const optionId =
+    option ? option.id : 'normal';
+
+  // 同一个商品不同大小分开
+  const cartKey =
+    `${product.id}_${optionId}`;
+
+  const priceDelta =
+    option
+      ? Number(option.price_delta || 0)
+      : 0;
+
+  const finalPrice =
+    Number(product.price) + priceDelta;
+
+  if (cart[cartKey]) {
+
+    cart[cartKey].quantity += 1;
+
   } else {
-    cart[product.id] = {
+
+    cart[cartKey] = {
+
       ...product,
+
+      cartKey: cartKey,
+
+      optionId:
+        option ? option.id : null,
+
+      optionName:
+        option ? option.option_name : null,
+
+      groupName:
+        option ? option.group_name : null,
+
+      basePrice:
+        Number(product.price),
+
+      price:
+        finalPrice,
+
       quantity: 1
     };
   }
@@ -537,62 +550,102 @@ function addToCart(product) {
   updateCartBar();
 }
 
+
+// =========================
 // 修改数量
-function changeQuantity(id, amount) {
-  if (!cart[id]) return;
+// =========================
+function changeQuantity(cartKey, amount) {
 
-  cart[id].quantity += amount;
+  if (!cart[cartKey]) return;
 
-  if (cart[id].quantity <= 0) {
-    delete cart[id];
+  cart[cartKey].quantity += amount;
+
+  if (cart[cartKey].quantity <= 0) {
+    delete cart[cartKey];
   }
 
   updateCartBar();
   renderCart();
 }
 
-// 商品总数量
-function getCartCount() {
-  return Object.values(cart).reduce(
-    (total, product) => total + product.quantity,
-    0
-  );
-}
 
-// 总价
-function getCartTotal() {
+// =========================
+// 商品总数量
+// =========================
+function getCartCount() {
+
   return Object.values(cart).reduce(
     (total, product) =>
-      total + Number(product.price) * product.quantity,
+      total + product.quantity,
     0
   );
 }
 
+
+// =========================
+// 总价
+// =========================
+function getCartTotal() {
+
+  return Object.values(cart).reduce(
+    (total, product) =>
+      total +
+      Number(product.price) *
+      product.quantity,
+    0
+  );
+}
+
+
+// =========================
 // 更新底部购物车
+// =========================
 function updateCartBar() {
-  const count = getCartCount();
+
+  const count =
+    getCartCount();
 
   const cartText =
     document.querySelector('.cart span:last-child');
 
   cartText.textContent =
-    `${count} ${count === 1 ? 'producto' : 'productos'} · ${formatPrice(getCartTotal())}`;
+    `${count} ${
+      count === 1
+        ? 'producto'
+        : 'productos'
+    } · ${formatPrice(getCartTotal())}`;
 }
 
+
+// =========================
 // 打开购物车
+// =========================
 function openCart() {
+
   renderCart();
 
-  document.getElementById('cartOverlay').style.display = 'flex';
+  document
+    .getElementById('cartOverlay')
+    .style.display = 'flex';
 }
 
+
+// =========================
 // 关闭购物车
+// =========================
 function closeCart() {
-  document.getElementById('cartOverlay').style.display = 'none';
+
+  document
+    .getElementById('cartOverlay')
+    .style.display = 'none';
 }
 
-// 显示购物车内容
+
+// =========================
+// 显示购物车
+// =========================
 function renderCart() {
+
   const cartItems =
     document.getElementById('cartItems');
 
@@ -600,7 +653,9 @@ function renderCart() {
     Object.values(cart);
 
   if (products.length === 0) {
+
     cartItems.innerHTML = `
+
       <p style="
         text-align:center;
         color:#777;
@@ -609,98 +664,125 @@ function renderCart() {
         Tu pedido está vacío
       </p >
     `;
+
   } else {
-    cartItems.innerHTML = products.map(product => `
-      <div style="
-        display:flex;
-        align-items:center;
-        gap:12px;
-        padding:14px 0;
-        border-bottom:1px solid #eee;
-      ">
 
-        ${
-          product.image_url
-            ? `
-              <img
-                src="${product.image_url}"
-                alt="${product.name}"
-                style="
-                  width:60px;
-                  height:60px;
-                  object-fit:cover;
-                  border-radius:12px;
-                "
-              >
-            `
-            : ''
-        }
+    cartItems.innerHTML =
+      products.map(product => `
 
-        <div style="flex:1;">
-          <strong>${product.name}</strong>
+        <div style="
+          display:flex;
+          align-items:center;
+          gap:12px;
+          padding:14px 0;
+          border-bottom:1px solid #eee;
+        ">
 
-${product.option_name
-  ? `
-    <div style="
-      margin-top:4px;
-      font-size:14px;
-      color:#777;
-    ">
-      ${product.option_name}
-    </div>
-  `
-  : ''
-}
+          ${
+            product.image_url
+              ? `
+                <img
+                  src="${product.image_url}"
+                  alt="${product.name}"
+                  style="
+                    width:60px;
+                    height:60px;
+                    object-fit:cover;
+                    border-radius:12px;
+                  "
+                >
+              `
+              : ''
+          }
 
-<div style="margin-top:5px;">
-  ${formatPrice(product.price)}
-</div>
+          <div style="flex:1;">
+
+            <strong>
+              ${product.name}
+            </strong>
+
+            ${
+              product.optionName
+                ? `
+                  <div style="
+                    margin-top:4px;
+                    font-size:14px;
+                    color:#777;
+                  ">
+                    ${product.optionName}
+                  </div>
+                `
+                : ''
+            }
+
+            <div style="margin-top:5px;">
+              ${formatPrice(product.price)}
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            onclick="changeQuantity('${product.cartKey}', -1)"
+            style="
+              width:34px;
+              height:34px;
+              border:none;
+              border-radius:50%;
+              font-size:20px;
+              cursor:pointer;
+            "
+          >
+            −
+          </button>
+
+          <strong>
+            ${product.quantity}
+          </strong>
+
+          <button
+            type="button"
+            onclick="changeQuantity('${product.cartKey}', 1)"
+            style="
+              width:34px;
+              height:34px;
+              border:none;
+              border-radius:50%;
+              background:#FFEAAB;
+              font-size:20px;
+              cursor:pointer;
+            "
+          >
+            +
+          </button>
+
         </div>
 
-        <button
-          type="button"
-          onclick="changeQuantity('${product.id}', -1)"
-          style="
-            width:34px;
-            height:34px;
-            border:none;
-            border-radius:50%;
-            font-size:20px;
-          "
-        >
-          −
-        </button>
-
-        <strong>${product.quantity}</strong>
-
-        <button
-          type="button"
-          onclick="changeQuantity('${product.id}', 1)"
-          style="
-            width:34px;
-            height:34px;
-            border:none;
-            border-radius:50%;
-            background:#FFEAAB;
-            font-size:20px;
-          "
-        >
-          +
-        </button>
-
-      </div>
-    `).join('');
+      `).join('');
   }
 
-  document.getElementById('cartTotal').textContent =
-    formatPrice(getCartTotal());
+  document
+    .getElementById('cartTotal')
+    .textContent =
+      formatPrice(getCartTotal());
 }
 
-// 点击底部购物车
-document.querySelector('.cart').addEventListener('click', openCart);
 
+// =========================
+// 点击底部购物车
+// =========================
+document
+  .querySelector('.cart')
+  .addEventListener('click', openCart);
+
+
+// =========================
 // 创建购物车弹窗
-document.body.insertAdjacentHTML('beforeend', `
+// =========================
+document.body.insertAdjacentHTML(
+  'beforeend',
+  `
+
   <div
     id="cartOverlay"
     style="
@@ -744,6 +826,7 @@ document.body.insertAdjacentHTML('beforeend', `
             border:none;
             background:none;
             font-size:28px;
+            cursor:pointer;
           "
         >
           ×
@@ -790,11 +873,17 @@ document.body.insertAdjacentHTML('beforeend', `
       </button>
 
     </div>
-  </div>
-`);
 
-// 开始加载商品
+  </div>
+  `
+);
+
+
+// =========================
+// 开始加载
+// =========================
 loadProducts();
+
 </script>
 </body>
 </html>
