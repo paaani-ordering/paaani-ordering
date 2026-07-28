@@ -370,6 +370,36 @@
         box-shadow: 0 0 50px rgba(0,0,0,.08);
       }
     }
+    /* 用餐方式 */
+.dining-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 10px 20px 28px;
+}
+
+.dining-card {
+  background: #f7e4cf;
+  border-radius: 22px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #18324b;
+}
+
+.dining-icon {
+  font-size: 46px;
+  line-height: 1;
+}
+
+.dining-card strong {
+  font-size: 18px;
+  font-weight: 700;
+}
   </style>
 </head>
 
@@ -405,42 +435,20 @@
   </section>
 
 
-  <!-- 点餐 -->
-  <div class="order-area">
+  <!-- 用餐方式 -->
+<div class="dining-options">
 
-    <a href=" " class="order-button">
+  <a href="menu.html" class="dining-card">
+    <div class="dining-icon">🍽️</div>
+    <strong>Comer aquí</strong>
+  </a >
 
-      <div>
-        <strong>Pedir ahora</strong>
-        <small>Descubre nuestro menú</small>
-      </div>
+  <a href="menu.html" class="dining-card">
+    <div class="dining-icon">🥡</div>
+    <strong>Para llevar</strong>
+  </a >
 
-      <div class="arrow">→</div>
-
-    </a >
-
-  </div>
-
-
-  <!-- 快捷入口 -->
-  <div class="quick">
-
-    <a href="menu.html" class="quick-card">
-      <div class="quick-icon">☕</div>
-      <strong>Menú</strong>
-    </a >
-
-    <a href="#novedades" class="quick-card">
-      <div class="quick-icon">✨</div>
-      <strong>Novedades</strong>
-    </a >
-
-    <a href="#ofertas" class="quick-card">
-      <div class="quick-icon">🎟️</div>
-      <strong>Ofertas</strong>
-    </a >
-
-  </div>
+</div>
 
 
   <!-- 活动 -->
