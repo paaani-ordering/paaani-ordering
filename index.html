@@ -395,6 +395,96 @@
   font-size: 18px;
   font-weight: 700;
 }
+    /* 邮箱订阅优惠 */
+
+.email-section {
+  padding: 25px 22px 0;
+}
+
+.email-card {
+  background: #FFE18A;
+  border-radius: 25px;
+  padding: 25px 24px 28px;
+}
+
+.email-badge {
+  display: inline-block;
+  background: #FFFFFF;
+  color: #164F91;
+  padding: 8px 13px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.email-card h2 {
+  margin: 0;
+  color: #164F91;
+  font-size: 38px;
+  line-height: 1;
+}
+
+.email-card h3 {
+  margin: 7px 0 10px;
+  color: #164F91;
+  font-size: 20px;
+}
+
+.email-card p {
+  margin: 0 0 8px;
+  color: #53616A;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.email-benefits {
+  color: #164F91;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.email-form {
+  display: flex;
+  gap: 8px;
+}
+
+.email-form input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: #FFFFFF;
+  border-radius: 15px;
+  padding: 14px;
+  font-size: 13px;
+}
+
+.email-form button {
+  border: none;
+  background: #164F91;
+  color: #FFFFFF;
+  border-radius: 15px;
+  padding: 0 15px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.email-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 13px;
+  color: #53616A;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.email-consent input {
+  margin: 1px 0 0;
+}
   </style>
 </head>
 
@@ -447,34 +537,48 @@
 
 
   <!-- 活动 -->
-  <section class="section" id="ofertas">
+ <!-- 邮箱订阅优惠 -->
+<section class="email-section">
 
-    <div class="section-title">
-      <h2>Para ti 💛</h2>
+  <div class="email-card">
+
+    <div class="email-badge">REGALO DE BIENVENIDA 💛</div>
+
+    <h2>15% DTO.</h2>
+
+    <h3>¡Solo por suscribirte!</h3>
+
+    <p>
+      Déjanos tu email y recibe un 15% de descuento
+      en tu primera suscripción.
+    </p >
+
+    <div class="email-benefits">
+      Sin compra mínima · Sin caducidad
     </div>
 
-    <div class="promo">
+    <form class="email-form">
+      <input
+        type="email"
+        placeholder="Tu correo electrónico"
+        required
+      >
 
-      <span class="promo-tag">
-        MARTES · VIERNES
+      <button type="submit">
+        Conseguir mi 15% →
+      </button>
+    </form>
+
+    <label class="email-consent">
+      <input type="checkbox" required>
+      <span>
+        Acepto recibir novedades y promociones de Paaani.
       </span>
+    </label>
 
-      <h3>
-        Happy<br>
-        Afternoon
-      </h3>
+  </div>
 
-      <p>
-        Descubre nuestras promociones.
-      </p >
-
-      <div class="promo-coffee">
-        🧋
-      </div>
-
-    </div>
-
-  </section>
+</section>
 
 
   <!-- 推荐 -->
