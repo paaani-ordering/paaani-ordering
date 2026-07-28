@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFF8E9">
+
   <title>Paaani Café</title>
 
   <style>
@@ -10,879 +12,560 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --blue: #164F91;
+      --yellow: #F4C65D;
+      --cream: #FFF8E9;
+      --white: #FFFFFF;
+      --text: #18324B;
+      --muted: #7C7C76;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f8f8f5;
-      color: #222;
+      background: #F3EFE6;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
     }
 
-    header {
-      background: #8ed8f8;
-      padding: 28px 20px;
+    /* 手机主体 */
+    .app {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--cream);
+      padding-bottom: 100px;
+    }
+
+    /* 顶部 */
+    .hero {
+      padding: 38px 22px 24px;
       text-align: center;
+      background:
+        linear-gradient(
+          180deg,
+          #FFF3D7 0%,
+          #FFF8E9 100%
+        );
     }
 
-    .header-logo {
-  width: 120px;
-  height: auto;
-  display: block;
-  margin: 0 auto 8px;
-}
+    .brand {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--blue);
+      margin-bottom: 3px;
+    }
 
-    header p {
-  margin: 10px 0 0;
-  font-size: 20px;
-  color: white;
-  font-weight: 500;
-}
+    .brand-subtitle {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--blue);
+    }
 
-    .categories {
+    /* Pani 临时插画 */
+    .dog-area {
+      height: 180px;
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .sun {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      background: #F7D77C;
+      position: absolute;
+      left: 50%;
+      top: 20px;
+      transform: translateX(-50%);
+      opacity: .55;
+    }
+
+    .dog {
+      position: absolute;
+      left: 50%;
+      top: 50px;
+      transform: translateX(-50%);
+      font-size: 90px;
+    }
+
+    /* 欢迎 */
+    .welcome {
+      padding: 5px 22px 18px;
+    }
+
+    .welcome h1 {
+      margin: 0;
+      font-size: 29px;
+      line-height: 1.15;
+      color: var(--blue);
+    }
+
+    .welcome p {
+      color: var(--muted);
+      margin: 9px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* 主按钮 */
+    .order-area {
+      padding: 0 22px 20px;
+    }
+
+    .order-button {
       display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 18px 15px;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 19px 21px;
+      background: var(--blue);
+      color: white;
+      border-radius: 22px;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(22,79,145,.18);
     }
 
-    .categories button {
-  border: none;
-  background: white;
-  color: #8ed8f8;
-  padding: 11px 18px;
-  border-radius: 25px;
-  white-space: nowrap;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
+    .order-button strong {
+      display: block;
+      font-size: 19px;
+    }
 
-.categories button.active {
-  background: #8ed8f8;
-  color: white;
-}
+    .order-button small {
+      opacity: .75;
+      font-size: 12px;
+    }
 
-    .menu {
-      padding: 0 15px 100px;
-      max-width: 600px;
-      margin: auto;
+    .arrow {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--yellow);
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    /* 快捷入口 */
+    .quick {
+      padding: 0 22px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 10px;
+    }
+
+    .quick-card {
+      background: white;
+      border-radius: 19px;
+      padding: 17px 8px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,.045);
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .quick-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin: 0 auto 9px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #FFF1C9;
+      font-size: 23px;
+    }
+
+    .quick-card strong {
+      font-size: 13px;
+    }
+
+    /* 活动 */
+    .section {
+      padding: 25px 22px 0;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 13px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--blue);
+    }
+
+    .section-title a {
+      color: var(--blue);
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .promo {
+      min-height: 180px;
+      border-radius: 25px;
+      background:
+        linear-gradient(
+          135deg,
+          #F6D778,
+          #FFEAB0
+        );
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promo-tag {
+      display: inline-block;
+      background: white;
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: bold;
+      padding: 7px 11px;
+      border-radius: 20px;
+    }
+
+    .promo h3 {
+      font-size: 28px;
+      line-height: 1;
+      color: var(--blue);
+      margin: 14px 0 6px;
+    }
+
+    .promo p {
+      margin: 0;
+      font-size: 13px;
+      color: #53616A;
+    }
+
+    .promo-coffee {
+      position: absolute;
+      right: 12px;
+      bottom: -5px;
+      font-size: 90px;
+      transform: rotate(-6deg);
+    }
+
+    /* 推荐 */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 12px;
     }
 
     .product {
       background: white;
-      border-radius: 18px;
+      border-radius: 21px;
       padding: 12px;
-      margin-bottom: 14px;
+      min-height: 175px;
+    }
+
+    .product-image {
+      height: 105px;
+      background: #F9F4E9;
+      border-radius: 16px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      justify-content: center;
+      font-size: 58px;
     }
 
-    .product img {
-      width: 105px;
-      height: 105px;
-      object-fit: cover;
-      border-radius: 14px;
-    }
-
-    .info {
-      flex: 1;
-    }
-
-    .info h3 {
-      margin: 0 0 7px;
-    }
-
-    .description {
+    .product-name {
+      margin-top: 10px;
       font-size: 13px;
-      color: #777;
-      margin-bottom: 10px;
-    }
-
-    .price {
       font-weight: bold;
-      font-size: 17px;
     }
 
-    .add {
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #FFEAAB;
-      font-size: 24px;
-      cursor: pointer;
+    .product-label {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
     }
 
-    .cart {
-      position: fixed;
-      bottom: 18px;
-      left: 15px;
-      right: 15px;
-      max-width: 570px;
-      margin: auto;
-      background: #8ed8f8;
+    /* Pani 卡片 */
+    .pani-card {
+      margin: 26px 22px;
+      background: var(--blue);
+      border-radius: 25px;
       color: white;
-      padding: 16px 20px;
-      border-radius: 18px;
+      padding: 23px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pani-card h3 {
+      margin: 0 0 6px;
+      font-size: 21px;
+    }
+
+    .pani-card p {
+      margin: 0;
+      max-width: 65%;
+      font-size: 12px;
+      opacity: .8;
+      line-height: 1.5;
+    }
+
+    .pani-dog {
+      position: absolute;
+      right: 17px;
+      bottom: 4px;
+      font-size: 65px;
+    }
+
+    /* 底部导航 */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      height: 78px;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(15px);
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      border-top: 1px solid rgba(0,0,0,.05);
+      z-index: 20;
+    }
+
+    .nav-item {
+      text-decoration: none;
+      color: #8C8C88;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      gap: 5px;
+    }
+
+    .nav-icon {
+      font-size: 21px;
+    }
+
+    .nav-item.active {
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    @media (min-width: 600px) {
+      .app {
+        box-shadow: 0 0 50px rgba(0,0,0,.08);
+      }
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <img class="header-logo" src="https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/product-images/logo-bai.png" alt="Paaani">
-  <p>¿Qué te apetece hoy?</p >
-</header>
+<div class="app">
 
-<div class="categories">
+  <!-- LOGO -->
+  <section class="hero">
 
-  <button class="active" data-category="a6fca325-d92c-4475-9254-7a9e512cb240">
-  Cafés especiales
-</button>
+    <div class="brand">PAAANI</div>
+    <div class="brand-subtitle">
+      COFFEE · DESSERT
+    </div>
 
-  <button data-category="518f932f-6a26-4b33-9dc4-002225e208f6">
-    Cafés
-  </button>
+    <div class="dog-area">
+      <div class="sun"></div>
+      <div class="dog">🐕</div>
+    </div>
 
-  <button data-category="9268fdce-f27b-45dc-bc89-e7ef7c13c6dc">
-    Bebidas
-  </button>
-
-  <button data-category="ade5d730-ee05-478d-9406-54427f06956d">
-    Desayunos
-  </button>
-
-  <button data-category="7fb4cb63-be76-477c-8204-7d3a9cb851d8">
-    Postres
-  </button>
-
-  <button data-category="5684d15f-811c-4124-9e91-f5843d5ef2b8">
-    Ensaladas
-  </button>
-
-  <button data-category="3ccae3bb-3595-4b78-b5f9-a5c5c108c747">
-    Merchandising
-  </button>
-</div>
-
-<div class="menu">
-
-</div>
-
-<div class="cart">
-  <span>🛒 Mi pedido</span>
-  <span>0 productos</span>
-</div>
-
-<script>
-const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
-
-let cart = {};
-let allProducts = [];
-let allOptions = [];
-
-// 默认打开 Café especiales
-const defaultCategory = 'a6fca325-d92c-4475-9254-7a9e512cb240';
-
-// 价格格式
-function formatPrice(price) {
-  return `${Number(price).toFixed(2).replace('.', ',')} €`;
-}
-
-// =========================
-// 读取商品 + 商品选项
-// =========================
-async function loadProducts() {
-  try {
-
-    const [productsResponse, optionsResponse] = await Promise.all([
-      fetch(
-        `${SUPABASE_URL}/rest/v1/products?select=*`,
-        {
-          headers: {
-            apikey: SUPABASE_KEY
-          }
-        }
-      ),
-
-      fetch(
-        `${SUPABASE_URL}/rest/v1/product_options?select=*&is_available=eq.true&order=sort_order.asc`,
-        {
-          headers: {
-            apikey: SUPABASE_KEY
-          }
-        }
-      )
-    ]);
-
-    if (!productsResponse.ok) {
-      throw new Error(`Products Error ${productsResponse.status}`);
-    }
-
-    if (!optionsResponse.ok) {
-      throw new Error(`Options Error ${optionsResponse.status}`);
-    }
-
-    allProducts = await productsResponse.json();
-    allOptions = await optionsResponse.json();
-
-    console.log('Productos:', allProducts);
-    console.log('Opciones:', allOptions);
-
-    // 默认只显示 Café especiales
-    const defaultProducts = allProducts
-  .filter(product => product.category_id === defaultCategory)
-  .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)); 
-
-    renderProducts(defaultProducts);
-
-  } catch (error) {
-
-    console.error('Error al cargar datos:', error);
-
-    document.querySelector('.menu').innerHTML = `
-      <p>No se pudieron cargar los productos.</p >
-    `;
-  }
-}
+  </section>
 
 
-// =========================
-// 显示商品
-// =========================
-function renderProducts(products) {
+  <!-- 欢迎 -->
+  <section class="welcome">
 
-  const menu = document.querySelector('.menu');
+    <h1>
+      Hola,<br>
+      bienvenido a Paaani.
+    </h1>
 
-  menu.innerHTML = '';
+    <p>
+      Café, postres y pequeños momentos
+      que hacen el día un poquito mejor.
+    </p >
 
-  products.forEach(product => {
+  </section>
 
-    const item = document.createElement('div');
 
-    item.className = 'product';
+  <!-- 点餐 -->
+  <div class="order-area">
 
-    item.innerHTML = `
-      ${
-        product.image_url
-          ? `<img src="${product.image_url}" alt="${product.name}">`
-          : ''
-      }
+    <a href=" " class="order-button">
 
-      <div class="info">
-
-        <h3>${product.name}</h3>
-
-        <div class="description">
-          ${product.description || ''}
-        </div>
-
-        <div class="price">
-          ${formatPrice(product.price)}
-        </div>
-
+      <div>
+        <strong>Pedir ahora</strong>
+        <small>Descubre nuestro menú</small>
       </div>
 
-      <button class="add" type="button">+</button>
-    `;
+      <div class="arrow">→</div>
 
-    item.querySelector('.add').addEventListener('click', () => {
-      handleAddProduct(product);
-    });
+    </a >
 
-    menu.appendChild(item);
-  });
-}
+  </div>
 
 
-// =========================
-// 点击商品 +
-// =========================
-function handleAddProduct(product) {
+  <!-- 快捷入口 -->
+  <div class="quick">
 
-  const options = allOptions.filter(option =>
-    option.product_id === product.id &&
-    option.is_available !== false
-  );
+    <a href="menu.html" class="quick-card">
+      <div class="quick-icon">☕</div>
+      <strong>Menú</strong>
+    </a >
 
-  // 没有大小选项 → 直接加入
-  if (options.length === 0) {
-    addToCart(product, null);
-    return;
-  }
+    <a href="#novedades" class="quick-card">
+      <div class="quick-icon">✨</div>
+      <strong>Novedades</strong>
+    </a >
 
-  // 有选项 → 打开选择窗口
-  openOptionModal(product, options);
-}
+    <a href="#ofertas" class="quick-card">
+      <div class="quick-icon">🎟️</div>
+      <strong>Ofertas</strong>
+    </a >
+
+  </div>
 
 
-// =========================
-// 打开大小选择窗口
-// =========================
-function openOptionModal(product, options) {
+  <!-- 活动 -->
+  <section class="section" id="ofertas">
 
-  const oldModal = document.getElementById('optionOverlay');
+    <div class="section-title">
+      <h2>Para ti 💛</h2>
+    </div>
 
-  if (oldModal) {
-    oldModal.remove();
-  }
+    <div class="promo">
 
-  const groupName =
-    options[0]?.group_name || 'Tamaño';
+      <span class="promo-tag">
+        MARTES · VIERNES
+      </span>
 
-  const overlay = document.createElement('div');
+      <h3>
+        Happy<br>
+        Afternoon
+      </h3>
 
-  overlay.id = 'optionOverlay';
+      <p>
+        Descubre nuestras promociones.
+      </p >
 
-  overlay.style.cssText = `
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
-    z-index:2000;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-  `;
-
-  overlay.innerHTML = `
-
-    <div style="
-      background:white;
-      width:100%;
-      max-width:600px;
-      border-radius:24px 24px 0 0;
-      padding:24px 20px 30px;
-    ">
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-bottom:8px;
-      ">
-
-        <h2 style="
-          margin:0;
-          font-size:24px;
-        ">
-          ${product.name}
-        </h2>
-
-        <button
-          id="closeOptionModal"
-          type="button"
-          style="
-            border:none;
-            background:none;
-            font-size:30px;
-            cursor:pointer;
-          "
-        >
-          ×
-        </button>
-
+      <div class="promo-coffee">
+        🧋
       </div>
-
-      <div style="
-        font-size:16px;
-        font-weight:bold;
-        margin:20px 0 12px;
-      ">
-        ${groupName}
-      </div>
-
-      <div id="optionButtons"></div>
 
     </div>
-  `;
 
-  document.body.appendChild(overlay);
+  </section>
 
-  const buttonsContainer =
-    document.getElementById('optionButtons');
 
-  options.forEach(option => {
+  <!-- 推荐 -->
+  <section class="section" id="novedades">
 
-    const finalPrice =
-      Number(product.price) +
-      Number(option.price_delta || 0);
+    <div class="section-title">
 
-    const button =
-      document.createElement('button');
+      <h2>Favoritos</h2>
 
-    button.type = 'button';
+      <a href="menu.html">
+        Ver todo →
+      </a >
 
-    button.style.cssText = `
-      width:100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:16px 18px;
-      margin-bottom:10px;
-      border:2px solid #8ed8f8;
-      border-radius:16px;
-      background:white;
-      color:#222;
-      font-size:17px;
-      cursor:pointer;
-    `;
+    </div>
 
-    button.innerHTML = `
-      <strong>${option.option_name}</strong>
 
-      <span>
-        ${formatPrice(finalPrice)}
-      </span>
-    `;
+    <div class="products">
 
-    button.addEventListener('click', () => {
-
-      addToCart(product, option);
-
-      overlay.remove();
-    });
-
-    buttonsContainer.appendChild(button);
-  });
-
-  document
-    .getElementById('closeOptionModal')
-    .addEventListener('click', () => {
-      overlay.remove();
-    });
-
-  // 点黑色背景关闭
-  overlay.addEventListener('click', event => {
-
-    if (event.target === overlay) {
-      overlay.remove();
-    }
-  });
-}
-
-
-// =========================
-// 分类按钮
-// =========================
-document.querySelectorAll('.categories button').forEach(button => {
-
-  button.addEventListener('click', () => {
-
-    document.querySelectorAll('.categories button').forEach(btn => {
-      btn.classList.remove('active');
-    });
-
-    button.classList.add('active');
-
-    const category =
-      button.dataset.category;
-
-    if (category === 'all') {
-      renderProducts(allProducts);
-      return;
-    }
-
-    const filteredProducts = allProducts
-  .filter(product => product.category_id === category)
-  .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-
-renderProducts(filteredProducts);
-  });
-});
-
-
-// =========================
-// 加入购物车
-// =========================
-function addToCart(product, option) {
-
-  const optionId =
-    option ? option.id : 'normal';
-
-  // 同一个商品不同大小分开
-  const cartKey =
-    `${product.id}_${optionId}`;
-
-  const priceDelta =
-    option
-      ? Number(option.price_delta || 0)
-      : 0;
-
-  const finalPrice =
-    Number(product.price) + priceDelta;
-
-  if (cart[cartKey]) {
-
-    cart[cartKey].quantity += 1;
-
-  } else {
-
-    cart[cartKey] = {
-
-      ...product,
-
-      cartKey: cartKey,
-
-      optionId:
-        option ? option.id : null,
-
-      optionName:
-        option ? option.option_name : null,
-
-      groupName:
-        option ? option.group_name : null,
-
-      basePrice:
-        Number(product.price),
-
-      price:
-        finalPrice,
-
-      quantity: 1
-    };
-  }
-
-  updateCartBar();
-}
-
-
-// =========================
-// 修改数量
-// =========================
-function changeQuantity(cartKey, amount) {
-
-  if (!cart[cartKey]) return;
-
-  cart[cartKey].quantity += amount;
-
-  if (cart[cartKey].quantity <= 0) {
-    delete cart[cartKey];
-  }
-
-  updateCartBar();
-  renderCart();
-}
-
-
-// =========================
-// 商品总数量
-// =========================
-function getCartCount() {
-
-  return Object.values(cart).reduce(
-    (total, product) =>
-      total + product.quantity,
-    0
-  );
-}
-
-
-// =========================
-// 总价
-// =========================
-function getCartTotal() {
-
-  return Object.values(cart).reduce(
-    (total, product) =>
-      total +
-      Number(product.price) *
-      product.quantity,
-    0
-  );
-}
-
-
-// =========================
-// 更新底部购物车
-// =========================
-function updateCartBar() {
-
-  const count =
-    getCartCount();
-
-  const cartText =
-    document.querySelector('.cart span:last-child');
-
-  cartText.textContent =
-    `${count} ${
-      count === 1
-        ? 'producto'
-        : 'productos'
-    } · ${formatPrice(getCartTotal())}`;
-}
-
-
-// =========================
-// 打开购物车
-// =========================
-function openCart() {
-
-  renderCart();
-
-  document
-    .getElementById('cartOverlay')
-    .style.display = 'flex';
-}
-
-
-// =========================
-// 关闭购物车
-// =========================
-function closeCart() {
-
-  document
-    .getElementById('cartOverlay')
-    .style.display = 'none';
-}
-
-
-// =========================
-// 显示购物车
-// =========================
-function renderCart() {
-
-  const cartItems =
-    document.getElementById('cartItems');
-
-  const products =
-    Object.values(cart);
-
-  if (products.length === 0) {
-
-    cartItems.innerHTML = `
-
-      <p style="
-        text-align:center;
-        color:#777;
-        padding:30px 0;
-      ">
-        Tu pedido está vacío
-      </p >
-    `;
-
-  } else {
-
-    cartItems.innerHTML =
-      products.map(product => `
-
-        <div style="
-          display:flex;
-          align-items:center;
-          gap:12px;
-          padding:14px 0;
-          border-bottom:1px solid #eee;
-        ">
-
-          ${
-            product.image_url
-              ? `
-                <img
-                  src="${product.image_url}"
-                  alt="${product.name}"
-                  style="
-                    width:60px;
-                    height:60px;
-                    object-fit:cover;
-                    border-radius:12px;
-                  "
-                >
-              `
-              : ''
-          }
-
-          <div style="flex:1;">
-
-            <strong>
-              ${product.name}
-            </strong>
-
-            ${
-              product.optionName
-                ? `
-                  <div style="
-                    margin-top:4px;
-                    font-size:14px;
-                    color:#777;
-                  ">
-                    ${product.optionName}
-                  </div>
-                `
-                : ''
-            }
-
-            <div style="margin-top:5px;">
-              ${formatPrice(product.price)}
-            </div>
-
-          </div>
-
-          <button
-            type="button"
-            onclick="changeQuantity('${product.cartKey}', -1)"
-            style="
-              width:34px;
-              height:34px;
-              border:none;
-              border-radius:50%;
-              font-size:20px;
-              cursor:pointer;
-            "
-          >
-            −
-          </button>
-
-          <strong>
-            ${product.quantity}
-          </strong>
-
-          <button
-            type="button"
-            onclick="changeQuantity('${product.cartKey}', 1)"
-            style="
-              width:34px;
-              height:34px;
-              border:none;
-              border-radius:50%;
-              background:#FFEAAB;
-              font-size:20px;
-              cursor:pointer;
-            "
-          >
-            +
-          </button>
-
+      <div class="product">
+        <div class="product-image">
+          ☕
         </div>
 
-      `).join('');
-  }
+        <div class="product-name">
+          Café Paaani
+        </div>
 
-  document
-    .getElementById('cartTotal')
-    .textContent =
-      formatPrice(getCartTotal());
-}
-
-
-// =========================
-// 点击底部购物车
-// =========================
-document
-  .querySelector('.cart')
-  .addEventListener('click', openCart);
-
-
-// =========================
-// 创建购物车弹窗
-// =========================
-document.body.insertAdjacentHTML(
-  'beforeend',
-  `
-
-  <div
-    id="cartOverlay"
-    style="
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.45);
-      z-index:999;
-      align-items:flex-end;
-      justify-content:center;
-    "
-  >
-
-    <div
-      style="
-        background:white;
-        width:100%;
-        max-width:600px;
-        max-height:85vh;
-        overflow:auto;
-        border-radius:24px 24px 0 0;
-        padding:20px;
-      "
-    >
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-bottom:10px;
-      ">
-
-        <h2 style="margin:0;">
-          Mi pedido
-        </h2>
-
-        <button
-          type="button"
-          onclick="closeCart()"
-          style="
-            border:none;
-            background:none;
-            font-size:28px;
-            cursor:pointer;
-          "
-        >
-          ×
-        </button>
-
+        <div class="product-label">
+          Uno de nuestros favoritos
+        </div>
       </div>
 
-      <div id="cartItems"></div>
 
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        font-size:20px;
-        font-weight:bold;
-        padding-top:20px;
-      ">
+      <div class="product">
+        <div class="product-image">
+          🍰
+        </div>
 
-        <span>Total</span>
+        <div class="product-name">
+          Postres
+        </div>
 
-        <span id="cartTotal">
-          0,00 €
-        </span>
-
+        <div class="product-label">
+          Hechos para disfrutar
+        </div>
       </div>
 
-      <button
-        id="checkoutButton"
-        type="button"
-        style="
-          display:block;
-          width:100%;
-          margin-top:20px;
-          padding:17px;
-          border:none;
-          border-radius:16px;
-          background:#FFEAAB;
-          color:#222;
-          font-size:17px;
-          font-weight:bold;
-          cursor:pointer;
-        "
-      >
-        Confirmar pedido
-      </button>
+    </div>
 
+  </section>
+
+
+  <!-- PANI -->
+  <div class="pani-card">
+
+    <h3>Hola, soy Pani 🐾</h3>
+
+    <p>
+      El pequeño compañero de Paaani.
+      Café, postres y muchas cosas bonitas
+      te esperan por aquí.
+    </p >
+
+    <div class="pani-dog">
+      🐕
     </div>
 
   </div>
-  `
-);
+
+</div>
 
 
-// =========================
-// 开始加载
-// =========================
-loadProducts();
+<!-- 底部导航 -->
+<nav class="bottom-nav">
 
-</script>
+  <a href="index.html" class="nav-item active">
+    <div class="nav-icon">⌂</div>
+    Inicio
+  </a >
+
+  <a href="menu.html" class="nav-item">
+    <div class="nav-icon">☕</div>
+    Menú
+  </a >
+
+  <a href="#ofertas" class="nav-item">
+    <div class="nav-icon">♡</div>
+    Ofertas
+  </a >
+
+  <a href="#novedades" class="nav-item">
+    <div class="nav-icon">•••</div>
+    Más
+  </a >
+
+</nav>
+
 </body>
 </html>
