@@ -1141,12 +1141,15 @@ const orderTypeButtons = document.querySelectorAll('.order-type');
 // 读取主页传来的 ?type=takeaway / ?type=dinein
 const params = new URLSearchParams(window.location.search);
 const typeFromHome = params.get('type');
+  // 从主页选择外带进入菜单时，清空旧购物车
+if (typeFromHome === 'takeaway') {
+    cart = {};
+    localStorage.removeItem('paaaani_cart');
+    sessionStorage.removeItem('paaaani_cart');
+}
 
 // URL 有合法 type，就优先使用；否则读取之前保存的状态
 let selectedOrderType;
- 
-const previousOrderType =
-  localStorage.getItem('paaaani_order_type');
 
 if (typeFromHome === 'takeaway' || typeFromHome === 'dinein') {
 
@@ -1154,9 +1157,6 @@ if (typeFromHome === 'takeaway' || typeFromHome === 'dinein') {
 
   // 如果从堂食切换到外带，或从外带切换到堂食
   // 清空之前的购物车
-  if (previousOrderType && previousOrderType !== selectedOrderType) {
-    
-  }
 
   localStorage.setItem(
     'paaaani_order_type',
