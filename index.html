@@ -504,7 +504,7 @@ body {
 .email-card h2 {
   margin: 0 0 8px;
   color: #8ed8f8;
-  font-size: 20px;
+  font-size: 17px;
   line-height: 1.15;
 }
 
@@ -527,7 +527,7 @@ body {
 
 .email-card h2 {
   margin: 0;
-  color: #164F91;
+  color: #8ed8f8;
   font-size: 38px;
   line-height: 1;
 }
@@ -639,18 +639,18 @@ body {
 }
 
 .stamp-cups {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 28px;
-  gap: 7px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px 16px;
+    margin-top: 28px;
+    width: 100%;
 }
 
 .stamp {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  opacity: 0.25;
+    width: 100%;
+    max-width: 85px;
+    height: auto;
+    justify-self: center;
 }
 
 /* 已经集到的章 */
@@ -842,7 +842,7 @@ body {
     <div class="stamp-top">
       <div>
         <h2 class="stamp-title">TARJETA DE SELLOS </h2>
-        <div class="stamp-subtitle">PAAANI REWARDS</div>
+        <div class="stamp-subtitle">·Paaani Rewards</div>
       </div>
 
       <button class="stamp-btn" type="button">
