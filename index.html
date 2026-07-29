@@ -834,5 +834,18 @@ body {
   </a >
 
 </nav>
+  <script>
+  // 读取二维码网址里的桌号，例如 ?table=5
+  const params = new URLSearchParams(window.location.search);
+  const tableNumber = params.get('table');
+
+  // 保存桌号，之后 menu.html 和 checkout.html 都可以读取
+  if (tableNumber) {
+    localStorage.setItem('paaani_table', tableNumber);
+  }
+</script>
+
+</body>
+</html>
 </body>
 </html>
