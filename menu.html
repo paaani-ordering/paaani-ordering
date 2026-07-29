@@ -362,11 +362,11 @@ header {
     </div>
 
     <div class="order-types">
-  <button class="order-type active" data-type="Comer aquí">
+  <button class="order-type" data-type="dinein">
     Comer aquí
   </button>
 
-  <button class="order-type" data-type="Para llevar">
+  <button class="order-type" data-type="takeaway">
     Para llevar
   </button>
 </div>
@@ -1138,6 +1138,51 @@ document.body.insertAdjacentHTML(
 updateCartBar();
 
 // 再加载商品
+  // =========================
+// 堂食 / 外带
+// =========================
+
+const orderTypeButtons =
+  document.querySelectorAll('.order-type');
+
+// 读取主页选择
+let selectedOrderType =
+  localStorage.getItem('orderType') || 'dinein';
+
+// 显示当前选择
+function updateOrderTypeButtons() {
+
+  orderTypeButtons.forEach(button => {
+
+    if (button.dataset.type === selectedOrderType) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
+
+  });
+}
+
+updateOrderTypeButtons();
+
+
+// menu 页面也可以重新切换
+orderTypeButtons.forEach(button => {
+
+  button.addEventListener('click', () => {
+
+    selectedOrderType = button.dataset.type;
+
+    localStorage.setItem(
+      'orderType',
+      selectedOrderType
+    );
+
+    updateOrderTypeButtons();
+
+  });
+
+});
 loadProducts();
 
 </script>
