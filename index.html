@@ -328,22 +328,100 @@
       font-size: 65px;
     }
 
-    /* 底部导航 */
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 480px;
-      height: 78px;
-      background: rgba(255,255,255,.96);
-      backdrop-filter: blur(15px);
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      border-top: 1px solid rgba(0,0,0,.05);
-      z-index: 20;
-    }
+    /* =========================
+   底部导航
+========================= */
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 480px;
+  height: 72px;
+
+  background: #ffffff;
+  border-top: 1px solid #eeeeee;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  padding-bottom: env(safe-area-inset-bottom);
+
+  z-index: 9999;
+}
+
+/* 每个按钮 */
+.nav-item {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  text-decoration: none;
+
+  color: #9a9a9a;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 图标 */
+.nav-icon {
+  position: relative;
+
+  width: 23px;
+  height: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon svg {
+  width: 23px;
+  height: 23px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 当前页面 */
+.nav-item.active {
+  color: #8ed8f8;
+}
+
+/* 订单提示小圆点 */
+.nav-dot {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  right: -2px;
+  top: -1px;
+
+  background: #FFEAAB;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+/* 防止页面内容被底栏挡住 */
+body {
+  padding-bottom: calc(90px + env(safe-area-inset-bottom));
+}
 
     .nav-item {
       text-decoration: none;
@@ -703,27 +781,51 @@
 <!-- 底部导航 -->
 <nav class="bottom-nav">
 
+  <!-- 首页 -->
   <a href="index.html" class="nav-item active">
-    <div class="nav-icon">⌂</div>
-    Inicio
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 10.5L12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 0 1 3 19.5z"/>
+      </svg>
+    </span>
+    <span>Inicio</span>
   </a >
 
+  <!-- 菜单 -->
   <a href="menu.html" class="nav-item">
-    <div class="nav-icon">☕</div>
-    Menú
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 5h16M4 12h16M4 19h16"/>
+      </svg>
+    </span>
+    <span>Menú</span>
   </a >
 
-  <a href="#ofertas" class="nav-item">
-    <div class="nav-icon">♡</div>
-    Ofertas
+  <!-- 订单 -->
+  <a href="orders.html" class="nav-item">
+    <span class="nav-icon nav-order-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/>
+        <path d="M9 8h6M9 12h6"/>
+      </svg>
+
+      <!-- 有进行中的订单时可显示小红点 -->
+      <span class="nav-dot"></span>
+    </span>
+    <span>Pedidos</span>
   </a >
 
-  <a href="#novedades" class="nav-item">
-    <div class="nav-icon">•••</div>
-    Más
+  <!-- 会员 -->
+  <a href="account.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4.5 21c.7-4.2 3.2-6.5 7.5-6.5s6.8 2.3 7.5 6.5"/>
+      </svg>
+    </span>
+    <span>Mi cuenta</span>
   </a >
 
 </nav>
-
 </body>
 </html>
