@@ -37,35 +37,74 @@
   font-weight: 500;
 }
 
-    .categories {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 18px 15px;
-    }
+/* ===== 左侧分类 + 右侧商品 ===== */
 
-    .categories button {
+.menu-layout {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* 左侧分类栏 */
+.categories {
+  width: 100px;
+  flex: 0 0 100px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  padding: 0;
+  background: #f5f5f3;
+
+  position: sticky;
+  top: 0;
+
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 分类按钮 */
+.categories button {
+  width: 100%;
+  min-height: 64px;
+
   border: none;
-  background: white;
-  color: #8ed8f8;
-  padding: 11px 18px;
-  border-radius: 25px;
-  white-space: nowrap;
-  font-size: 14px;
+  border-radius: 0;
+
+  background: transparent;
+  color: #777;
+
+  padding: 10px 7px;
+
+  white-space: normal;
+  text-align: center;
+
+  font-size: 12px;
   font-weight: 600;
+  line-height: 1.25;
+
   cursor: pointer;
 }
 
+/* 当前分类 */
 .categories button.active {
-  background: #8ed8f8;
-  color: white;
+  background: #ffffff;
+  color: #222;
+  font-weight: 700;
 }
 
-    .menu {
-      padding: 0 15px 100px;
-      max-width: 600px;
-      margin: auto;
-    }
+/* 右侧商品区域 */
+.menu {
+  flex: 1;
+  min-width: 0;
+
+  padding: 12px 10px 130px;
+
+  margin: 0;
+  max-width: none;
+}
 
     .product {
       background: white;
@@ -244,7 +283,7 @@
   <img class="header-logo" src="https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/product-images/logo-bai.png" alt="Paaani">
   <p>¿Qué te apetece hoy?</p >
 </header>
-
+<div class="menu-layout">
 <div class="categories">
 
   <button class="active" data-category="a6fca325-d92c-4475-9254-7a9e512cb240">
@@ -279,7 +318,7 @@
 <div class="menu">
 
 </div>
-
+</div>
 <div class="cart">
   <span>🛒 Mi pedido</span>
   <span>0 productos</span>
