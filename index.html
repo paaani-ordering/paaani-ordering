@@ -380,21 +380,32 @@
 
 .dining-card {
   background: #8ed8f8;
-  border-radius: 18px;
-  min-height: 135px;
+  border-radius: 22px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  justify-content: flex-end;
+
+  
+  position: relative;
+  padding: 55px 6px 18px;
+  margin-top: 35px;
+
   text-decoration: none;
   color: #18324b;
-  text-align: center;
 }
 
 .dining-icon {
-  width: 75px;
-  height: 75px;
+  position: absolute;
+
+  width: 105px;
+  height: 105px;
+
+  top: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -410,6 +421,7 @@
 .dining-card strong {
   font-size: 15px;
   font-weight: 700;
+  text-align: center;
 }
     /* 邮箱订阅优惠 */
 
