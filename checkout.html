@@ -418,7 +418,7 @@ function renderOrder() {
           }
 
           <div class="item-price">
-            ${formatPrice(product.price)}
+            ${formatPrice(product.basePrice ?? product.price ?? 0)}
           </div>
 
         </div>
@@ -436,7 +436,7 @@ function renderOrder() {
     products.reduce(
       (sum, product) =>
         sum +
-        Number(product.price) *
+        Number(product.basePrice ?? product.price ?? 0) *
         Number(product.quantity),
       0
     );
