@@ -17,24 +17,82 @@
       color: #222;
     }
 
-    header {
-      background: #8ed8f8;
-      padding: 28px 20px;
-      text-align: center;
-    }
+    /* ===== 菜单顶部店铺信息 ===== */
 
-    .header-logo {
-  width: 120px;
-  height: auto;
-  display: block;
-  margin: 0 auto 8px;
+header {
+  background: #ffffff;
+  padding: 16px 16px 12px;
+  text-align: left;
 }
 
-    header p {
-  margin: 10px 0 0;
-  font-size: 20px;
-  color: white;
-  font-weight: 500;
+/* 最上面的品牌名 */
+.shop-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+  margin: 2px 0 18px;
+}
+
+/* 店铺名称 + 用餐方式 */
+.shop-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.shop-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #222;
+  white-space: nowrap;
+}
+
+/* 堂食 / 外带 */
+.order-types {
+  display: flex;
+  background: #f5f5f5;
+  border-radius: 22px;
+  padding: 3px;
+}
+
+.order-type {
+  border: 0;
+  background: transparent;
+  color: #999;
+  padding: 8px 12px;
+  border-radius: 19px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.order-type.active {
+  background: #8ed8f8;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* 店铺副信息 */
+.shop-sub {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #999;
+}
+
+/* 提示信息 */
+.shop-notice {
+  margin-top: 13px;
+  padding-top: 10px;
+  border-top: 1px solid #eeeeee;
+
+  font-size: 11px;
+  line-height: 1.4;
+  color: #888;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ===== 左侧分类 + 右侧商品 ===== */
@@ -287,8 +345,27 @@
 <body>
 
 <header>
-  <img class="header-logo" src="https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/product-images/logo-bai.png" alt="Paaani">
-  <p>¿Qué te apetece hoy?</p >
+
+  <div class="shop-title">Paaani Café</div>
+
+  <div class="shop-main">
+
+    <div>
+      <div class="shop-name">☆ Paaani Café</div>
+      <div class="shop-sub">Café · Postres · Gran Canaria</div>
+    </div>
+
+    <div class="order-types">
+      <button class="order-type active">Comer aquí</button>
+      <button class="order-type">Para llevar</button>
+    </div>
+
+  </div>
+
+  <div class="shop-notice">
+    ☀︎ Productos preparados al momento · Disfrútalos recién hechos
+  </div>
+
 </header>
 <div class="menu-layout">
 <div class="categories">
