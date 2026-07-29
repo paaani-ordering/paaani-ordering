@@ -115,7 +115,7 @@
 
     .cart {
       position: fixed;
-      bottom: 85px;
+      bottom: calc(84px + env(safe-area-inset-bottom));
       left: 15px;
       right: 15px;
       max-width: 570px;
@@ -130,51 +130,86 @@
     /* ===== 底部导航栏 ===== */
 
 .bottom-nav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
 
-    height: 68px;
-    background: #ffffff;
-    border-top: 1px solid #eeeeee;
+  width: 100%;
+  max-width: 480px;
+  height: 72px;
 
-    display: flex;
-    align-items: center;
+  background: #ffffff;
+  border-top: 1px solid #eeeeee;
 
-    padding-bottom: env(safe-area-inset-bottom);
-    z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  padding-bottom: env(safe-area-inset-bottom);
+
+  z-index: 9999;
 }
 
 .nav-item {
-    flex: 1;
+  flex: 1;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    gap: 3px;
+  gap: 5px;
 
-    color: #999999;
-    text-decoration: none;
+  text-decoration: none;
 
-    font-size: 11px;
+  color: #8C8C88;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
-.nav-item svg {
-    width: 23px;
-    height: 23px;
+.nav-icon {
+  position: relative;
 
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  width: 23px;
+  height: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon svg {
+  width: 23px;
+  height: 23px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .nav-item.active {
-    color: #77C7EF;
+  color: #8ed8f8;
+  font-weight: bold;
+}
+
+.nav-dot {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  right: -2px;
+  top: -1px;
+
+  background: #FFEAAB;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
 }
   </style>
 </head>
