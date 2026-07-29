@@ -419,10 +419,35 @@
   display: block;
 }
 
-.dining-card strong {
-  font-size: 15px;
-  font-weight: 700;
+.dining-text {
+  width: 100%;
   text-align: center;
+
+  /* 文字整体往上 */
+  margin-bottom: 12px;
+}
+
+.dining-text strong {
+  display: block;
+  color: white;
+
+  /* 西语放大 */
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.dining-text span {
+  display: block;
+  color: white;
+
+  /* 英文小字 */
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  /* 西语和英文之间距离 */
+  margin-top: 6px;
 }
     /* 邮箱订阅优惠 */
 
@@ -549,28 +574,40 @@
   </section>
 
 
-  <!-- 用餐方式 -->
+ <!-- 用餐方式 -->
 <div class="dining-options">
 
   <a href=" " class="dining-card">
     <div class="dining-icon">
-      <img src="dine-in.png" alt="Comer aquí">
+      < img src="dine-in.png" alt="Comer aquí">
     </div>
-    <strong>Comer aquí</strong>
+
+    <div class="dining-text">
+      <strong>Comer aquí</strong>
+      <span>DINE IN</span>
+    </div>
   </a >
 
   <a href="menu.html" class="dining-card">
     <div class="dining-icon">
-      <img src="takeaway.png" alt="Para llevar">
+      < img src="takeaway.png" alt="Para llevar">
     </div>
-    <strong>Para llevar</strong>
+
+    <div class="dining-text">
+      <strong>Para llevar</strong>
+      <span>TAKE AWAY</span>
+    </div>
   </a >
 
   <a href="reservation.html" class="dining-card">
     <div class="dining-icon">
-      <img src="reservation.png" alt="Reservar mesa">
+      < img src="reservation.png" alt="Reservar mesa">
     </div>
-    <strong>Reservar mesa</strong>
+
+    <div class="dining-text">
+      <strong>Reservar mesa</strong>
+      <span>RESERVE A TABLE</span>
+    </div>
   </a >
 
 </div>
