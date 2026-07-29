@@ -845,8 +845,7 @@ function updateCartBar() {
 
   // 保存购物车，跳到 checkout.html 后还能读取
   localStorage.setItem('paaani_cart', JSON.stringify(cart));
-alert('购物车保存成功：' + JSON.stringify(cart));
-  alert('菜单页地址：' + window.location.href);
+
   const count = getCartCount();
 
   const cartText =
@@ -1191,11 +1190,6 @@ orderTypeButtons.forEach(button => {
 
   localStorage.setItem('paaani_cart', cartData);
 
-  alert(
-    'cart变量：' + cartData +
-    '\n保存后读取：' + localStorage.getItem('paaani_cart') +
-    '\n当前地址：' + window.location.href
-  );
 } catch (error) {
   alert('保存购物车出错：' + error.message);
 }
