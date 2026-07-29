@@ -298,6 +298,7 @@
 const cartData = localStorage.getItem('paaaani_cart');
 
 const cart = JSON.parse(cartData || '{}');
+  alert('CHECKOUT CART: ' + JSON.stringify(cart));
   
 const orderType =
   localStorage.getItem('paaani_order_type')
