@@ -1203,7 +1203,10 @@ orderTypeButtons.forEach(button => {
       'paaani_order_type',
       selectedOrderType
     );
+const checkoutCart = JSON.stringify(cart);
 
+sessionStorage.setItem('paaaani_cart', checkoutCart);
+localStorage.setItem('paaaani_cart', checkoutCart);
     const tableNumber = localStorage.getItem('paaani_table_number');
 
 if (selectedOrderType === 'dinein' && tableNumber) {
