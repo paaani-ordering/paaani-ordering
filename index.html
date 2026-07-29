@@ -365,34 +365,35 @@
         box-shadow: 0 0 50px rgba(0,0,0,.08);
       }
     }
-    /* 用餐方式 */
+   /* 用餐方式 */
 .dining-options {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
   padding: 10px 20px 28px;
 }
 
 .dining-card {
   background: #f7e4cf;
-  border-radius: 22px;
-  min-height: 150px;
+  border-radius: 18px;
+  min-height: 135px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   color: #18324b;
+  text-align: center;
 }
 
 .dining-icon {
-  font-size: 46px;
+  font-size: 38px;
   line-height: 1;
 }
 
 .dining-card strong {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
 }
     /* 邮箱订阅优惠 */
@@ -523,7 +524,7 @@
   <!-- 用餐方式 -->
 <div class="dining-options">
 
-  <a href="menu.html" class="dining-card">
+  <a href=" " class="dining-card">
     <div class="dining-icon">🍽️</div>
     <strong>Comer aquí</strong>
   </a >
@@ -533,8 +534,12 @@
     <strong>Para llevar</strong>
   </a >
 
-</div>
+  <a href="reservation.html" class="dining-card">
+    <div class="dining-icon">📅</div>
+    <strong>Reservar mesa</strong>
+  </a >
 
+</div>
 
   <!-- 活动 -->
  <!-- 邮箱订阅优惠 -->
