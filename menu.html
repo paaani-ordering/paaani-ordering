@@ -1145,12 +1145,30 @@ const typeFromHome = params.get('type');
 // URL 有合法 type，就优先使用；否则读取之前保存的状态
 let selectedOrderType;
 
+const previousOrderType =
+  localStorage.getItem('paaaani_order_type');
+
 if (typeFromHome === 'takeaway' || typeFromHome === 'dinein') {
-    selectedOrderType = typeFromHome;
-    localStorage.setItem('paaani_order_type', selectedOrderType);
+
+  selectedOrderType = typeFromHome;
+
+  // 如果从堂食切换到外带，或从外带切换到堂食
+  // 清空之前的购物车
+  if (previousOrderType && previousOrderType !== selectedOrderType) {
+    localStorage.removeItem('paaaani_cart');
+    sessionStorage.removeItem('paaaani_cart');
+  }
+
+  localStorage.setItem(
+    'paaaani_order_type',
+    selectedOrderType
+  );
+
 } else {
-    selectedOrderType =
-        localStorage.getItem('paaani_order_type') || 'dinein';
+
+  selectedOrderType =
+    previousOrderType || 'dinein';
+
 }
 
 // 只负责更新按钮样式
