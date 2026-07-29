@@ -422,7 +422,8 @@ header {
 const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
 
-let cart = {};
+// 从浏览器读取购物车
+let cart = JSON.parse(localStorage.getItem('paaaniCart') || '{}');
 let allProducts = [];
 let allOptions = [];
 
@@ -842,20 +843,26 @@ function getCartTotal() {
 // =========================
 function updateCartBar() {
 
-  const count =
-    getCartCount();
+  // 保存购物车
+  localStorage.setItem(
+    'paaaniCart',
+    JSON.stringify(cart)
+  );
+
+  const count = getCartCount();
 
   const cartText =
     document.querySelector('.cart span:last-child');
 
-  cartText.textContent =
-    `${count} ${
-      count === 1
-        ? 'producto'
-        : 'productos'
-    } · ${formatPrice(getCartTotal())}`;
+  if (cartText) {
+    cartText.textContent =
+      `${count} ${
+        count === 1
+          ? 'producto'
+          : 'productos'
+      } · ${formatPrice(getCartTotal())}`;
+  }
 }
-
 
 // =========================
 // 打开购物车
@@ -1122,6 +1129,11 @@ document.body.insertAdjacentHTML(
 // =========================
 // 开始加载
 // =========================
+
+// 先显示已经保存的购物车数量
+updateCartBar();
+
+// 再加载商品
 loadProducts();
 
 </script>
