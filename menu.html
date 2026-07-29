@@ -362,7 +362,7 @@ header {
     </div>
 
     <div class="order-types">
-  <button class="order-type" data-type="dinein">
+  <button class="order-type active" data-type="dinein">
     Comer aquí
   </button>
 
@@ -370,7 +370,6 @@ header {
     Para llevar
   </button>
 </div>
-
   </div>
 
   <div class="shop-notice">
@@ -1138,50 +1137,41 @@ document.body.insertAdjacentHTML(
 updateCartBar();
 
 // 再加载商品
-  // =========================
-// 堂食 / 外带
+ // =========================
+// 堂食 / 外带切换
 // =========================
 
-const orderTypeButtons =
-  document.querySelectorAll('.order-type');
+const orderTypeButtons = document.querySelectorAll('.order-type');
 
-// 读取主页选择
+// 读取主页传过来的 ?type=
+const params = new URLSearchParams(window.location.search);
+const typeFromHome = params.get('type');
+
+// 默认堂食
 let selectedOrderType =
-  localStorage.getItem('orderType') || 'dinein';
+  typeFromHome === 'takeaway'
+    ? 'takeaway'
+    : 'dinein';
 
-// 显示当前选择
+// 根据当前类型更新按钮
 function updateOrderTypeButtons() {
-
   orderTypeButtons.forEach(button => {
-
-    if (button.dataset.type === selectedOrderType) {
-      button.classList.add('active');
-    } else {
-      button.classList.remove('active');
-    }
-
+    button.classList.toggle(
+      'active',
+      button.dataset.type === selectedOrderType
+    );
   });
 }
 
+// 第一次进入页面就执行
 updateOrderTypeButtons();
 
-
-// menu 页面也可以重新切换
+// 点击也可以手动切换
 orderTypeButtons.forEach(button => {
-
   button.addEventListener('click', () => {
-
     selectedOrderType = button.dataset.type;
-
-    localStorage.setItem(
-      'orderType',
-      selectedOrderType
-    );
-
     updateOrderTypeButtons();
-
   });
-
 });
 loadProducts();
 
