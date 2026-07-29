@@ -1144,21 +1144,7 @@ const typeFromHome = params.get('type');
 
 // URL 有合法 type，就优先使用；否则读取之前保存的状态
 let selectedOrderType;
-  const previousOrderType = localStorage.getItem('paaaani_order_type');
-
-if (
-  (typeFromHome === 'takeaway' || typeFromHome === 'dinein') &&
-  previousOrderType &&
-  previousOrderType !== typeFromHome
-) {
-  cart = {};
-
-  localStorage.removeItem('paaaani_cart');
-  localStorage.removeItem('paaaaani_cart');
-  sessionStorage.removeItem('paaaani_cart');
-  sessionStorage.removeItem('paaaaani_cart');
-}
-
+ 
 const previousOrderType =
   localStorage.getItem('paaaani_order_type');
 
