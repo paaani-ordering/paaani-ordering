@@ -338,30 +338,28 @@ const tableField =
 const phoneField =
   document.getElementById('phoneField');
 
-
 if (orderType === 'takeaway') {
+  orderTypeElement.textContent = 'Para llevar';
 
-  orderTypeElement.textContent =
-    'Para llevar';
+  if (tableField) {
+    tableField.style.display = 'none';
+  }
 
-  tableField.style.display =
-    'none';
-
-  phoneField.style.display =
-    'block';
+  if (phoneField) {
+    phoneField.style.display = 'block';
+  }
 
 } else {
+  orderTypeElement.textContent = 'Comer aquí';
 
-  orderTypeElement.textContent =
-    'Comer aquí';
+  if (tableField) {
+    tableField.style.display = 'block';
+  }
 
-  tableField.style.display =
-    'block';
-
-  phoneField.style.display =
-    'none';
+  if (phoneField) {
+    phoneField.style.display = 'none';
+  }
 }
-
 
 // ========================
 // 显示商品
