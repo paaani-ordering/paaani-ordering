@@ -680,20 +680,23 @@ body {
 <div class="dining-options">
 
   <!-- 店内用餐 -->
-  <a href="menu.html" class="dining-card">
-    <div class="dining-icon">
-      <img src="dine-in.png" alt="Comer aquí">
-    </div>
-    <strong>Comer aquí</strong>
-  </a >
+  <a href=" "
+   class="dining-card"
+   onclick="localStorage.setItem('orderType', 'dinein')">
+  <div class="dining-icon">
+    <img src="dine-in.png" alt="Comer aquí">
+  </div>
+  <strong>Comer aquí</strong>
+</a >
 
-  <!-- 外带 -->
-  <a href="menu.html" class="dining-card">
-    <div class="dining-icon">
-      <img src="takeaway.png" alt="Para llevar">
-    </div>
-    <strong>Para llevar</strong>
-  </a >
+<a href="menu.html"
+   class="dining-card"
+   onclick="localStorage.setItem('orderType', 'takeaway')">
+  <div class="dining-icon">
+    <img src="takeaway.png" alt="Para llevar">
+  </div>
+  <strong>Para llevar</strong>
+</a >
 
   <!-- 预订桌子 -->
   <a href="reservation.html" class="dining-card">
