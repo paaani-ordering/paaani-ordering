@@ -299,6 +299,7 @@ const cart =
   JSON.parse(
     localStorage.getItem('paaani_cart') || '{}'
   );
+  alert('结算页读取到：' + localStorage.getItem('paaaani_cart'));
 
 const orderType =
   localStorage.getItem('paaani_order_type')
