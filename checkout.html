@@ -258,41 +258,6 @@
 
       <h2>Tus datos</h2>
 
-      <div class="field">
-
-        <label for="customerName">
-          Nombre
-        </label>
-
-        <input
-          id="customerName"
-          type="text"
-          placeholder="Tu nombre"
-        >
-
-      </div>
-
-
-      <!-- 堂食 -->
-      <div
-        class="field"
-        id="tableField"
-      >
-
-        <label for="tableNumber">
-          Número de mesa
-        </label>
-
-        <input
-          id="tableNumber"
-          type="text"
-          inputmode="numeric"
-          placeholder="Ej. 5"
-        >
-
-      </div>
-
-
       <!-- 外带 -->
       <div
         class="field"
@@ -339,7 +304,19 @@ const orderType =
   localStorage.getItem('paaani_order_type')
   || 'dinein';
 
+// =========================
+// 自动读取二维码里的桌号
+// 例如：checkout.html?table=5
+// =========================
+const params = new URLSearchParams(window.location.search);
 
+const tableNumber =
+  params.get('table') ||
+  localStorage.getItem('paaani_table_number');
+
+if (tableNumber) {
+  localStorage.setItem('paaani_table_number', tableNumber);
+}
 function formatPrice(price) {
 
   return `${Number(price)
