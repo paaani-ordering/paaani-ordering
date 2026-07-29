@@ -295,9 +295,7 @@
 
 <script>
 
-const cartData =
-  sessionStorage.getItem('paaaani_cart') ||
-  localStorage.getItem('paaaani_cart');
+const cartData = localStorage.getItem('paaaani_cart');
 
 const cart = JSON.parse(cartData || '{}');
   
