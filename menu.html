@@ -115,7 +115,7 @@
 
     .cart {
       position: fixed;
-      bottom: 18px;
+      bottom: 85px;
       left: 15px;
       right: 15px;
       max-width: 570px;
@@ -127,6 +127,55 @@
       display: flex;
       justify-content: space-between;
     }
+    /* ===== 底部导航栏 ===== */
+
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 68px;
+    background: #ffffff;
+    border-top: 1px solid #eeeeee;
+
+    display: flex;
+    align-items: center;
+
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 1000;
+}
+
+.nav-item {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    color: #999999;
+    text-decoration: none;
+
+    font-size: 11px;
+}
+
+.nav-item svg {
+    width: 23px;
+    height: 23px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nav-item.active {
+    color: #77C7EF;
+}
   </style>
 </head>
 
@@ -884,5 +933,39 @@ document.body.insertAdjacentHTML(
 loadProducts();
 
 </script>
+  <!-- 底部导航栏 -->
+<nav class="bottom-nav">
+
+  <a href=" " class="nav-item">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 10.5L12 3l9 7.5v9H15v-6H9v6H3z"/>
+    </svg>
+    <span>Inicio</span>
+  </a >
+
+  <a href="menu.html" class="nav-item active">
+    <svg viewBox="0 0 24 24">
+      <path d="M5 6h14M5 12h14M5 18h14"/>
+    </svg>
+    <span>Menú</span>
+  </a >
+
+  <a href="orders.html" class="nav-item">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/>
+      <path d="M9 8h6M9 12h6"/>
+    </svg>
+    <span>Pedidos</span>
+  </a >
+
+  <a href="account.html" class="nav-item">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4.5 21c.7-4.2 3.2-6.5 7.5-6.5s6.8 2.3 7.5 6.5"/>
+    </svg>
+    <span>Mi cuenta</span>
+  </a >
+
+</nav>
 </body>
 </html>
