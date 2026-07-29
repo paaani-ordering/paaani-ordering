@@ -393,8 +393,18 @@
 }
 
 .dining-icon {
-  font-size: 38px;
-  line-height: 1;
+  width: 75px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dining-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .dining-card strong {
@@ -530,17 +540,23 @@
 <div class="dining-options">
 
   <a href=" " class="dining-card">
-    <div class="dining-icon">🍽️</div>
+    <div class="dining-icon">
+      < img src="dine-in.png" alt="Comer aquí">
+    </div>
     <strong>Comer aquí</strong>
   </a >
 
   <a href="menu.html" class="dining-card">
-    <div class="dining-icon">🥡</div>
+    <div class="dining-icon">
+      < img src="takeaway.png" alt="Para llevar">
+    </div>
     <strong>Para llevar</strong>
   </a >
 
   <a href="reservation.html" class="dining-card">
-    <div class="dining-icon">📅</div>
+    <div class="dining-icon">
+      < img src="reservation.png" alt="Reservar mesa">
+    </div>
     <strong>Reservar mesa</strong>
   </a >
 
