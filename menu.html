@@ -1195,7 +1195,14 @@ orderTypeButtons.forEach(button => {
       selectedOrderType
     );
 
-    window.location.href = 'checkout.html';
+    const tableNumber = localStorage.getItem('paaani_table_number');
+
+if (selectedOrderType === 'dinein' && tableNumber) {
+  window.location.href =
+    `checkout.html?table=${encodeURIComponent(tableNumber)}`;
+} else {
+  window.location.href = 'checkout.html';
+}
   });
 loadProducts();
 
@@ -1247,10 +1254,17 @@ loadProducts();
 
 </nav>
   <script>
+    const urlParams = new URLSearchParams(window.location.search);
+const tableFromUrl = urlParams.get('table');
+
+if (tableFromUrl) {
+  localStorage.setItem('paaani_table_number', tableFromUrl);
+  localStorage.setItem('paaani_order_type', 'dinein');
+}
   const orderTypeButtons = document.querySelectorAll('.order-type');
 
   // 读取之前选择的类型
-  const savedOrderType = localStorage.getItem('orderType') || 'Comer aquí';
+  const savedOrderType = localStorage.getItem('paaani_order_type') || 'dinein';
 
   orderTypeButtons.forEach(button => {
 
@@ -1268,7 +1282,7 @@ loadProducts();
       button.classList.add('active');
 
       // 保存选择
-      localStorage.setItem('orderType', button.dataset.type);
+      localStorage.setItem('paaani_order_type', button.dataset.type);
     });
 
   });
