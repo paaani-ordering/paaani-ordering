@@ -475,25 +475,28 @@
 
 <script>
 
-  /* ===== 显示堂食 / 外带 ===== */
-
-  const orderType =
-    localStorage.getItem('orderType') || 'Comer aquí';
-
-  document.getElementById('orderTypeDisplay').textContent =
-    orderType;
+let cart = JSON.parse(
+  localStorage.getItem('paaaniCart') || '{}'
+);
 
 
-  /* ===== 购物车 ===== */
+// =========================
+// 价格格式
+// =========================
 
-  let cart = [];
+function formatPrice(price) {
 
-  try {
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-  } catch (error) {
-    cart = [];
-  }
+  return `${Number(price)
+    .toFixed(2)
+    .replace('.', ',')} €`;
+}
 
+
+// =========================
+// 显示订单
+// =========================
+
+function renderOrder() {
 
   const orderItems =
     document.getElementById('orderItems');
@@ -504,151 +507,205 @@
   const summary =
     document.getElementById('summary');
 
-
-  function renderCart() {
-
-    orderItems.innerHTML = '';
-
-    if (!cart.length) {
-
-      emptyCart.style.display = 'block';
-      summary.style.display = 'none';
-
-      return;
-    }
+  const products =
+    Object.values(cart);
 
 
-    emptyCart.style.display = 'none';
-    summary.style.display = 'block';
+  orderItems.innerHTML = '';
 
 
-    let subtotal = 0;
+  // 没有商品
+  if (products.length === 0) {
+
+    emptyCart.style.display = 'block';
+    summary.style.display = 'none';
+
+    return;
+  }
 
 
-    cart.forEach((item, index) => {
-
-      const quantity =
-        Number(item.quantity || 1);
-
-      const price =
-        Number(item.price || 0);
-
-      subtotal += price * quantity;
+  emptyCart.style.display = 'none';
+  summary.style.display = 'block';
 
 
-      const product =
-        document.createElement('div');
-
-      product.className = 'order-item';
+  let subtotal = 0;
 
 
-      product.innerHTML = `
+  products.forEach(product => {
+
+    const quantity =
+      Number(product.quantity || 1);
+
+    const price =
+      Number(product.price || 0);
+
+    subtotal += price * quantity;
+
+
+    const item =
+      document.createElement('div');
+
+    item.className = 'order-item';
+
+
+    item.innerHTML = `
+
+      ${
+        product.image_url
+          ? `
+            <img
+              src="${product.image_url}"
+              alt="${product.name}"
+            >
+          `
+          : ''
+      }
+
+
+      <div class="item-info">
+
+        <div class="item-name">
+          ${product.name}
+        </div>
+
 
         ${
-          item.image
-          ? `<img src="${item.image}" alt="${item.name || 'Producto'}">`
-          : ''
-        }
-
-        <div class="item-info">
-
-          <div class="item-name">
-            ${item.name || 'Producto'}
-          </div>
-
-          ${
-            item.options
+          product.optionName
             ? `
               <div class="item-options">
-                ${item.options}
+                ${
+                  product.groupName
+                    ? product.groupName + ': '
+                    : ''
+                }
+                ${product.optionName}
               </div>
             `
             : ''
-          }
+        }
 
-          <div class="item-bottom">
 
-            <div class="item-price">
-              ${formatPrice(price * quantity)}
-            </div>
+        <div class="item-bottom">
 
-            <div class="quantity">
+          <div class="item-price">
+            ${formatPrice(price * quantity)}
+          </div>
 
-              <button
-                class="minus"
-                onclick="changeQuantity(${index}, -1)"
-              >
-                −
-              </button>
 
-              <span class="quantity-number">
-                ${quantity}
-              </span>
+          <div class="quantity">
 
-              <button
-                class="plus"
-                onclick="changeQuantity(${index}, 1)"
-              >
-                +
-              </button>
+            <button
+              class="minus"
+              onclick="changeQuantity(
+                '${product.cartKey}',
+                -1
+              )"
+            >
+              −
+            </button>
 
-            </div>
+
+            <span class="quantity-number">
+              ${quantity}
+            </span>
+
+
+            <button
+              class="plus"
+              onclick="changeQuantity(
+                '${product.cartKey}',
+                1
+              )"
+            >
+              +
+            </button>
 
           </div>
 
         </div>
 
-      `;
+      </div>
+
+    `;
 
 
-      orderItems.appendChild(product);
+    orderItems.appendChild(item);
 
-    });
+  });
 
 
-    document.getElementById('subtotal').textContent =
+  document
+    .getElementById('subtotal')
+    .textContent =
       formatPrice(subtotal);
 
-    document.getElementById('total').textContent =
+
+  document
+    .getElementById('total')
+    .textContent =
       formatPrice(subtotal);
 
-  }
+}
 
 
-  function changeQuantity(index, amount) {
+// =========================
+// 修改数量
+// =========================
 
-    cart[index].quantity =
-      Number(cart[index].quantity || 1) + amount;
+function changeQuantity(cartKey, amount) {
 
-
-    if (cart[index].quantity <= 0) {
-
-      cart.splice(index, 1);
-
-    }
+  if (!cart[cartKey]) return;
 
 
-    localStorage.setItem(
-      'cart',
-      JSON.stringify(cart)
-    );
+  cart[cartKey].quantity += amount;
 
 
-    renderCart();
+  // 数量变成 0 就删除
+  if (cart[cartKey].quantity <= 0) {
+
+    delete cart[cartKey];
 
   }
 
 
-  function formatPrice(price) {
-
-    return Number(price)
-      .toFixed(2)
-      .replace('.', ',') + ' €';
-
-  }
+  // 保存
+  localStorage.setItem(
+    'paaaniCart',
+    JSON.stringify(cart)
+  );
 
 
-  renderCart();
+  // 重新显示
+  renderOrder();
+
+}
+
+
+// =========================
+// 堂食 / 外带
+// =========================
+
+const orderType =
+  localStorage.getItem('orderType');
+
+
+const orderTypeDisplay =
+  document.getElementById('orderTypeDisplay');
+
+
+if (orderTypeDisplay) {
+
+  orderTypeDisplay.textContent =
+    orderType || 'Comer aquí';
+
+}
+
+
+// =========================
+// 页面打开
+// =========================
+
+renderOrder();
 
 </script>
 
