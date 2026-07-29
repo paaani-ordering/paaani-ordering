@@ -843,25 +843,20 @@ function getCartTotal() {
 // =========================
 function updateCartBar() {
 
-  // 保存购物车
-  localStorage.setItem(
-    'paaaniCart',
-    JSON.stringify(cart)
-  );
+  // 保存购物车，跳到 checkout.html 后还能读取
+  localStorage.setItem('paaani_cart', JSON.stringify(cart));
 
   const count = getCartCount();
 
   const cartText =
     document.querySelector('.cart span:last-child');
 
-  if (cartText) {
-    cartText.textContent =
-      `${count} ${
-        count === 1
-          ? 'producto'
-          : 'productos'
-      } · ${formatPrice(getCartTotal())}`;
-  }
+  cartText.textContent =
+    `${count} ${
+      count === 1
+        ? 'producto'
+        : 'productos'
+    } · ${formatPrice(getCartTotal())}`;
 }
 
 // =========================
@@ -1152,15 +1147,23 @@ let selectedOrderType =
   typeFromHome === 'takeaway'
     ? 'takeaway'
     : 'dinein';
+  localStorage.setItem('paaani_order_type', selectedOrderType);
 
 // 根据当前类型更新按钮
 function updateOrderTypeButtons() {
   orderTypeButtons.forEach(button => {
-    button.classList.toggle(
-      'active',
-      button.dataset.type === selectedOrderType
+  button.addEventListener('click', () => {
+
+    selectedOrderType = button.dataset.type;
+
+    localStorage.setItem(
+      'paaani_order_type',
+      selectedOrderType
     );
+
+    updateOrderTypeButtons();
   });
+});
 }
 
 // 第一次进入页面就执行
@@ -1173,6 +1176,27 @@ orderTypeButtons.forEach(button => {
     updateOrderTypeButtons();
   });
 });
+  document
+  .getElementById('checkoutButton')
+  .addEventListener('click', () => {
+
+    if (getCartCount() === 0) {
+      alert('Tu pedido está vacío');
+      return;
+    }
+
+    localStorage.setItem(
+      'paaani_cart',
+      JSON.stringify(cart)
+    );
+
+    localStorage.setItem(
+      'paaani_order_type',
+      selectedOrderType
+    );
+
+    window.location.href = 'checkout.html';
+  });
 loadProducts();
 
 </script>
