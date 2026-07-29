@@ -423,7 +423,21 @@ const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
 
 // 从浏览器读取购物车
-let cart = JSON.parse(localStorage.getItem('paaani_cart') || '{}');
+// 读取当前进入菜单的方式
+const initialParams = new URLSearchParams(window.location.search);
+const initialType = initialParams.get('type');
+
+// 从主页进入外带菜单：先清空旧购物车，再读取购物车
+if (initialType === 'takeaway') {
+    localStorage.removeItem('paaaani_cart');
+    sessionStorage.removeItem('paaaani_cart');
+
+    // 顺便清除之前写错名字留下的旧购物车
+    localStorage.removeItem('paaaaani_cart');
+    sessionStorage.removeItem('paaaaani_cart');
+}
+
+let cart = JSON.parse(localStorage.getItem('paaaani_cart') || '{}');
 let allProducts = [];
 let allOptions = [];
 
@@ -1141,12 +1155,7 @@ const orderTypeButtons = document.querySelectorAll('.order-type');
 // 读取主页传来的 ?type=takeaway / ?type=dinein
 const params = new URLSearchParams(window.location.search);
 const typeFromHome = params.get('type');
-  // 从主页选择外带进入菜单时，清空旧购物车
-if (typeFromHome === 'takeaway') {
-    cart = {};
-    localStorage.removeItem('paaaani_cart');
-    sessionStorage.removeItem('paaaani_cart');
-}
+
 
 // URL 有合法 type，就优先使用；否则读取之前保存的状态
 let selectedOrderType;
