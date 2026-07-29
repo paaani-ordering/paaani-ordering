@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Confirmar pedido | Paaaani Café</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f7f7f5;
+      color: #222;
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: auto;
+      background: #f7f7f5;
+      padding-bottom: 40px;
+    }
+
+    /* 顶部 */
+    .header {
+      height: 70px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-bottom: 1px solid #eee;
+    }
+
+    .back {
+      position: absolute;
+      left: 20px;
+      border: none;
+      background: none;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    /* 堂食/外带 */
+    .type-card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .type-label {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 7px;
+    }
+
+    .type-value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    /* 商品 */
+    .order-card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .order-card h2,
+    .info-card h2 {
+      margin: 0 0 18px;
+      font-size: 20px;
+    }
+
+    .order-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .order-item img {
+      width: 58px;
+      height: 58px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-name {
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .item-option {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .item-price {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .quantity {
+      font-weight: 700;
+    }
+
+    /* 总价 */
+    .total {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 18px;
+      margin-top: 8px;
+      border-top: 1px solid #eee;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    /* 信息 */
+    .info-card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      height: 50px;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 0 15px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #8ed8f8;
+    }
+
+    /* 最终下单 */
+    .submit {
+      width: 100%;
+      height: 58px;
+      border: none;
+      border-radius: 18px;
+      background: #FFEAAB;
+      color: #222;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="header">
+
+    <button
+      class="back"
+      type="button"
+      onclick="history.back()"
+    >
+      ‹
+    </button>
+
+    <h1>Confirmar pedido</h1>
+
+  </div>
+
+
+  <main class="content">
+
+    <!-- 堂食 / 外带 -->
+    <section class="type-card">
+
+      <div class="type-label">
+        Tipo de pedido
+      </div>
+
+      <div
+        class="type-value"
+        id="orderType"
+      ></div>
+
+    </section>
+
+
+    <!-- 商品 -->
+    <section class="order-card">
+
+      <h2>Tu pedido</h2>
+
+      <div id="orderItems"></div>
+
+      <div class="total">
+
+        <span>Total</span>
+
+        <span id="totalPrice">
+          0,00 €
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- 客人信息 -->
+    <section class="info-card">
+
+      <h2>Tus datos</h2>
+
+      <div class="field">
+
+        <label for="customerName">
+          Nombre
+        </label>
+
+        <input
+          id="customerName"
+          type="text"
+          placeholder="Tu nombre"
+        >
+
+      </div>
+
+
+      <!-- 堂食 -->
+      <div
+        class="field"
+        id="tableField"
+      >
+
+        <label for="tableNumber">
+          Número de mesa
+        </label>
+
+        <input
+          id="tableNumber"
+          type="text"
+          inputmode="numeric"
+          placeholder="Ej. 5"
+        >
+
+      </div>
+
+
+      <!-- 外带 -->
+      <div
+        class="field"
+        id="phoneField"
+        style="display:none;"
+      >
+
+        <label for="phone">
+          Teléfono
+        </label>
+
+        <input
+          id="phone"
+          type="tel"
+          placeholder="Tu teléfono"
+        >
+
+      </div>
+
+    </section>
+
+
+    <button
+      class="submit"
+      id="submitOrder"
+      type="button"
+    >
+      Realizar pedido
+    </button>
+
+  </main>
+
+</div>
+
+
+<script>
+
+const cart =
+  JSON.parse(
+    localStorage.getItem('paaani_cart') || '{}'
+  );
+
+const orderType =
+  localStorage.getItem('paaani_order_type')
+  || 'dinein';
+
+
+function formatPrice(price) {
+
+  return `${Number(price)
+    .toFixed(2)
+    .replace('.', ',')} €`;
+}
+
+
+// ========================
+// 堂食 / 外带
+// ========================
+
+const orderTypeElement =
+  document.getElementById('orderType');
+
+const tableField =
+  document.getElementById('tableField');
+
+const phoneField =
+  document.getElementById('phoneField');
+
+
+if (orderType === 'takeaway') {
+
+  orderTypeElement.textContent =
+    'Para llevar';
+
+  tableField.style.display =
+    'none';
+
+  phoneField.style.display =
+    'block';
+
+} else {
+
+  orderTypeElement.textContent =
+    'Comer aquí';
+
+  tableField.style.display =
+    'block';
+
+  phoneField.style.display =
+    'none';
+}
+
+
+// ========================
+// 显示商品
+// ========================
+
+function renderOrder() {
+
+  const container =
+    document.getElementById('orderItems');
+
+  const products =
+    Object.values(cart);
+
+  if (products.length === 0) {
+
+    container.innerHTML =
+      '<p>Tu pedido está vacío</p>';
+
+    return;
+  }
+
+
+  container.innerHTML =
+    products.map(product => `
+
+      <div class="order-item">
+
+        ${
+          product.image_url
+            ? `
+              <img
+                src="${product.image_url}"
+                alt="${product.name}"
+              >
+            `
+            : ''
+        }
+
+        <div class="item-info">
+
+          <div class="item-name">
+            ${product.name}
+          </div>
+
+          ${
+            product.optionName
+              ? `
+                <div class="item-option">
+                  ${product.optionName}
+                </div>
+              `
+              : ''
+          }
+
+          <div class="item-price">
+            ${formatPrice(product.price)}
+          </div>
+
+        </div>
+
+        <div class="quantity">
+          ×${product.quantity}
+        </div>
+
+      </div>
+
+    `).join('');
+
+
+  const total =
+    products.reduce(
+      (sum, product) =>
+        sum +
+        Number(product.price) *
+        Number(product.quantity),
+      0
+    );
+
+
+  document
+    .getElementById('totalPrice')
+    .textContent =
+      formatPrice(total);
+}
+
+
+renderOrder();
+
+
+// ========================
+// 最终提交
+// ========================
+
+document
+  .getElementById('submitOrder')
+  .addEventListener('click', () => {
+
+    const name =
+      document
+        .getElementById('customerName')
+        .value
+        .trim();
+
+
+    if (!name) {
+
+      alert('Introduce tu nombre.');
+
+      return;
+    }
+
+
+    if (orderType === 'dinein') {
+
+      const table =
+        document
+          .getElementById('tableNumber')
+          .value
+          .trim();
+
+      if (!table) {
+
+        alert('Introduce el número de mesa.');
+
+        return;
+      }
+
+    }
+
+
+    if (orderType === 'takeaway') {
+
+      const phone =
+        document
+          .getElementById('phone')
+          .value
+          .trim();
+
+      if (!phone) {
+
+        alert('Introduce tu teléfono.');
+
+        return;
+      }
+
+    }
+
+
+    alert('Pedido listo para enviar');
+
+    // 下一步这里连接 Supabase
+
+  });
+
+</script>
+
+</body>
+</html>
