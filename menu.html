@@ -1155,8 +1155,7 @@ if (typeFromHome === 'takeaway' || typeFromHome === 'dinein') {
   // 如果从堂食切换到外带，或从外带切换到堂食
   // 清空之前的购物车
   if (previousOrderType && previousOrderType !== selectedOrderType) {
-    localStorage.removeItem('paaaani_cart');
-    sessionStorage.removeItem('paaaani_cart');
+    
   }
 
   localStorage.setItem(
