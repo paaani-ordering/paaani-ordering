@@ -32,7 +32,7 @@ header {
 }
 
 .shop-title-logo {
-  width: 110px;
+  width: 160px;
   height: auto;
   display: block;
   margin: 0 auto;
@@ -357,14 +357,18 @@ header {
   <div class="shop-main">
 
     <div>
-      <div class="shop-name">☆ Paaani Café</div>
-      <div class="shop-sub">Café · Postres · Gran Canaria</div>
+      <div class="shop-name">☆ Paaani</div>
     </div>
 
     <div class="order-types">
-      <button class="order-type active">Comer aquí</button>
-      <button class="order-type">Para llevar</button>
-    </div>
+  <button class="order-type active" data-type="Comer aquí">
+    Comer aquí
+  </button>
+
+  <button class="order-type" data-type="Para llevar">
+    Para llevar
+  </button>
+</div>
 
   </div>
 
@@ -1167,5 +1171,32 @@ loadProducts();
   </a >
 
 </nav>
+  <script>
+  const orderTypeButtons = document.querySelectorAll('.order-type');
+
+  // 读取之前选择的类型
+  const savedOrderType = localStorage.getItem('orderType') || 'Comer aquí';
+
+  orderTypeButtons.forEach(button => {
+
+    // 页面打开时恢复选中状态
+    if (button.dataset.type === savedOrderType) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
+
+    // 点击切换
+    button.addEventListener('click', () => {
+      orderTypeButtons.forEach(btn => btn.classList.remove('active'));
+
+      button.classList.add('active');
+
+      // 保存选择
+      localStorage.setItem('orderType', button.dataset.type);
+    });
+
+  });
+</script>
 </body>
 </html>
