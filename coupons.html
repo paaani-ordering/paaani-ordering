@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cupones | Paaani</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f8f8f5;
+      font-family: Arial, sans-serif;
+      color: #222;
+      padding-bottom: calc(95px + env(safe-area-inset-bottom));
+    }
+
+    .page {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+
+    /* 顶部 */
+    .header {
+      background: #8ed8f8;
+      padding: 22px 20px 28px;
+      color: white;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .header p {
+      margin: 10px 0 0 42px;
+      font-size: 13px;
+      opacity: .9;
+    }
+
+    /* 内容 */
+    .content {
+      padding: 22px 18px;
+    }
+
+    .section-title {
+      margin: 0 0 15px 3px;
+      font-size: 18px;
+    }
+
+    /* 优惠券 */
+    .coupon {
+      background: white;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      display: flex;
+      min-height: 130px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.035);
+    }
+
+    .coupon-value {
+      width: 105px;
+      flex-shrink: 0;
+
+      background: #FFEAAB;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      color: #333;
+      text-align: center;
+    }
+
+    .coupon-value strong {
+      font-size: 27px;
+      line-height: 1;
+    }
+
+    .coupon-value span {
+      font-size: 11px;
+      margin-top: 7px;
+    }
+
+    .coupon-info {
+      flex: 1;
+      padding: 17px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .coupon-info h3 {
+      margin: 0 0 7px;
+      font-size: 16px;
+    }
+
+    .coupon-info p {
+      margin: 0;
+      color: #777;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .coupon-bottom {
+      margin-top: auto;
+      padding-top: 12px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .expiry {
+      font-size: 10px;
+      color: #aaa;
+    }
+
+    .claim-btn {
+      border: 0;
+      background: #8ed8f8;
+      color: white;
+
+      padding: 8px 14px;
+      border-radius: 20px;
+
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ===== 底部导航 ===== */
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+
+      width: 100%;
+      max-width: 480px;
+      height: 72px;
+
+      background: #ffffff;
+      border-top: 1px solid #eeeeee;
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 9999;
+    }
+
+    .nav-item {
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      gap: 4px;
+
+      text-decoration: none;
+      color: #9a9a9a;
+
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .nav-icon {
+      position: relative;
+      width: 23px;
+      height: 23px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-icon svg {
+      width: 23px;
+      height: 23px;
+
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- 顶部 -->
+  <header class="header">
+
+    <div class="header-top">
+      <a href=" " class="back">‹</a >
+      <h1>Cupones</h1>
+    </div>
+
+    <p>Descubre las ofertas disponibles</p >
+
+  </header>
+
+
+  <main class="content">
+
+    <h2 class="section-title">Disponibles</h2>
+
+
+    <!-- 优惠券 1 -->
+    <div class="coupon">
+
+      <div class="coupon-value">
+        <strong>15%</strong>
+        <span>DESCUENTO</span>
+      </div>
+
+      <div class="coupon-info">
+
+        <h3>Café + postre</h3>
+
+        <p>
+          Disfruta de un 15% de descuento
+          en café y postre.
+        </p >
+
+        <div class="coupon-bottom">
+          <span class="expiry">Hasta 15/08/2026</span>
+          <button class="claim-btn">Conseguir</button>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 优惠券 2 -->
+    <div class="coupon">
+
+      <div class="coupon-value">
+        <strong>1€</strong>
+        <span>DESCUENTO</span>
+      </div>
+
+      <div class="coupon-info">
+
+        <h3>Tu café favorito</h3>
+
+        <p>
+          1 € de descuento en bebidas
+          seleccionadas.
+        </p >
+
+        <div class="coupon-bottom">
+          <span class="expiry">Hasta 31/08/2026</span>
+          <button class="claim-btn">Conseguir</button>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 优惠券 3 -->
+    <div class="coupon">
+
+      <div class="coupon-value">
+        <strong>×2</strong>
+        <span>SELLOS</span>
+      </div>
+
+      <div class="coupon-info">
+
+        <h3>Doble sello</h3>
+
+        <p>
+          Consigue el doble de sellos
+          con bebidas seleccionadas.
+        </p >
+
+        <div class="coupon-bottom">
+          <span class="expiry">Solo este fin de semana</span>
+          <button class="claim-btn">Conseguir</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+
+<!-- 底部导航 -->
+<nav class="bottom-nav">
+
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 10.5L12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 0 1 3 19.5z"/>
+      </svg>
+    </span>
+    <span>Inicio</span>
+  </a >
+
+  <a href="menu.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 5h16M4 12h16M4 19h16"/>
+      </svg>
+    </span>
+    <span>Menú</span>
+  </a >
+
+  <a href="orders.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/>
+        <path d="M9 8h6M9 12h6"/>
+      </svg>
+    </span>
+    <span>Pedidos</span>
+  </a >
+
+  <a href="account.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4.5 21c.7-4.2 3.2-6.5 7.5-6.5s6.8 2.3 7.5 6.5"/>
+      </svg>
+    </span>
+    <span>Mi cuenta</span>
+  </a >
+
+</nav>
+
+</body>
+</html>
