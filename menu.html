@@ -543,7 +543,7 @@ function renderProducts(products) {
 
       </div>
 
-      <button class="add" type="button">+</button>
+     <button class="add" type="button" data-product-id="${product.id}">+</button>
     `;
 
     item.querySelector('.add').addEventListener('click', () => {
@@ -558,6 +558,17 @@ function renderProducts(products) {
 // =========================
 // 点击商品 +
 // =========================
+  function updateProductButtons() {
+    document.querySelectorAll('.add[data-product-id]').forEach(button => {
+        const productId = button.dataset.productId;
+
+        const quantity = Object.values(cart)
+            .filter(item => String(item.id) === String(productId))
+            .reduce((total, item) => total + Number(item.quantity || 0), 0);
+
+        button.textContent = quantity > 0 ? quantity : '+';
+    });
+}
 function handleAddProduct(product) {
 
   const options = allOptions.filter(option =>
@@ -803,6 +814,7 @@ function addToCart(product, option) {
   }
 
   updateCartBar();
+updateProductButtons();
 }
 
 
@@ -820,7 +832,8 @@ function changeQuantity(cartKey, amount) {
   }
 
   updateCartBar();
-  renderCart();
+renderCart();
+updateProductButtons();
 }
 
 
