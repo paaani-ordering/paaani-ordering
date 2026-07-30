@@ -66,6 +66,10 @@
       font-size: 18px;
     }
 
+    .my-title {
+      margin-top: 32px;
+    }
+
     /* 优惠券 */
     .coupon {
       background: white;
@@ -80,7 +84,6 @@
     .coupon-value {
       width: 105px;
       flex-shrink: 0;
-
       background: #FFEAAB;
 
       display: flex;
@@ -149,8 +152,28 @@
       cursor: pointer;
     }
 
-    /* ===== 底部导航 ===== */
+    .claim-btn:disabled {
+      background: #d4d4d4;
+      cursor: default;
+    }
 
+    .status {
+      color: #999;
+      font-size: 12px;
+      padding: 8px 3px 18px;
+    }
+
+    .empty {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      color: #999;
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    /* 底部导航 */
     .bottom-nav {
       position: fixed;
       left: 50%;
@@ -209,7 +232,6 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-
   </style>
 </head>
 
@@ -217,102 +239,33 @@
 
 <div class="page">
 
-  <!-- 顶部 -->
   <header class="header">
 
     <div class="header-top">
-      <a href=" " class="back">‹</a >
+      <a href="index.html" class="back">‹</a>
       <h1>Cupones</h1>
     </div>
 
-    <p>Descubre las ofertas disponibles</p >
+    <p>Descubre las ofertas disponibles</p>
 
   </header>
 
 
   <main class="content">
 
+    <!-- 可以领取 -->
     <h2 class="section-title">Disponibles</h2>
 
-
-    <!-- 优惠券 1 -->
-    <div class="coupon">
-
-      <div class="coupon-value">
-        <strong>15%</strong>
-        <span>DESCUENTO</span>
-      </div>
-
-      <div class="coupon-info">
-
-        <h3>Café + postre</h3>
-
-        <p>
-          Disfruta de un 15% de descuento
-          en café y postre.
-        </p >
-
-        <div class="coupon-bottom">
-          <span class="expiry">Hasta 15/08/2026</span>
-          <button class="claim-btn">Conseguir</button>
-        </div>
-
-      </div>
-
+    <div id="available-coupons">
+      <div class="status">Cargando cupones...</div>
     </div>
 
 
-    <!-- 优惠券 2 -->
-    <div class="coupon">
+    <!-- 已经领取 -->
+    <h2 class="section-title my-title">Mis cupones</h2>
 
-      <div class="coupon-value">
-        <strong>1€</strong>
-        <span>DESCUENTO</span>
-      </div>
-
-      <div class="coupon-info">
-
-        <h3>Tu café favorito</h3>
-
-        <p>
-          1 € de descuento en bebidas
-          seleccionadas.
-        </p >
-
-        <div class="coupon-bottom">
-          <span class="expiry">Hasta 31/08/2026</span>
-          <button class="claim-btn">Conseguir</button>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- 优惠券 3 -->
-    <div class="coupon">
-
-      <div class="coupon-value">
-        <strong>×2</strong>
-        <span>SELLOS</span>
-      </div>
-
-      <div class="coupon-info">
-
-        <h3>Doble sello</h3>
-
-        <p>
-          Consigue el doble de sellos
-          con bebidas seleccionadas.
-        </p >
-
-        <div class="coupon-bottom">
-          <span class="expiry">Solo este fin de semana</span>
-          <button class="claim-btn">Conseguir</button>
-        </div>
-
-      </div>
-
+    <div id="my-coupons">
+      <div class="status">Cargando tus cupones...</div>
     </div>
 
   </main>
@@ -320,7 +273,6 @@
 </div>
 
 
-<!-- 底部导航 -->
 <nav class="bottom-nav">
 
   <a href="index.html" class="nav-item">
@@ -330,7 +282,7 @@
       </svg>
     </span>
     <span>Inicio</span>
-  </a >
+  </a>
 
   <a href="menu.html" class="nav-item">
     <span class="nav-icon">
@@ -339,7 +291,7 @@
       </svg>
     </span>
     <span>Menú</span>
-  </a >
+  </a>
 
   <a href="orders.html" class="nav-item">
     <span class="nav-icon">
@@ -349,7 +301,7 @@
       </svg>
     </span>
     <span>Pedidos</span>
-  </a >
+  </a>
 
   <a href="account.html" class="nav-item">
     <span class="nav-icon">
@@ -359,9 +311,467 @@
       </svg>
     </span>
     <span>Mi cuenta</span>
-  </a >
+  </a>
 
 </nav>
+
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+  /* ==========================================
+     把这里换成你项目现有的两个值
+     ========================================== */
+
+  const SUPABASE_URL = "https://oevwuadmtzujngtmkkbw.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl";
+
+  const sb = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+  const availableBox =
+    document.getElementById("available-coupons");
+
+  const myBox =
+    document.getElementById("my-coupons");
+
+
+  let currentUser = null;
+  let claimedCouponIds = new Set();
+
+
+  /* 日期显示 */
+
+  function formatDate(value) {
+
+    if (!value) return "";
+
+    const date = new Date(value);
+
+    return date.toLocaleDateString(
+      "es-ES",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      }
+    );
+  }
+
+
+  /* 优惠额度 */
+
+  function couponValue(coupon) {
+
+    if (coupon.discount_type === "percent") {
+
+      return `
+        <strong>${coupon.discount_value}%</strong>
+        <span>DESCUENTO</span>
+      `;
+
+    }
+
+    if (
+      coupon.discount_type === "fixed" ||
+      coupon.discount_type === "amount"
+    ) {
+
+      return `
+        <strong>${coupon.discount_value}€</strong>
+        <span>DESCUENTO</span>
+      `;
+
+    }
+
+    return `
+      <strong>★</strong>
+      <span>OFERTA</span>
+    `;
+  }
+
+
+  /* 生成优惠券 */
+
+  function couponHTML(coupon, claimed = false) {
+
+    let expiry = "";
+
+    if (claimed && coupon.expires_at) {
+
+      expiry =
+        `Hasta ${formatDate(coupon.expires_at)}`;
+
+    } else if (coupon.end_at) {
+
+      expiry =
+        `Hasta ${formatDate(coupon.end_at)}`;
+
+    }
+
+
+    return `
+      <div class="coupon">
+
+        <div class="coupon-value">
+          ${couponValue(coupon)}
+        </div>
+
+        <div class="coupon-info">
+
+          <h3>
+            ${coupon.title || "Cupón Paaani"}
+          </h3>
+
+          <p>
+            ${coupon.description || ""}
+          </p>
+
+          <div class="coupon-bottom">
+
+            <span class="expiry">
+              ${expiry}
+            </span>
+
+            ${
+              claimed
+
+              ? `
+                <button
+                  class="claim-btn"
+                  disabled
+                >
+                  Conseguido
+                </button>
+              `
+
+              : `
+                <button
+                  class="claim-btn"
+                  onclick="claimCoupon(${coupon.id}, this)"
+                >
+                  Conseguir
+                </button>
+              `
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+  }
+
+
+  /* 读取登录用户 */
+
+  async function getUser() {
+
+    const {
+      data,
+      error
+    } = await sb.auth.getUser();
+
+    if (error) {
+      console.error(error);
+    }
+
+    currentUser = data?.user || null;
+
+  }
+
+
+  /* 读取已经领取的优惠券 */
+
+  async function loadMyCoupons() {
+
+    if (!currentUser) {
+
+      myBox.innerHTML = `
+        <div class="empty">
+          Inicia sesión para ver tus cupones.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } = await sb
+
+      .from("user_coupons")
+
+      .select(`
+        coupon_id,
+        claimed_at,
+        expires_at,
+        coupons (
+          id,
+          title,
+          description,
+          discount_type,
+          discount_value,
+          end_at
+        )
+      `)
+
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+
+      .order(
+        "claimed_at",
+        {
+          ascending: false
+        }
+      );
+
+
+    if (error) {
+
+      console.error(
+        "读取我的优惠券失败:",
+        error
+      );
+
+      myBox.innerHTML = `
+        <div class="empty">
+          No se pudieron cargar tus cupones.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    claimedCouponIds =
+      new Set(
+        (data || []).map(
+          item => item.coupon_id
+        )
+      );
+
+
+    if (!data || data.length === 0) {
+
+      myBox.innerHTML = `
+        <div class="empty">
+          Todavía no tienes cupones.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    myBox.innerHTML =
+      data
+
+        .filter(item => item.coupons)
+
+        .map(item => {
+
+          const coupon = {
+            ...item.coupons,
+            expires_at: item.expires_at
+          };
+
+          return couponHTML(
+            coupon,
+            true
+          );
+
+        })
+
+        .join("");
+
+  }
+
+
+  /* 读取现在有效的优惠券 */
+
+  async function loadAvailableCoupons() {
+
+    const now =
+      new Date().toISOString();
+
+
+    const {
+      data,
+      error
+    } = await sb
+
+      .from("coupons")
+
+      .select("*")
+
+      .eq("is_active", true)
+
+      .or(
+        `start_at.is.null,start_at.lte.${now}`
+      )
+
+      .or(
+        `end_at.is.null,end_at.gte.${now}`
+      )
+
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+    if (error) {
+
+      console.error(
+        "读取优惠券失败:",
+        error
+      );
+
+      availableBox.innerHTML = `
+        <div class="empty">
+          No se pudieron cargar los cupones.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const available =
+      (data || []).filter(
+        coupon =>
+          !claimedCouponIds.has(coupon.id)
+      );
+
+
+    if (available.length === 0) {
+
+      availableBox.innerHTML = `
+        <div class="empty">
+          No hay nuevos cupones disponibles.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    availableBox.innerHTML =
+      available
+        .map(coupon =>
+          couponHTML(coupon, false)
+        )
+        .join("");
+
+  }
+
+
+  /* 领取 */
+
+  async function claimCoupon(
+    couponId,
+    button
+  ) {
+
+    if (!currentUser) {
+
+      alert(
+        "Inicia sesión para conseguir este cupón."
+      );
+
+      return;
+    }
+
+
+    button.disabled = true;
+    button.textContent = "Guardando...";
+
+
+    const {
+      error
+    } = await sb
+
+      .from("user_coupons")
+
+      .insert({
+        user_id: currentUser.id,
+        coupon_id: couponId
+      });
+
+
+    if (error) {
+
+      console.error(
+        "领取优惠券失败:",
+        error
+      );
+
+
+      if (
+        error.code === "23505"
+      ) {
+
+        alert(
+          "Ya tienes este cupón."
+        );
+
+      } else {
+
+        alert(
+          "No se pudo conseguir el cupón."
+        );
+
+      }
+
+
+      button.disabled = false;
+      button.textContent = "Conseguir";
+
+      return;
+    }
+
+
+    await refreshCoupons();
+
+  }
+
+
+  /* 刷新 */
+
+  async function refreshCoupons() {
+
+    await loadMyCoupons();
+    await loadAvailableCoupons();
+
+  }
+
+
+  /* 页面启动 */
+
+  async function init() {
+
+    await getUser();
+    await refreshCoupons();
+
+  }
+
+
+  init();
+
+</script>
 
 </body>
 </html>
