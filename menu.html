@@ -494,7 +494,7 @@ async function loadProducts() {
   .filter(product => product.category_id === defaultCategory)
   .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)); 
 
-    renderProducts(defaultProducts);
+    renderProducts(defaultProducts.length > 0 ? defaultProducts : allProducts);
 
   } catch (error) {
 
