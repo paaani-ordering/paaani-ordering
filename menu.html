@@ -441,6 +441,14 @@ let cart = JSON.parse(localStorage.getItem('paaaani_cart') || '{}');
 let allProducts = [];
 let allOptions = [];
 
+// 读取之前选择的用餐方式
+let selectedOrderType =
+    new URLSearchParams(window.location.search).get('type') ||
+    localStorage.getItem('paaaani_order_type') ||
+    'dinein';
+
+localStorage.setItem('paaaani_order_type', selectedOrderType);
+
 // 默认打开 Café especiales
 const defaultCategory = 'a6fca325-d92c-4475-9254-7a9e512cb240';
 
@@ -1304,13 +1312,18 @@ loadProducts();
 </nav>
   <script>
   const urlParams2 = new URLSearchParams(window.location.search);
-const tableFromUrl = urlParams2.get('table');
-    
-if (tableFromUrl) {
-  localStorage.setItem('paaani_table_number', tableFromUrl);
-  localStorage.setItem('paaani_order_type', 'dinein');
-}
- 
+
+  const tableFromUrl = urlParams2.get('table');
+  const typeFromUrl = urlParams2.get('type');
+
+  if (tableFromUrl) {
+    localStorage.setItem('paaani_table_number', tableFromUrl);
+    localStorage.setItem('paaani_order_type', 'dinein');
+  }
+
+  if (typeFromUrl === 'dinein' || typeFromUrl === 'takeaway') {
+    localStorage.setItem('paaani_order_type', typeFromUrl);
+  }
 </script>
 </body>
 </html>
