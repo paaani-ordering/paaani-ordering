@@ -496,13 +496,9 @@ async function loadProducts() {
       throw new Error(`Products Error ${productsResponse.status}`);
     }
 
-    if (!optionsResponse.ok) {
-      throw new Error(`Options Error ${optionsResponse.status}`);
-    }
 
     allProducts = await productsResponse.json();
-    allOptions = await optionsResponse.json();
-
+   allOptions = optionsResponse.ok ? await optionsResponse.json() : [];
     console.log('Productos:', allProducts);
     console.log('Opciones:', allOptions);
 
