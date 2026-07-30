@@ -1179,9 +1179,7 @@ updateCartBar();
 const orderTypeButtons = document.querySelectorAll('.order-type');
 
 // 读取主页传来的 ?type=takeaway / ?type=dinein
-const params = new URLSearchParams(window.location.search);
 const typeFromHome = params.get('type');
-
 
 // URL 有合法 type，就优先使用；否则读取之前保存的状态
 let selectedOrderType;
