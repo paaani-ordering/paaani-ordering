@@ -1196,10 +1196,8 @@ if (typeFromHome === 'takeaway' || typeFromHome === 'dinein') {
   );
 
 } else {
-
-  selectedOrderType =
-    previousOrderType || 'dinein';
-
+    selectedOrderType =
+        localStorage.getItem('paaaani_order_type') || 'dinein';
 }
 
 // 只负责更新按钮样式
