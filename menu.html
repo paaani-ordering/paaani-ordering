@@ -456,7 +456,16 @@ const defaultCategory = 'a6fca325-d92c-4475-9254-7a9e512cb240';
 function formatPrice(price) {
   return `${Number(price).toFixed(2).replace('.', ',')} €`;
 }
+const params = new URLSearchParams(window.location.search);
+const urlType = params.get('type');
 
+if (urlType === 'dinein' || urlType === 'takeaway') {
+  localStorage.setItem('paaani_order_type', urlType);
+}
+
+if (!localStorage.getItem('paaani_order_type')) {
+  localStorage.setItem('paaani_order_type', 'dinein');
+}
 // =========================
 // 读取商品 + 商品选项
 // =========================
@@ -1313,17 +1322,24 @@ loadProducts();
   <script>
   const urlParams2 = new URLSearchParams(window.location.search);
 
-  const tableFromUrl = urlParams2.get('table');
-  const typeFromUrl = urlParams2.get('type');
+const tableFromUrl = urlParams2.get('table');
+const typeFromUrl = urlParams2.get('type');
 
-  if (tableFromUrl) {
-    localStorage.setItem('paaani_table_number', tableFromUrl);
-    localStorage.setItem('paaani_order_type', 'dinein');
-  }
+// 有桌号 = 堂食
+if (tableFromUrl) {
+  localStorage.setItem('paaani_table_number', tableFromUrl);
+  localStorage.setItem('paaani_order_type', 'dinein');
+}
 
-  if (typeFromUrl === 'dinein' || typeFromUrl === 'takeaway') {
-    localStorage.setItem('paaani_order_type', typeFromUrl);
-  }
+// URL 有 type，就使用 URL 的
+if (typeFromUrl === 'dinein' || typeFromUrl === 'takeaway') {
+  localStorage.setItem('paaani_order_type', typeFromUrl);
+}
+
+// 什么都没有时，默认堂食
+if (!localStorage.getItem('paaani_order_type')) {
+  localStorage.setItem('paaani_order_type', 'dinein');
+}
 </script>
 </body>
 </html>
