@@ -252,6 +252,18 @@
 
     </section>
 
+        <!-- 优惠券 -->
+    <section class="info-card" id="couponCard">
+
+      <h2>Mis cupones</h2>
+
+      <div id="couponArea">
+        <p style="color:#888;font-size:14px;">
+          Cargando cupones...
+        </p>
+      </div>
+
+    </section>
 
     <!-- 客人信息 -->
     <section class="info-card">
@@ -292,8 +304,17 @@
 
 </div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
 <script>
+
+const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 const cartData = localStorage.getItem('paaaani_cart');
 
@@ -428,26 +449,338 @@ function renderOrder() {
     `).join('');
 
 
-  const total =
-    products.reduce(
-      (sum, product) =>
-        sum +
-        Number(product.basePrice ?? product.price ?? 0) *
-        Number(product.quantity),
-      0
-    );
+  orderSubtotal =
+  products.reduce(
+    (sum, product) =>
+      sum +
+      Number(product.basePrice ?? product.price ?? 0) *
+      Number(product.quantity),
+    0
+  );
 
-
-  document
-    .getElementById('totalPrice')
-    .textContent =
-      formatPrice(total);
+updateTotal();
 }
 
 
 renderOrder();
 
+// ========================
+// 读取当前用户可使用的优惠券
+// ========================
 
+let selectedUserCoupon = null;
+let orderSubtotal = 0;
+
+function updateTotal() {
+
+  let discount = 0;
+
+  if (selectedUserCoupon && selectedUserCoupon.coupons) {
+
+    const coupon = selectedUserCoupon.coupons;
+
+    const minimum =
+      Number(coupon.min_order || 0);
+
+    if (orderSubtotal >= minimum) {
+
+      if (coupon.discount_type === 'percent') {
+
+        discount =
+          orderSubtotal *
+          Number(coupon.discount_value) / 100;
+
+      } else {
+
+        discount =
+          Number(coupon.discount_value || 0);
+
+      }
+
+    }
+
+  }
+
+  // 防止优惠金额超过订单金额
+  discount = Math.min(discount, orderSubtotal);
+
+  const finalTotal =
+    Math.max(0, orderSubtotal - discount);
+
+  document
+    .getElementById('totalPrice')
+    .textContent =
+      formatPrice(finalTotal);
+}
+  
+async function loadMyCoupons() {
+
+  const couponArea =
+    document.getElementById('couponArea');
+
+  try {
+
+    // 1. 获取当前登录用户
+    const {
+      data: { user },
+      error: userError
+    } = await supabaseClient.auth.getUser();
+
+    if (userError) {
+      throw userError;
+    }
+
+    // 没登录
+    if (!user) {
+
+      couponArea.innerHTML = `
+        <p style="color:#888;font-size:14px;">
+          Inicia sesión para usar tus cupones.
+        </p>
+      `;
+
+      return;
+    }
+
+
+    // 2. 读取这个用户领取的、尚未使用的优惠券
+    const {
+      data: userCoupons,
+      error: couponError
+    } = await supabaseClient
+      .from('user_coupons')
+      .select(`
+        id,
+        coupon_id,
+        expires_at,
+        is_used,
+        coupons (
+          id,
+          title,
+          description,
+          discount_type,
+          discount_value,
+          min_order
+        )
+      `)
+      .eq('user_id', user.id)
+      .eq('is_used', false);
+
+    if (couponError) {
+      throw couponError;
+    }
+
+
+    // 3. 去掉已经过期的优惠券
+    const now = new Date();
+
+    const availableCoupons =
+      (userCoupons || []).filter(item => {
+
+        if (!item.expires_at) {
+          return true;
+        }
+
+        return new Date(item.expires_at) > now;
+
+      });
+
+
+    if (availableCoupons.length === 0) {
+
+      couponArea.innerHTML = `
+        <p style="color:#888;font-size:14px;">
+          No tienes cupones disponibles.
+        </p>
+      `;
+
+      return;
+    }
+
+
+    // 4. 显示优惠券
+    couponArea.innerHTML =
+      availableCoupons.map(item => {
+
+        const coupon = item.coupons;
+
+        if (!coupon) {
+          return '';
+        }
+
+        let valueText = '';
+
+        if (coupon.discount_type === 'percent') {
+          valueText = `${coupon.discount_value}%`;
+        } else {
+          valueText = `${Number(coupon.discount_value)
+            .toFixed(2)
+            .replace('.', ',')} €`;
+        }
+
+        return `
+          <div
+            class="checkout-coupon"
+            data-user-coupon-id="${item.id}"
+            style="
+              border:1px solid #e7e7e7;
+              border-radius:16px;
+              padding:15px;
+              margin-bottom:10px;
+              cursor:pointer;
+              background:#fff;
+            "
+          >
+
+            <div style="
+              display:flex;
+              justify-content:space-between;
+              gap:12px;
+              align-items:center;
+            ">
+
+              <div>
+
+                <div style="
+                  font-weight:700;
+                  margin-bottom:5px;
+                ">
+                  ${coupon.title}
+                </div>
+
+                <div style="
+                  font-size:13px;
+                  color:#888;
+                ">
+                  ${coupon.description || ''}
+                </div>
+
+              </div>
+
+              <div style="
+                font-size:18px;
+                font-weight:700;
+                white-space:nowrap;
+              ">
+                ${valueText}
+              </div>
+
+            </div>
+
+          </div>
+        `;
+
+      }).join('');
+document
+  .querySelectorAll('.checkout-coupon')
+  .forEach(element => {
+
+    element.addEventListener('click', () => {
+
+      const id =
+        Number(
+          element.dataset.userCouponId
+        );
+
+      const coupon =
+        availableCoupons.find(
+          item => Number(item.id) === id
+        );
+
+      if (!coupon) {
+        return;
+      }
+
+
+      // 再点一次 = 取消选择
+      if (
+        selectedUserCoupon &&
+        Number(selectedUserCoupon.id) === id
+      ) {
+
+        selectedUserCoupon = null;
+
+        document
+          .querySelectorAll('.checkout-coupon')
+          .forEach(card => {
+
+            card.style.border =
+              '1px solid #e7e7e7';
+
+            card.style.background =
+              '#fff';
+
+          });
+
+        updateTotal();
+
+        return;
+      }
+
+
+      // 检查最低消费
+      const minimum =
+        Number(
+          coupon.coupons?.min_order || 0
+        );
+
+      if (orderSubtotal < minimum) {
+
+        alert(
+          `Pedido mínimo: ${formatPrice(minimum)}`
+        );
+
+        return;
+      }
+
+
+      selectedUserCoupon = coupon;
+
+
+      // 恢复其他优惠券样式
+      document
+        .querySelectorAll('.checkout-coupon')
+        .forEach(card => {
+
+          card.style.border =
+            '1px solid #e7e7e7';
+
+          card.style.background =
+            '#fff';
+
+        });
+
+
+      // 当前选中的券
+      element.style.border =
+        '2px solid #8ed8f8';
+
+      element.style.background =
+        '#f2fbff';
+
+
+      updateTotal();
+
+    });
+
+  });
+  } catch (error) {
+
+    console.error('Error cargando cupones:', error);
+
+    couponArea.innerHTML = `
+      <p style="color:#d66;font-size:14px;">
+        No se pudieron cargar los cupones.
+      </p>
+    `;
+
+  }
+
+}
+
+
+// 加载优惠券
+loadMyCoupons();
 // ========================
 // 最终提交
 // ========================
