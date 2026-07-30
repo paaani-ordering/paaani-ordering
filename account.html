@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mi cuenta | Paaani</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f8f8f5;
+      font-family: Arial, sans-serif;
+      color: #222;
+      padding-bottom: calc(95px + env(safe-area-inset-bottom));
+    }
+
+    .page {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+
+    /* 顶部 */
+    .header {
+      background: #8ed8f8;
+      padding: 28px 22px 32px;
+      color: white;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 27px;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      font-size: 13px;
+      opacity: .9;
+    }
+
+    /* 主体 */
+    .content {
+      padding: 25px 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.04);
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .description {
+      margin: 0 0 22px;
+      color: #777;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #e4e4e4;
+      border-radius: 14px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+      background: #fafafa;
+    }
+
+    .field input:focus {
+      border-color: #8ed8f8;
+      background: white;
+    }
+
+    .main-btn {
+      width: 100%;
+      height: 48px;
+      border: 0;
+      border-radius: 24px;
+      background: #8ed8f8;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      height: 46px;
+      border: 1px solid #8ed8f8;
+      border-radius: 23px;
+      background: white;
+      color: #62bfe7;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .message {
+      margin-top: 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+      min-height: 20px;
+    }
+
+    /* 登录后的账户 */
+    #account-view {
+      display: none;
+    }
+
+    .welcome {
+      text-align: center;
+      padding: 10px 0 18px;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #FFEAAB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-size: 30px;
+    }
+
+    .welcome h2 {
+      margin: 0 0 7px;
+    }
+
+    .user-email {
+      color: #777;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .account-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 17px 2px;
+      border-top: 1px solid #eee;
+      text-decoration: none;
+      color: #222;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .logout-btn {
+      width: 100%;
+      height: 46px;
+      margin-top: 20px;
+      border-radius: 23px;
+      border: 0;
+      background: #f1f1f1;
+      color: #555;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 底部导航 */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+
+      width: 100%;
+      max-width: 480px;
+      height: 72px;
+
+      background: white;
+      border-top: 1px solid #eee;
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 9999;
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      text-decoration: none;
+      color: #9a9a9a;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .nav-item.active {
+      color: #8ed8f8;
+    }
+
+    .nav-icon {
+      width: 23px;
+      height: 23px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-icon svg {
+      width: 23px;
+      height: 23px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <header class="header">
+    <h1>Mi cuenta</h1>
+    <p>Tu espacio Paaani</p>
+  </header>
+
+
+  <main class="content">
+
+    <!-- 未登录 -->
+    <div class="card" id="login-view">
+
+      <h2>Bienvenido</h2>
+
+      <p class="description">
+        Inicia sesión para guardar tus cupones y recompensas.
+      </p>
+
+      <div class="field">
+        <label>Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="tu@email.com"
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="field">
+        <label>Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Mínimo 6 caracteres"
+          autocomplete="current-password"
+        >
+      </div>
+
+      <button class="main-btn" id="login-btn">
+        Iniciar sesión
+      </button>
+
+      <button class="secondary-btn" id="signup-btn">
+        Crear una cuenta
+      </button>
+
+      <div class="message" id="message"></div>
+
+    </div>
+
+
+    <!-- 已登录 -->
+    <div class="card" id="account-view">
+
+      <div class="welcome">
+
+        <div class="avatar">☕</div>
+
+        <h2>¡Hola!</h2>
+
+        <div class="user-email" id="user-email"></div>
+
+      </div>
+
+      <a href="coupons.html" class="account-link">
+        <span>Mis cupones</span>
+        <span>›</span>
+      </a>
+
+      <a href="orders.html" class="account-link">
+        <span>Mis pedidos</span>
+        <span>›</span>
+      </a>
+
+      <button class="logout-btn" id="logout-btn">
+        Cerrar sesión
+      </button>
+
+    </div>
+
+  </main>
+
+</div>
+
+
+<nav class="bottom-nav">
+
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 10.5L12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 0 1 3 19.5z"/>
+      </svg>
+    </span>
+    <span>Inicio</span>
+  </a>
+
+  <a href="menu.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 5h16M4 12h16M4 19h16"/>
+      </svg>
+    </span>
+    <span>Menú</span>
+  </a>
+
+  <a href="orders.html" class="nav-item">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/>
+        <path d="M9 8h6M9 12h6"/>
+      </svg>
+    </span>
+    <span>Pedidos</span>
+  </a>
+
+  <a href="account.html" class="nav-item active">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4.5 21c.7-4.2 3.2-6.5 7.5-6.5s6.8 2.3 7.5 6.5"/>
+      </svg>
+    </span>
+    <span>Mi cuenta</span>
+  </a>
+
+</nav>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+  /* ==============================
+     把这里换成 menu.html 里的值
+     ============================== */
+
+  const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
+
+  const SUPABASE_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
+
+
+  const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+  const loginView =
+    document.getElementById('login-view');
+
+  const accountView =
+    document.getElementById('account-view');
+
+  const emailInput =
+    document.getElementById('email');
+
+  const passwordInput =
+    document.getElementById('password');
+
+  const message =
+    document.getElementById('message');
+
+  const userEmail =
+    document.getElementById('user-email');
+
+
+  function showMessage(text, error = false) {
+
+    message.textContent = text;
+
+    message.style.color =
+      error ? '#d9534f' : '#4f9f70';
+
+  }
+
+
+  function showLoggedIn(user) {
+
+    loginView.style.display = 'none';
+
+    accountView.style.display = 'block';
+
+    userEmail.textContent =
+      user.email || '';
+
+  }
+
+
+  function showLoggedOut() {
+
+    loginView.style.display = 'block';
+
+    accountView.style.display = 'none';
+
+  }
+
+
+  async function checkSession() {
+
+    const {
+      data: { session }
+    } =
+      await supabaseClient.auth.getSession();
+
+    if (session && session.user) {
+
+      showLoggedIn(session.user);
+
+    } else {
+
+      showLoggedOut();
+
+    }
+
+  }
+
+
+  document
+    .getElementById('login-btn')
+    .addEventListener('click', async () => {
+
+      const email =
+        emailInput.value.trim();
+
+      const password =
+        passwordInput.value;
+
+
+      if (!email || !password) {
+
+        showMessage(
+          'Introduce tu correo y contraseña.',
+          true
+        );
+
+        return;
+      }
+
+
+      showMessage('Iniciando sesión...');
+
+
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+
+      if (error) {
+
+        showMessage(
+          error.message,
+          true
+        );
+
+        return;
+      }
+
+
+      showLoggedIn(data.user);
+
+  });
+
+
+  document
+    .getElementById('signup-btn')
+    .addEventListener('click', async () => {
+
+      const email =
+        emailInput.value.trim();
+
+      const password =
+        passwordInput.value;
+
+
+      if (!email || !password) {
+
+        showMessage(
+          'Introduce tu correo y contraseña.',
+          true
+        );
+
+        return;
+      }
+
+
+      if (password.length < 6) {
+
+        showMessage(
+          'La contraseña debe tener al menos 6 caracteres.',
+          true
+        );
+
+        return;
+      }
+
+
+      showMessage('Creando cuenta...');
+
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+          email,
+          password
+        });
+
+
+      if (error) {
+
+        showMessage(
+          error.message,
+          true
+        );
+
+        return;
+      }
+
+
+      if (data.session) {
+
+        showLoggedIn(data.user);
+
+      } else {
+
+        showMessage(
+          'Cuenta creada. Revisa tu correo para confirmar tu cuenta.'
+        );
+
+      }
+
+  });
+
+
+  document
+    .getElementById('logout-btn')
+    .addEventListener('click', async () => {
+
+      await supabaseClient.auth.signOut();
+
+      showLoggedOut();
+
+  });
+
+
+  supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+      if (session && session.user) {
+
+        showLoggedIn(session.user);
+
+      } else {
+
+        showLoggedOut();
+
+      }
+
+    }
+  );
+
+
+  checkSession();
+
+</script>
+
+</body>
+</html>
