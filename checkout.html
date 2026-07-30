@@ -385,6 +385,9 @@ if (orderType === 'takeaway') {
 // 显示商品
 // ========================
 
+let orderSubtotal = 0;
+let selectedUserCoupon = null;
+  
 function renderOrder() {
 
   const container =
@@ -464,7 +467,8 @@ function renderOrder() {
   return sum + price * quantity;
 
 }, 0);
-
+console.log('PRODUCTS:', products);
+console.log('ORDER SUBTOTAL:', orderSubtotal);
 document
   .getElementById('totalPrice')
   .textContent = formatPrice(orderSubtotal);
@@ -476,9 +480,6 @@ renderOrder();
 // ========================
 // 读取当前用户可使用的优惠券
 // ========================
-
-let selectedUserCoupon = null;
-let orderSubtotal = 0;
 
 function updateTotal() {
 
