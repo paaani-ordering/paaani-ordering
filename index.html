@@ -49,27 +49,77 @@
   padding-bottom: 100px;
 }
 
-    /* 顶部 */
-    .hero {
-  padding: 38px 22px 24px;
-  text-align: center;
-  background: transparent;
+   /* 顶部 */
+.hero{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:28px;
+
+    padding:40px 22px 30px;
+
+    background:transparent;
+    text-align:left;
 }
 
-    .brand {
-      font-size: 40px;
-      font-weight: 900;
-      letter-spacing: 3px;
-      color: var(--blue);
-      margin-bottom: 3px;
-    }
+.hero-left{
+    flex:1;
+}
 
-    .brand-subtitle {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      color: var(--blue);
-    }
+.hero-right{
+    flex:1;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.hero-right img{
+    width:260px;
+    max-width:100%;
+}
+
+@media(max-width:768px){
+
+.hero{
+    flex-direction:column;
+    text-align:center;
+}
+
+.hero-right{
+    justify-content:center;
+}
+
+.hero-right img{
+    width:220px;
+}
+
+}
+
+   .brand{
+
+font-size:54px;
+
+font-weight:900;
+
+line-height:1.08;
+
+letter-spacing:0;
+
+color:#3D73BE;
+
+margin-bottom:18px;
+
+}
+   .brand-subtitle{
+
+font-size:19px;
+
+line-height:1.7;
+
+color:#666;
+
+max-width:420px;
+
+}
 
     /* Pani 临时插画 */
     .dog-area {
@@ -432,42 +482,57 @@ body {
 .dining-options {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding: 10px 20px 28px;
+  gap: 18px;
+  padding: 20px 22px 30px;
 }
 
-.dining-card {
-  background: #8ed8f8;
-  border-radius: 22px;
-  height: 120px;
-  box-sizing: border-box;
+.dining-card{
+    border-radius:28px;
+    height:190px;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 
-  position: relative;
-  padding: 10px 5px 15px;
-  margin-top: 55px;
+    justify-content:flex-start;
 
-  text-decoration: none;
-  color: #18324b;
+    padding:14px 12px 16px;
+
+    box-sizing:border-box;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 24px rgba(0,0,0,.06);
+
+    transition:.25s;
+}
+    .dining-card:nth-child(1){
+    background:#FFF6DE;
 }
 
-.dining-icon {
-  position: absolute;
+.dining-card:nth-child(2){
+    background:#EDF6FF;
+}
 
-  width: 115px;
-  height: 115px;
+.dining-card:nth-child(3){
+    background:#FFF6DE;
+}
+    .dining-card:active{
 
-  top: -75px;
-  left: 50%;
-  transform: translateX(-50%);
+    transform:scale(.98);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.dining-icon{
+    width:125px;
+    height:125px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:6px;
+    margin-bottom:8px;
 }
 
 .dining-icon img {
@@ -477,16 +542,13 @@ body {
   display: block;
 }
 
-.dining-card strong {
-  display: block;
-  color: #ffffff !important;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.15;
-  text-align: center;
+.dining-card strong{
+    font-size:22px;
+    font-weight:700;
+    color:#5C82C8;
 
-  position: relative;
-  top: -25px;
+    margin-top:6px;
+    margin-bottom:2px;
 }
   
     /* 邮箱订阅优惠 */
