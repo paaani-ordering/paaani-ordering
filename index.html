@@ -152,9 +152,6 @@
     }
 
     /* 欢迎 */
-    .welcome {
-    padding: 0 22px 10px;
-}
 
     .welcome h1 {
     margin: 0;
@@ -168,6 +165,27 @@
     margin: 6px 0 0;
     font-size: 14px;
     line-height: 1.45;
+}
+    .welcome{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:6px 22px 12px;
+}
+
+.welcome-text{
+    flex:1;
+}
+
+.welcome-image{
+    width:140px;
+    flex-shrink:0;
+}
+
+.welcome-image img{
+    width:100%;
+    display:block;
 }
 
     /* 主按钮 */
@@ -931,17 +949,23 @@ body {
   <!-- 欢迎 -->
   <section class="welcome">
 
-    <h1>
-      Hola,<br>
-      bienvenido a Paaani.
-    </h1>
+    <div class="welcome-text">
+        <h1>
+            Hola,<br>
+            bienvenido a Paaani.
+        </h1>
 
-    <p>
-      Café, postres y pequeños momentos
-      que hacen el día un poquito mejor.
-    </p >
+        <p>
+            Café, postres y pequeños momentos
+            que hacen el día un poquito mejor.
+        </p>
+    </div>
 
-  </section>
+    <div class="welcome-image">
+        <img src="welcome-side.png" alt="Welcome">
+    </div>
+
+</section>
 
 
  <!-- 用餐方式 -->
