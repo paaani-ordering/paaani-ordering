@@ -479,13 +479,13 @@ body {
       }
     }
    /* 用餐方式 */
-.dining-options {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  padding: 20px 22px 30px;
+.dining-options{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(120px,1fr));
+    gap:18px;
+    overflow-x:auto;
+    padding:20px 22px 30px;
 }
-
 .dining-card{
     border-radius:28px;
     height:190px;
@@ -546,15 +546,30 @@ body {
 .dining-card strong{
     display:block;
     width:100%;
+
     text-align:center;
-    font-family:Georgia,"Times New Roman",serif;
-    font-size:24px;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size:18px;    
+
     font-weight:700;
+
     color:#5E88CF;
-    line-height:1.15;
-    margin-top:2px;
+
+    line-height:1.2;
+
+    margin-top:4px;
+
     margin-bottom:0;
+
     text-decoration:none;
+
+    white-space:nowrap;  
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 }
     .heart{
     display:block;
