@@ -302,7 +302,7 @@ Mis puntos
       </svg>
     </span>
     <span>Inicio</span>
-  </a >
+  </a>
 
   <!-- 菜单 -->
   <a href="menu.html" class="nav-item">
@@ -312,7 +312,7 @@ Mis puntos
       </svg>
     </span>
     <span>Menú</span>
-  </a >
+  </a>
 
  <!-- 商城 -->
 <a href="shop.html" class="nav-item active">
@@ -336,7 +336,7 @@ Mis puntos
       </svg>
     </span>
     <span>Mi cuenta</span>
-  </a >
+  </a>
 
 </nav>
 
@@ -356,6 +356,7 @@ Mis puntos
 }
 
 .nav-item{
+    flex:1;
     text-decoration:none;
     color:#888;
     display:flex;
@@ -364,11 +365,23 @@ Mis puntos
     font-size:12px;
 }
 
-.nav-item span{
-    font-size:22px;
+.nav-icon{
+    width:22px;
+    height:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     margin-bottom:4px;
 }
 
+.nav-icon svg{
+    width:22px;
+    height:22px;
+}
+
+.nav-item span:last-child{
+    font-size:12px;
+}
 .nav-item.active{
     color:#58C6F7;
 }
