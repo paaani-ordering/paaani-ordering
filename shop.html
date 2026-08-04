@@ -89,15 +89,24 @@ body{
     color:#222;
 }
 
+    .points-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+    
 .member{
+    display:inline-flex;
+    align-items:center;
 
-    margin-top:10px;
+    margin-top:0;
 
-    padding:6px 14px;
-
-    border-radius:999px;
+    padding:6px 12px;
 
     font-size:13px;
+
+    border-radius:999px;
 }
     /* 搜索框 */
 
@@ -270,24 +279,14 @@ body{
 
 <div class="points-card">
 
-<div class="points-title">
-Mis puntos
-</div>
-
-<div class="points">
-1280 Points
-</div>
-
-<div class="member">
-⭐ Gold Member
+<div class="points-row">
+    <div class="points">1280 Points</div>
+    <div class="member">⭐ Gold</div>
 </div>
 
 <div class="search">
 <input placeholder="Buscar productos...">
 </div>
-
-</div>
-
 <div class="categories">
 
 <button class="category active">Todos</button>
@@ -301,6 +300,8 @@ Mis puntos
 <button class="category">🐶 Merch</button>
 
 <button class="category">⭐ Nuevo</button>
+
+</div>
 
 </div>
 
