@@ -43,15 +43,16 @@ body{
 .header{
     background:linear-gradient(135deg,#8ED8F8,#9DDCF9);
     color:#fff;
-    padding:28px 22px 14px;
+    padding:28px 22px 12px;
     border-bottom-left-radius:40px;
     border-bottom-right-radius:40px;
 }
 
 .header h1{
-    font-size:38px;
+    font-size:15px;
     font-weight:800;
     margin-bottom:10px;
+    margin-top:4px;
     line-height:1.1;
 }
 
@@ -101,46 +102,29 @@ body{
 /* 分类 */
 
 .categories{
-
     display:flex;
-
-    gap:16px;
+    gap:12px;
 
     overflow-x:auto;
 
-    margin:8px 0 16px;
+    padding:0 20px;
 
-    padding-bottom:8px;
+    margin:10px 0 18px;
 
+    scrollbar-width:none;
 }
 
 .categories::-webkit-scrollbar{
-
     display:none;
-
 }
-
 .category{
-
     flex:none;
 
-    border:none;
-
-    background:#fff;
-
-    padding:12px 22px;
+    padding:12px 20px;
 
     border-radius:999px;
 
-    font-size:16px;
-
-    font-weight:700;
-
-    box-shadow:0 6px 18px rgba(0,0,0,.05);
-
-    color:#444;
-    transition:.25s;
-
+    white-space:nowrap;
 }
 
 .category.active{
