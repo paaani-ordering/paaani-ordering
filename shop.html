@@ -104,132 +104,83 @@ body{
 /* 分类 */
 
 .categories{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin:16px 20px 24px;
+    display:flex;
+    gap:28px;
+    margin:20px 0 16px;
+    border-bottom:1px solid #ECECEC;
 }
-.categories::-webkit-scrollbar{
-    display:none;
-}
+
 .category{
-    height:46px;
     border:none;
-    border-radius:24px;
-    background:#fff;
-    font-size:15px;
+    background:none;
+    padding:0 0 12px;
+    font-size:16px;
     font-weight:600;
-    color:#333;
-    box-shadow:0 6px 18px rgba(0,0,0,.05);
-    cursor:pointer;
+    color:#888;
 }
 
 .category.active{
-    background:#8ED8F8;
-    color:#fff;
+    color:#222;
+    border-bottom:3px solid #8ED8F8;
 }
     /* 签到 */
 
 .checkin-card{
     width:100%;
-    margin:20px 0;
-    padding:22px;
-
-    box-sizing:border-box;
-
     background:#fff;
     border-radius:24px;
-
-    box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-.checkin-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
+    padding:20px;
+    margin:18px 0;
+    box-sizing:border-box;
+    box-shadow:0 8px 24px rgba(0,0,0,.05);
 }
 
-.checkin-top h3{
-
+.checkin-title{
     font-size:18px;
-
-    margin:0;
-
-}
-
-.checkin-top p{
-
-    margin-top:6px;
-
-    color:#888;
-
-    font-size:13px;
-
-}
-
-.checkin-btn{
-
-    border:none;
-
-    background:#8ED8F8;
-
-    color:white;
-
-    padding:10px 18px;
-
-    border-radius:999px;
-
     font-weight:700;
+}
 
+.checkin-desc{
+    margin-top:6px;
+    font-size:14px;
+    color:#888;
 }
 
 .checkin-days{
-
     display:flex;
-
     justify-content:space-between;
-
-    margin-top:18px;
-
+    margin:18px 0;
 }
 
-.day{
-
-    width:38px;
-
-    height:38px;
-
+.checkin-days span{
+    width:36px;
+    height:36px;
     border-radius:50%;
-
     background:#F3F5F7;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     font-weight:700;
-
-    color:#999;
-
 }
 
-.day.active{
-
+.checkin-days .active{
     background:#8ED8F8;
-
-    color:white;
-
+    color:#fff;
 }
 
-.day.gift{
+.checkin-days .gift{
+    background:#FFE58F;
+}
 
-    background:#FFE9A8;
-
+.checkin-btn{
+    width:100%;
+    height:46px;
+    border:none;
+    border-radius:14px;
+    background:#8ED8F8;
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
 }
 /* 商品 */
 
@@ -366,7 +317,34 @@ body{
     </div>
 
 </div>
+<div class="checkin-card">
 
+    <div class="checkin-title">
+        🔥 Daily Check-in
+    </div>
+
+    <div class="checkin-desc">
+        已连续签到 3 天 · 今日 +5 Points
+    </div>
+
+    <div class="checkin-days">
+
+        <span class="active">✓</span>
+        <span class="active">✓</span>
+        <span class="active">✓</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+        <span class="gift">🎁</span>
+
+    </div>
+
+    <button class="checkin-btn">
+        Check in
+    </button>
+
+</div>
+    
 <div class="categories">
 
 <button class="category active">Todos</button>
