@@ -220,3 +220,175 @@ Mis puntos
 </div>
 
 <div class="products">
+
+    <div class="product">
+
+    <img src="paaani-logo.png">
+
+    <h3>Paaani Sticker</h3>
+
+    <div class="price">€3.50</div>
+
+    <div class="points-price">
+        🪙 180 Points
+    </div>
+
+    <button class="exchange">
+        Canjear
+    </button>
+
+    <button class="buy">
+        Comprar
+    </button>
+
+</div>
+
+<div class="product">
+
+    <img src="paaani-logo.png">
+
+    <h3>Paaani Mug</h3>
+
+    <div class="price">€18.90</div>
+
+    <div class="points-price">
+        🪙1800 Points
+    </div>
+
+    <button class="exchange">
+        Canjear
+    </button>
+
+    <button class="buy">
+        Comprar
+    </button>
+
+</div>
+
+<div class="product">
+
+    <img src="paaani-logo.png">
+
+    <h3>2x1 Café</h3>
+
+    <div class="price">Cupón</div>
+
+    <div class="points-price">
+        🪙300 Points
+    </div>
+
+    <button class="exchange">
+        Canjear
+    </button>
+
+</div>
+
+<div class="product">
+
+    <img src="paaani-logo.png">
+
+    <h3>Croissant Gratis</h3>
+
+    <div class="price">Cupón</div>
+
+    <div class="points-price">
+        🪙150 Points
+    </div>
+
+    <button class="exchange">
+        Canjear
+    </button>
+
+</div>
+
+</div>
+
+    </div>
+
+<nav class="bottom-nav">
+
+    <a href="index.html" class="nav-item">
+        <span>🏠</span>
+        <p>Inicio</p>
+    </a>
+
+    <a href="menu.html" class="nav-item">
+        <span>☕</span>
+        <p>Menú</p>
+    </a>
+
+    <a href="shop.html" class="nav-item active">
+        <span>🛍️</span>
+        <p>Tienda</p>
+    </a>
+
+    <a href="account.html" class="nav-item">
+        <span>👤</span>
+        <p>Mi cuenta</p>
+    </a>
+
+</nav>
+
+<style>
+
+.bottom-nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:72px;
+    background:#fff;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    box-shadow:0 -4px 15px rgba(0,0,0,.08);
+}
+
+.nav-item{
+    text-decoration:none;
+    color:#888;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-size:12px;
+}
+
+.nav-item span{
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.nav-item.active{
+    color:#58C6F7;
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+const supabaseUrl = "https://oevwuadmtzujngtmkkbw.supabase.co";
+const supabaseKey = "sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl";
+
+const supabase = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
+</script>
+    <script>
+
+async function loadProducts() {
+
+    const { data, error } = await supabase
+        .from("shop_products")
+        .select("*")
+        .eq("active", true);
+
+    console.log(data);
+
+}
+
+loadProducts();
+
+</script>
+</body>
+</html>
