@@ -219,91 +219,8 @@ Mis puntos
 
 </div>
 
-<div class="products">
-
-    <div class="product">
-
-    <img src="paaani-logo.png">
-
-    <h3>Paaani Sticker</h3>
-
-    <div class="price">€3.50</div>
-
-    <div class="points-price">
-        🪙 180 Points
-    </div>
-
-    <button class="exchange">
-        Canjear
-    </button>
-
-    <button class="buy">
-        Comprar
-    </button>
-
+<div class="products" id="products">
 </div>
-
-<div class="product">
-
-    <img src="paaani-logo.png">
-
-    <h3>Paaani Mug</h3>
-
-    <div class="price">€18.90</div>
-
-    <div class="points-price">
-        🪙1800 Points
-    </div>
-
-    <button class="exchange">
-        Canjear
-    </button>
-
-    <button class="buy">
-        Comprar
-    </button>
-
-</div>
-
-<div class="product">
-
-    <img src="paaani-logo.png">
-
-    <h3>2x1 Café</h3>
-
-    <div class="price">Cupón</div>
-
-    <div class="points-price">
-        🪙300 Points
-    </div>
-
-    <button class="exchange">
-        Canjear
-    </button>
-
-</div>
-
-<div class="product">
-
-    <img src="paaani-logo.png">
-
-    <h3>Croissant Gratis</h3>
-
-    <div class="price">Cupón</div>
-
-    <div class="points-price">
-        🪙150 Points
-    </div>
-
-    <button class="exchange">
-        Canjear
-    </button>
-
-</div>
-
-</div>
-
-    </div>
 
 <nav class="bottom-nav">
 
@@ -383,9 +300,48 @@ async function loadProducts() {
         .select("*")
         .eq("active", true);
 
-    console.log(data);
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const container = document.getElementById("products");
+
+    container.innerHTML = "";
+
+    data.forEach(product => {
+
+        container.innerHTML += `
+            <div class="product">
+
+                <img src="${product.image}" alt="${product.name}">
+
+                <h3>${product.name}</h3>
+
+                <div class="price">
+                    €${product.price}
+                </div>
+
+                <div class="points-price">
+                    🌑 ${product.points} Points
+                </div>
+
+                <button class="exchange">
+                    Canjear
+                </button>
+
+                <button class="buy">
+                    Comprar
+                </button>
+
+            </div>
+        `;
+
+    });
 
 }
+
+loadProducts();
 
 loadProducts();
 
