@@ -135,24 +135,21 @@ body{
     box-shadow:0 8px 24px rgba(0,0,0,.05);
 }
 
-   .checkin-top{
-
+  .checkin-top{
     display:flex;
-
     justify-content:space-between;
-
-    align-items:center;
-
-    gap:20px;
+    align-items:flex-start;
+    gap:16px;
 }
-    .checkin-info{
+   .checkin-info{
     flex:1;
+    min-width:0;
 }
 .checkin-title{
     font-size:18px;
     font-weight:700;
+    white-space:nowrap;
 }
-
 .checkin-desc{
     margin-top:6px;
     font-size:14px;
@@ -187,7 +184,8 @@ body{
 }
 
 .checkin-btn{
-    min-width:140px;
+    width:120px;
+    min-width:120px;
     height:48px;
     flex-shrink:0;
     border:none;
