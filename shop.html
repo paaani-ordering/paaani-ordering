@@ -135,11 +135,18 @@ body{
     box-shadow:0 8px 24px rgba(0,0,0,.05);
 }
 
-    .checkin-top{
+   .checkin-top{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
-    gap:16px;
+
+    gap:20px;
+}
+    .checkin-info{
+    flex:1;
 }
 .checkin-title{
     font-size:18px;
@@ -182,6 +189,7 @@ body{
 .checkin-btn{
     min-width:140px;
     height:48px;
+    flex-shrink:0;
     border:none;
     border-radius:24px;
     background:#8ED8F8;
@@ -304,7 +312,6 @@ body{
 
 <div class="checkin-info">
 
-   
             <div class="checkin-title">
                 🔥 Daily Check-in
             </div>
@@ -313,6 +320,10 @@ body{
                 已连续签到 3 天 · 今日 +5 Points
             </div>
         </div>
+        <button class="checkin-btn">
+            Check in
+        </button>
+     </div>
   <div class="checkin-days">
 
         <span class="active">✓</span>
@@ -322,10 +333,7 @@ body{
         <span>5</span>
         <span>6</span>
         <span class="gift">🎁</span>
-    </div>
-        <button class="checkin-btn">
-            Check in
-        </button>
+    
     </div>
 
 
