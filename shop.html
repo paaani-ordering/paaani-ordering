@@ -313,19 +313,19 @@ Mis puntos
 
 </div>
 
-<div class="category">
+<div class="categories">
 
-<button class="active">Todos</button>
+<button class="category active">Todos</button>
 
-<button>🎟 Cupones</button>
+<button class="category">🎟 Cupones</button>
 
-<button>☕ Bebidas</button>
+<button class="category">☕ Bebidas</button>
 
-<button>🍰 Postres</button>
+<button class="category">🍰 Postres</button>
 
-<button>🐶 Merch</button>
+<button class="category">🐶 Merch</button>
 
-<button>⭐ Nuevo</button>
+<button class="category">⭐ Nuevo</button>
 
 </div>
 
@@ -493,7 +493,6 @@ async function loadProducts() {
     return;
 }
 
-alert(JSON.stringify(data));
 
     const container = document.getElementById("products");
 
@@ -502,29 +501,27 @@ alert(JSON.stringify(data));
     data.forEach(product => {
 
         container.innerHTML += `
-            <div class="product">
+           <div class="product">
 
-                <img src="${product.image}" alt="${product.name}">
+    <img src="${product.image}" alt="${product.name}">
 
-                <h3>${product.name}</h3>
+    <div class="product-info">
 
-                <div class="price">
-                    €${product.price}
-                </div>
+        <div class="product-title">
+            ${product.name}
+        </div>
 
-                <div class="points-price">
-                    🌑 ${product.points} Points
-                </div>
+        <div class="product-points">
+            ⭐ ${product.points} Points
+        </div>
 
-                <button class="exchange">
-                    Canjear
-                </button>
+        <div class="badge">
+            ${product.badge ?? ""}
+        </div>
 
-                <button class="buy">
-                    Comprar
-                </button>
+    </div>
 
-            </div>
+</div>
         `;
 
     });
@@ -533,7 +530,6 @@ alert(JSON.stringify(data));
 
 loadProducts();
 
-loadProducts();
 
 </script>
 </body>
