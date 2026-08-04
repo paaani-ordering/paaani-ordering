@@ -301,9 +301,11 @@ async function loadProducts() {
         .eq("active", true);
 
     if (error) {
-        console.error(error);
-        return;
-    }
+    alert(error.message);
+    return;
+}
+
+alert(JSON.stringify(data));
 
     const container = document.getElementById("products");
 
