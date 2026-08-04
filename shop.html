@@ -485,6 +485,9 @@ async function loadProducts() {
         .select("*")
         .eq("active", true);
 
+    console.log(error);
+    console.log(data);
+
     if (error) {
     alert(error.message);
     return;
