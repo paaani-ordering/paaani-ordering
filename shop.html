@@ -631,17 +631,6 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-        const checkinBtn = document.getElementById("checkinBtn");
-
-if (checkinBtn) {
-  const today = new Date().toLocaleDateString();
-  const lastCheckin = localStorage.getItem("checkinDate");
-
-  if (lastCheckin === today) {
-    checkinBtn.textContent = "Registrado ✓";
-    checkinBtn.disabled = true;
-    checkinBtn.classList.add("checked");
-  }
 
   checkinBtn.addEventListener("click", () => {
 
@@ -670,7 +659,6 @@ const supabase = window.supabase.createClient(
 );
 </script>
     <script>
-localStorage.removeItem("checkinDate");
 async function loadProducts() {
 
     const { data, error } = await supabase
@@ -754,7 +742,7 @@ function renderCheckin() {
 
     if(lastDate===today){
 
-        btn.innerText="Checked";
+        btn.innerText="✓ Completado";
         btn.disabled=true;
 
         desc.innerHTML = `Has hecho check-in durante ${checkDays} día${checkDays === 1 ? "" : "s"} consecutivo${checkDays === 1 ? "" : "s"}`;
@@ -764,7 +752,7 @@ function renderCheckin() {
         btn.innerText="Check in";
         btn.disabled=false;
 
-        desc.innerHTML = "Haz check-in hoy y gana +5 Points";
+        desc.innerHTML="Haz check-in hoy y gana +5 puntos";
     }
 
 }
@@ -779,7 +767,7 @@ btn.addEventListener("click",()=>{
 
     if(checkDays>6){
         checkDays=0;
-        alert("🎉 恭喜获得签到奖励！");
+        alert("🎉 ¡Has conseguido tu recompensa semanal!");
     }
 
     localStorage.setItem("checkDays",checkDays);
