@@ -670,7 +670,7 @@ const supabase = window.supabase.createClient(
 );
 </script>
     <script>
-
+localStorage.removeItem("checkinDate");
 async function loadProducts() {
 
     const { data, error } = await supabase
