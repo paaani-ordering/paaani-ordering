@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tienda | Paaani</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root{
+    --blue:#8ED8F8;
+    --yellow:#F7D86B;
+    --cream:#FFF9EC;
+    --text:#2B2B2B;
+    --gray:#888;
+    --card:#ffffff;
+    --radius:22px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Nunito',sans-serif;
+    background:var(--cream);
+    color:var(--text);
+    max-width:430px;
+    margin:auto;
+    min-height:100vh;
+
+}
+
+a{
+
+    text-decoration:none;
+    color:inherit;
+
+}
+
+header{
+
+    position:sticky;
+    top:0;
+    z-index:99;
+
+    background:rgba(255,255,255,.75);
+    backdrop-filter:blur(20px);
+
+    padding:
+
+    20px
+    18px
+    14px;
+
+}
+
+.top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.back{
+
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+    background:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+.title{
+
+    font-size:24px;
+    font-weight:800;
+
+}
+
+.points{
+
+    background:var(--blue);
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    font-weight:800;
+
+}
+
+main{
+
+    padding:18px;
+
+}
+
+/* ---------- Check-in ---------- */
+
+.checkin{
+
+    background:white;
+
+    border-radius:26px;
+
+    padding:22px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.06);
+
+    margin-bottom:22px;
+
+}
+
+.check-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.check-title{
+
+    font-size:20px;
+    font-weight:800;
+
+}
+
+.check-sub{
+
+    margin-top:6px;
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+.reward{
+
+    margin-top:18px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.reward span{
+
+    font-size:28px;
+    font-weight:800;
+    color:#27ae60;
+
+}
+
+.check-btn{
+
+    border:none;
+
+    background:var(--blue);
+
+    color:white;
+
+    padding:13px 22px;
+
+    border-radius:999px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+}
+
+/* ---------- 分类 ---------- */
+
+.tabs{
+
+    display:flex;
+    gap:10px;
+
+    margin-bottom:24px;
+
+}
+
+.tab{
+
+    flex:1;
+
+    height:45px;
+
+    border-radius:999px;
+
+    background:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.tab.active{
+
+    background:var(--blue);
+
+    color:white;
+
+}
+
+/* ---------- 商品 ---------- */
+
+.products{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:16px;
+
+}
+
+.card{
+
+    background:white;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+}
+
+.product-image{
+
+    aspect-ratio:1;
+
+    background:#fafafa;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.product-image img{
+
+    width:82%;
+
+}
+
+.info{
+
+    padding:14px;
+
+}
+
+.name{
+
+    font-size:16px;
+    font-weight:800;
+
+}
+
+.price{
+
+    margin-top:6px;
+
+    color:#666;
+
+    font-weight:700;
+
+}
+
+.exchange{
+
+    width:100%;
+
+    margin-top:12px;
+
+    border:none;
+
+    height:42px;
+
+    border-radius:14px;
+
+    background:var(--yellow);
+
+    font-weight:800;
+
+    cursor:pointer;
+
+}
+
+.bottom-space{
+
+    height:90px;
+
+}
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:100%;
+    max-width:430px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    padding:12px 0 24px;
+
+    box-shadow:0 -10px 25px rgba(0,0,0,.05);
+
+}
+
+.nav-item{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    gap:5px;
+
+    font-size:12px;
+
+}
+
+.nav-item.active{
+
+    color:#59c8ff;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="top">
+
+<div class="back">←</div>
+
+<div class="title">
+
+Tienda
+
+</div>
+
+<div class="points">
+
+0 pts
+
+</div>
+
+</div>
+
+</header>
+
+<main>
+
+<div class="checkin">
+
+<div class="check-top">
+
+<div>
+
+<div class="check-title">
+☀️ Check-in diario
+</div>
+
+<div class="check-sub">
+Inicia sesión para conseguir puntos.
+</div>
+
+</div>
+
+</div>
+
+<div class="reward">
+
+<div>
+
+<div>Día 1 de 7</div>
+
+<span>+5 pts</span>
+
+</div>
+
+<button class="check-btn">
+
+Check-in
+
+</button>
+
+</div>
+
+</div>
+
+<div class="tabs">
+
+<div class="tab active">Todo</div>
+
+<div class="tab">Merch</div>
+
+<div class="tab">Cupones</div>
+
+</div>
+
+<div class="products">
+
+<!-- Supabase 动态生成 -->
+
+</div>
+
+<div class="bottom-space"></div>
+
+</main>
+
+<nav class="bottom-nav">
+
+<div class="nav-item">Inicio</div>
+
+<div class="nav-item">Menú</div>
+
+<div class="nav-item active">Tienda</div>
+
+<div class="nav-item">Reservar</div>
+
+<div class="nav-item">Perfil</div>
+
+</nav>
+
+<script>
+
+// 下一步开始接 Supabase
+
+</script>
+
+</body>
+</html>
