@@ -747,7 +747,7 @@ function renderCheckin() {
         btn.innerText="Checked";
         btn.disabled=true;
 
-        desc.innerHTML = `Has hecho check-in durante ${checkDays} días seguidos`;
+        desc.innerHTML = `Has hecho check-in durante ${checkDays} día${checkDays === 1 ? "" : "s"} consecutivo${checkDays === 1 ? "" : "s"}`;
 
     }else{
 
