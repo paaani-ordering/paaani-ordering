@@ -109,7 +109,7 @@ header{
 
 main{
 
-    padding:18px;
+    padding:20px;
 
 }
 
@@ -234,37 +234,24 @@ main{
 /* ---------- 商品 ---------- */
 
 .products{
-
     display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:16px;
-
+    width:100%;
 }
-
 .card{
-
-    background:white;
-
+    width:100%;
+    min-width:0;
+    background:#fff;
     border-radius:24px;
-
     overflow:hidden;
-
     box-shadow:0 10px 25px rgba(0,0,0,.05);
-
 }
-
 .product-image{
-
-    aspect-ratio:1;
-
-    background:#fafafa;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
 }
 
 .product-image img{
