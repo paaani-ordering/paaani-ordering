@@ -417,9 +417,9 @@ body{
             Current Points
         </div>
 
-        <div class="points-number">
-            1280
-        </div>
+        <div class="points-number" id="pointsNumber">
+    0
+</div>
 
         <div class="points-label">
             Points
@@ -439,7 +439,7 @@ body{
     </div>
 
     <div class="card-points">
-       <span id="cardPoints">1280</span> Points
+       <span id="cardPoints">0</span> Points
     </div>
 
     <img src="images/qrcode.png" class="card-qr">
@@ -692,7 +692,19 @@ async function loadProducts() {
 }
 
 loadProducts();
+/* ========= Points ========= */
 
+let points = parseInt(localStorage.getItem("points")) || 0;
+
+const pointsNumber = document.getElementById("pointsNumber");
+const cardPoints = document.getElementById("cardPoints");
+
+function renderPoints() {
+    pointsNumber.innerText = points;
+    cardPoints.innerText = points;
+}
+
+renderPoints();
 /* ========= Daily Check-in ========= */
 
 const btn = document.getElementById("checkinBtn");
@@ -755,16 +767,21 @@ btn.addEventListener("click",()=>{
 }
     lastDate = today;
 
-    if(checkDays>6){
-        checkDays=0;
-        alert("🎉 ¡Has conseguido tu recompensa semanal!");
-    }
+    if (checkDays > 6) {
+    checkDays = 0;
+    points += 20; // 第七天额外奖励20积分
+    alert("🎉 ¡Has conseguido tu recompensa semanal!");
+}
 
     localStorage.setItem("checkDays", checkDays);
 localStorage.setItem("checkDate", today);
 
+points += 5;
+localStorage.setItem("points", points);
+
 lastDate = today;
 
+renderPoints();
 renderCheckin();
 
 });
