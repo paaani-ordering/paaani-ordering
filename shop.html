@@ -6,6 +6,8 @@
 
 <title>Tienda | Paaani Café</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{
     --blue:#8ED8F8;
@@ -31,249 +33,142 @@
 body{
     background:#f7f9fc;
     color:var(--text);
+    padding-bottom:90px;
 }
 
 .container{
     width:100%;
-    max-width:none;
-    padding:0 0;
-    box-sizing:border-box;
+    max-width:480px;
+    margin:auto;
+    padding:20px;
 }
 
-.header{
-    background:linear-gradient(135deg,#8ED8F8,#9DDCF9);
-    color:#fff;
-    padding:28px 16px 18px;
-    border-bottom-left-radius:40px;
-    border-bottom-right-radius:40px;
-}
-
-.header h1{
-    font-size:15px;
-    font-weight:800;
-    margin-bottom:10px;
-    margin-top:4px;
-    line-height:1.1;
-}
-
-.header p{
-    font-size:15px;
-    opacity:.92;
-}
-
-.points-card{
-    width:100%;
-    margin:-10px 0 18px;
-    padding:24px 18px 0;
-    background:transparent;
-}
-   .points-header{
+.points-header{
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
 }
-    .points-left{
-    flex:1;
-}
+
 .points-title{
     font-size:15px;
-    color:#8F8F8F;
-    font-weight:500;
-    margin-bottom:8px;
-}
-.points-left{
-    display:flex;
-    flex-direction:column;
+    color:#888;
 }
 
 .points-number{
     font-size:72px;
     font-weight:800;
-    line-height:.9;
-    letter-spacing:-3px;
+    line-height:1;
 }
 
 .points-label{
-    margin-top:6px;
-    font-size:18px;
     color:#999;
+    margin-top:6px;
+}
+
+.member-card{
+    width:220px;
+    height:130px;
+    border-radius:20px;
+    padding:16px;
+    color:white;
+    background:linear-gradient(135deg,#8ED8F8,#BFEFFF);
+    position:relative;
 }
 
 .card-top{
-
     display:flex;
-
     align-items:center;
-
 }
 
 .card-logo{
-
     width:42px;
-
     height:42px;
-
-    border-radius:50%;
-
-    background:#fff;
-
 }
 
 .card-info{
-
     margin-left:10px;
-
 }
 
 .card-name{
-
-    font-size:18px;
-
     font-weight:700;
-
 }
 
 .card-level{
-
     font-size:12px;
-
-    opacity:.9;
-
 }
 
 .card-points{
-
-    margin-top:20px;
-
-    font-size:20px;
-
-    font-weight:700;
-
+    margin-top:18px;
+    font-size:22px;
+    font-weight:bold;
 }
 
 .card-qr{
-
-    width:42px;
-
     position:absolute;
-
+    width:42px;
     right:16px;
-
     bottom:16px;
-
 }
-.member-card{
+/* ========= Check-in ========= */
 
-    width:220px;
-
-    height:130px;
-
-    border-radius:20px;
-
-    background:linear-gradient(135deg,#8ED8F8,#BFEFFF);
-
-    padding:16px;
-
-    color:#fff;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.12);
-}
-
-.member-card img{
-    width:120px;
-    height:auto;
-    display:block;
-}
-    
-/* 分类 */
-
-.categories{
-    display:flex;
-    gap:28px;
-    margin:20px 0 16px;
-    border-bottom:1px solid #ECECEC;
-}
-
-.category{
-    border:none;
-    background:none;
-    padding:0 0 12px;
-    font-size:16px;
-    font-weight:600;
-    color:#888;
-}
-
-.category.active{
-    color:#222;
-    border-bottom:3px solid #8ED8F8;
-}
-   /* 签到卡 */
 .checkin-card{
-    width:100%;
+    margin-top:22px;
     background:#fff;
-    border-radius:24px;
-    padding:16px 18px;
-    margin:18px 0;
-    box-sizing:border-box;
-    box-shadow:0 6px 18px rgba(0,0,0,.04);
+    border-radius:22px;
+    padding:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
 }
 
 .checkin-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:16px;
-}
-
-.checkin-info{
-    flex:1;
 }
 
 .checkin-title{
-    font-size:16px;
+    font-size:17px;
     font-weight:700;
-    color:#222;
 }
 
 .checkin-desc{
-    margin-top:4px;
+    margin-top:5px;
+    color:#999;
     font-size:13px;
-    color:#9A9A9A;
 }
 
 .checkin-btn{
-    width:128px;
+    width:130px;
     height:42px;
     border:none;
     border-radius:999px;
     background:#8ED8F8;
     color:#fff;
-    font-size:17px;
     font-weight:700;
-    margin-top:2px;
+    cursor:pointer;
+}
+
+.checkin-btn:disabled{
+    opacity:.7;
 }
 
 .checkin-days{
     display:flex;
-    justify-content:flex-start;
     gap:14px;
-    align-items:center;
-    margin-top:12px;
+    margin-top:16px;
 }
 
 .checkin-days span{
     width:30px;
     height:30px;
     border-radius:50%;
-    background:#F5F5F7;
+    background:#F5F5F5;
     display:flex;
-    align-items:center;
     justify-content:center;
-    font-size:16px;
+    align-items:center;
     font-weight:700;
 }
 
-.checkin-days .active{
+.checkin-days span.active{
     background:#8ED8F8;
     color:#fff;
 }
@@ -281,465 +176,281 @@ body{
 .checkin-days .gift{
     background:#FFE58F;
 }
-    .checkin-days .active{
-    background:#8ED8F8;
-    color:#fff;
-    font-weight:bold;
-}
-    .checkin-days span.active{
-    animation:pop .35s ease;
+
+/* ========= Category ========= */
+
+.categories{
+    display:flex;
+    gap:26px;
+    margin:24px 0;
+    border-bottom:1px solid #eee;
 }
 
-@keyframes pop{
-    0%{
-        transform:scale(.6);
-    }
-    70%{
-        transform:scale(1.15);
-    }
-    100%{
-        transform:scale(1);
-    }
+.category{
+    background:none;
+    border:none;
+    padding-bottom:10px;
+    font-size:15px;
+    font-weight:700;
+    color:#999;
+    cursor:pointer;
 }
 
-.checkin-btn:disabled{
-    opacity:.7;
-    cursor:not-allowed;
+.category.active{
+    color:#222;
+    border-bottom:3px solid #8ED8F8;
 }
-    .checkin-btn.checked{
-    background:#b9e8ff;
-    color:#fff;
-}
-/* 商品 */
+
+/* ========= Products ========= */
 
 .products{
-
     display:grid;
-
     grid-template-columns:repeat(2,1fr);
-
     gap:18px;
-
 }
 
 .product{
-
-    background:white;
-
+    background:#fff;
     border-radius:22px;
-
     overflow:hidden;
-
-    box-shadow:var(--shadow);
-
-    cursor:pointer;
-
-    transition:.25s;
-
-}
-
-.product:hover{
-
-    transform:translateY(-3px);
-
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
 }
 
 .product img{
-
     width:100%;
-
     aspect-ratio:1;
-
     object-fit:cover;
-
-    display:block;
-
 }
 
 .product-info{
-
-    padding:15px;
-
+    padding:14px;
 }
 
 .product-title{
-
-    font-size:16px;
-
     font-weight:700;
-
     margin-bottom:8px;
-
 }
 
 .product-points{
-
-    color:#49a6e8;
-
-    font-size:15px;
-
+    color:#4AA7E8;
     font-weight:700;
-
 }
 
 .badge{
-
     display:inline-block;
-
     margin-top:10px;
-
     padding:4px 10px;
-
     border-radius:999px;
-
     background:#FFE27A;
-
     font-size:12px;
-
     font-weight:700;
+}
 
+.bottom-nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:72px;
+    background:#fff;
+    border-top:1px solid #eee;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
 }
 </style>
 </head>
 
 <body>
 
-
 <div class="container">
 
-<div class="points-card">
+    <div class="points-header">
 
-<div class="points-header">
+        <div class="points-left">
 
-<div class="points-left">
+            <div class="points-title">
+                Puntos actuales
+            </div>
 
-        <div class="points-title">
-            Current Points
+            <div class="points-number" id="pointsNumber">
+                0
+            </div>
+
+            <div class="points-label">
+                Points
+            </div>
+
         </div>
 
-        <div class="points-number" id="pointsNumber">
-    0
-</div>
+        <div class="member-card">
 
-        <div class="points-label">
-            Points
+            <div class="card-top">
+
+                <img
+                    src="images/pani.png"
+                    class="card-logo"
+                    alt="PAAANI Logo"
+                >
+
+                <div class="card-info">
+
+                    <div class="card-name">
+                        PAAANI
+                    </div>
+
+                    <div class="card-level">
+                        VIP MEMBER
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-points">
+
+                <span id="cardPoints">
+                    0
+                </span>
+
+                Points
+
+            </div>
+
+            <img
+                src="images/qrcode.png"
+                class="card-qr"
+                alt="QR Code"
+            >
+
         </div>
 
     </div>
 
-    <div class="member-card">
+    <div class="checkin-card">
 
-    <div class="card-top">
-        <img src="images/pani.png" class="card-logo">
+        <div class="checkin-top">
 
-        <div class="card-info">
-            <div class="card-name">PAAANI</div>
-            <div class="card-level">VIP MEMBER</div>
+            <div>
+
+                <div class="checkin-title">
+                    Registro diario
+                </div>
+
+                <div class="checkin-desc">
+                    Haz check-in hoy y gana +5 puntos
+                </div>
+
+            </div>
+
+            <button
+                id="checkinBtn"
+                class="checkin-btn">
+
+                Check in
+
+            </button>
+
         </div>
+
+        <div class="checkin-days">
+
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+            <span>6</span>
+
+            <span class="gift">
+                🎁
+            </span>
+
+        </div>
+
     </div>
 
-    <div class="card-points">
-       <span id="cardPoints">0</span> Points
+    <div class="categories">
+
+        <button class="category active">
+            Todos
+        </button>
+
+        <button class="category">
+            🎟 Cupones
+        </button>
+
+        <button class="category">
+            🐶 Merch
+        </button>
+
     </div>
 
-    <img src="images/qrcode.png" class="card-qr">
-
-</div>
-
-</div>
-  
-<div class="checkin-card">
-
-  <div class="checkin-top">
-
-    <div class="checkin-info">
-      <div class="checkin-title">
-    Registro diario
-</div>
-
-      <div class="checkin-desc">
-    Haz check-in hoy y gana +5 Points
-</div>
+    <div
+        id="products"
+        class="products">
     </div>
 
-    <button class="checkin-btn" id="checkinBtn">
-    Check in
-</button>
-
-  </div>
-
-  <div class="checkin-days">
-    <span>1</span>
-    <span>2</span>
-    <span>3</span>
-    <span>4</span>
-    <span>5</span>
-    <span>6</span>
-    <span class="gift">🎁</span>
-  </div>
-
 </div>
-    
-<div class="categories">
-
-<button class="category active">Todos</button>
-
-<button class="category">🎟 Cupones</button>
-
-<button class="category">🐶 Merch</button>
-
-</div>
-
-</div>
-
-<div class="products" id="products">
-</div>
-
-<!-- 底部导航 -->
-<nav class="bottom-nav">
-
-  <!-- 首页 -->
-  <a href="index.html" class="nav-item">
-    <span class="nav-icon">
-      <svg viewBox="0 0 24 24">
-        <path d="M3 10.5L12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 0 1 3 19.5z"/>
-      </svg>
-    </span>
-    <span>Inicio</span>
-  </a>
-
-  <!-- 菜单 -->
-  <a href="menu.html" class="nav-item">
-    <span class="nav-icon">
-      <svg viewBox="0 0 24 24">
-        <path d="M4 5h16M4 12h16M4 19h16"/>
-      </svg>
-    </span>
-    <span>Menú</span>
-  </a>
-
- <!-- 商城 -->
-<a href="shop.html" class="nav-item active">
-    <span class="nav-icon nav-shop-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 7L7 20H17L18 7"/>
-            <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
-        </svg>
-    </span>
-
-    <span>Tienda</span>
-</a>
-
-  <!-- 会员 -->
-  <a href="account.html" class="nav-item">
-    <span class="nav-icon">
-      <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4.5 21c.7-4.2 3.2-6.5 7.5-6.5s6.8 2.3 7.5 6.5"/>
-      </svg>
-    </span>
-    <span>Mi cuenta</span>
-  </a>
-
-</nav>
-
-<style>
-
-.bottom-nav {
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-
-  width: 100%;
-  max-width: 480px;
-  height: 72px;
-
-  background: #ffffff;
-  border-top: 1px solid #eeeeee;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-
-  padding-bottom: env(safe-area-inset-bottom);
-
-  z-index: 9999;
-}
-
-/* 每个按钮 */
-.nav-item {
-  flex: 1;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 4px;
-
-  text-decoration: none;
-
-  color: #9a9a9a;
-
-  font-size: 11px;
-  font-weight: 600;
-
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* 图标 */
-.nav-icon {
-  position: relative;
-
-  width: 23px;
-  height: 23px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-icon svg {
-  width: 23px;
-  height: 23px;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* 当前页面 */
-.nav-item.active {
-  color: #8ed8f8;
-}
-
-/* 防止页面内容被底栏挡住 */
-body {
-  padding-bottom: calc(90px + env(safe-area-inset-bottom));
-}
-
-    @media (min-width: 600px) {
-      .app {
-        box-shadow: 0 0 50px rgba(0,0,0,.08);
-      }
-    }
-</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script>
+<script>
+
+// =======================
+// Supabase
+// =======================
 
 const supabaseUrl = "https://oevwuadmtzujngtmkkbw.supabase.co";
-const supabaseKey = "sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl";
+const supabaseKey = "你的 Publishable Key";
 
 const supabase = window.supabase.createClient(
     supabaseUrl,
     supabaseKey
 );
-        const memberId = "63a972d5-ab25-43a6-99a6-a1453c6aeae7";
-        async function loadMember() {
 
-    const { data, error } = await supabase
-        .from("members")
-        .select("*")
-        .eq("id", memberId)
-        .single();
-
-    if (error) {
-        console.log(error);
-        return;
-    }
-
-    points = data.points ?? 0;
-checkDays = data.check_days ?? 0;
-lastDate = data.last_checkin ?? null;
-
-renderPoints();
-renderCheckin();
-
-}
-</script>
-    <script>
-async function loadProducts() {
-
-    const { data, error } = await supabase
-        .from("shop_products")
-        .select("*")
-        .eq("active", true);
-
-    console.log(error);
-    console.log(data);
-
-    if (error) {
-    alert(error.message);
-    return;
-}
+// 你的 members 表 id
+const memberId = "63a972d5-ab25-43a6-99a6-a1453c6aeae7";
 
 
-    const container = document.getElementById("products");
-
-    container.innerHTML = "";
-
-    data.forEach(product => {
-
-        container.innerHTML += `
-           <div class="product">
-
-    <img src="${product.image}" alt="${product.name}">
-
-    <div class="product-info">
-
-        <div class="product-title">
-            ${product.name}
-        </div>
-
-        <div class="product-points">
-            ⭐ ${product.points} Points
-        </div>
-
-        <div class="badge">
-            ${product.badge ?? ""}
-        </div>
-
-    </div>
-
-</div>
-        `;
-
-    });
-
-}
-
-/* ========= Points ========= */
+// =======================
+// 页面变量
+// =======================
 
 let points = 0;
+let checkDays = 0;
+let lastDate = null;
 
 const pointsNumber = document.getElementById("pointsNumber");
 const cardPoints = document.getElementById("cardPoints");
 
-function renderPoints() {
-    pointsNumber.innerText = points;
-    cardPoints.innerText = points;
-}
-
-renderPoints();
-/* ========= Daily Check-in ========= */
-
 const btn = document.getElementById("checkinBtn");
-const days = document.querySelectorAll(".checkin-days span:not(.gift)");
 const desc = document.querySelector(".checkin-desc");
+const days = document.querySelectorAll(".checkin-days span:not(.gift)");
 
-let checkDays = 0;
-let lastDate = null;
 const today = new Date().toISOString().split("T")[0];
+
 const yesterday = new Date();
-yesterday.setDate(yesterday.getDate() - 1);
+yesterday.setDate(yesterday.getDate()-1);
 const yesterdayStr = yesterday.toISOString().split("T")[0];
 
-function renderCheckin() {
+
+// =======================
+// 显示积分
+// =======================
+
+function renderPoints(){
+
+    pointsNumber.innerText = points;
+    cardPoints.innerText = points;
+
+}
+
+
+// =======================
+// 显示签到
+// =======================
+
+function renderCheckin(){
 
     days.forEach((item,index)=>{
 
@@ -759,66 +470,174 @@ function renderCheckin() {
 
     if(lastDate===today){
 
-        btn.innerHTML="✓ Completado";
         btn.disabled=true;
+        btn.innerHTML="✓ Completado";
 
-        desc.innerHTML = `Has hecho check-in durante ${checkDays} día${checkDays === 1 ? "" : "s"} consecutivo${checkDays === 1 ? "" : "s"}`;
+        desc.innerHTML=
+        `Has hecho check-in durante ${checkDays} día${checkDays==1?"":"s"} consecutivo${checkDays==1?"":"s"}`;
 
     }else{
 
-        btn.innerText="Check in";
         btn.disabled=false;
+        btn.innerHTML="Check in";
 
-        desc.innerHTML="Haz check-in hoy y gana +5 puntos";
+        desc.innerHTML=
+        "Haz check-in hoy y gana +5 puntos";
+
     }
 
 }
+// =======================
+// 读取会员资料
+// =======================
 
-renderCheckin();
+async function loadMember(){
 
-btn.addEventListener("click", async () => {
+    const { data, error } = await supabase
+        .from("members")
+        .select("*")
+        .eq("id", memberId)
+        .single();
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    points = data.points ?? 0;
+    checkDays = data.check_days ?? 0;
+    lastDate = data.last_checkin ?? null;
+
+    renderPoints();
+    renderCheckin();
+
+}
+
+
+// =======================
+// 读取商品
+// =======================
+
+async function loadProducts(){
+
+    const { data, error } = await supabase
+        .from("shop_products")
+        .select("*")
+        .eq("active", true);
+
+    if(error){
+        console.error(error);
+        return;
+    }
+
+    const container = document.getElementById("products");
+
+    container.innerHTML = "";
+
+    data.forEach(product=>{
+
+        container.innerHTML += `
+        <div class="product">
+
+            <img
+                src="${product.image}"
+                alt="${product.name}"
+            >
+
+            <div class="product-info">
+
+                <div class="product-title">
+                    ${product.name}
+                </div>
+
+                <div class="product-points">
+                    ⭐ ${product.points} Points
+                </div>
+
+                ${
+                    product.badge
+                    ? `<div class="badge">${product.badge}</div>`
+                    : ""
+                }
+
+            </div>
+
+        </div>
+        `;
+
+    });
+
+}
+
+
+// =======================
+// 点击签到
+// =======================
+
+btn.addEventListener("click", async ()=>{
 
     if(lastDate===today) return;
 
-    if (lastDate === yesterdayStr) {
-    checkDays++;
-} else {
-    checkDays = 1;
-}
-    lastDate = today;
+    if(lastDate===yesterdayStr){
 
-    if (checkDays > 6) {
-    checkDays = 0;
-    points += 20; // 第七天额外奖励20积分
-    alert("🎉 ¡Has conseguido tu recompensa semanal!");
-}
+        checkDays++;
 
+    }else{
 
-points += 5;
+        checkDays=1;
 
-const { error: updateError } = await supabase
-    .from("members")
-    .update({
-        points: points,
-        check_days: checkDays,
-        last_checkin: today
-    })
-    .eq("id", memberId);
+    }
 
-if (updateError) {
-    console.log(updateError);
-    alert("Error al guardar los puntos");
-    return;
-}
-lastDate = today;
-renderPoints();
-renderCheckin();
+    points += 5;
+
+    if(checkDays>=7){
+
+        points += 20;
+
+        checkDays=0;
+
+        alert("🎉 ¡Has conseguido el premio semanal!");
+
+    }
+
+    const { error } = await supabase
+        .from("members")
+        .update({
+
+            points:points,
+            check_days:checkDays,
+            last_checkin:today
+
+        })
+        .eq("id",memberId);
+
+    if(error){
+
+        console.error(error);
+        alert("Error al guardar.");
+
+        return;
+
+    }
+
+    lastDate=today;
+
+    renderPoints();
+    renderCheckin();
 
 });
-window.onload = async () => {
+ // =======================
+// 页面初始化
+// =======================
+
+window.addEventListener("load", async () => {
+
     await loadMember();
     await loadProducts();
-};
+
+});
+
 </script>
+
 </body>
-</html>
+</html>   
