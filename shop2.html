@@ -322,47 +322,75 @@ main{
 
 }
 
-.bottom-nav{
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
 
-    position:fixed;
+  width: 100%;
+  max-width: 480px;
+  height: 72px;
 
-    bottom:0;
+  background: #ffffff;
+  border-top: 1px solid #eeeeee;
 
-    left:50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 
-    transform:translateX(-50%);
+  padding-bottom: env(safe-area-inset-bottom);
 
-    width:100%;
-    max-width:430px;
-
-    background:white;
-
-    display:flex;
-
-    justify-content:space-around;
-
-    padding:12px 0 24px;
-
-    box-shadow:0 -10px 25px rgba(0,0,0,.05);
-
+  z-index: 9999;
 }
 
-.nav-item{
+/* 每个按钮 */
+.nav-item {
+  flex: 1;
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    gap:5px;
+  gap: 4px;
 
-    font-size:12px;
+  text-decoration: none;
 
+  color: #9a9a9a;
+
+  font-size: 11px;
+  font-weight: 600;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.nav-item.active{
+/* 图标 */
+.nav-icon {
+  position: relative;
 
-    color:#59c8ff;
+  width: 23px;
+  height: 23px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon svg {
+  width: 23px;
+  height: 23px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 当前页面 */
+.nav-item.active {
+  color: #8ed8f8;
 }
 
 </style>
