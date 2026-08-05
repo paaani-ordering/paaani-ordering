@@ -639,6 +639,24 @@ const supabase = window.supabase.createClient(
     supabaseUrl,
     supabaseKey
 );
+        const memberId = "63a972d5-ab25-43a6-99a6-a1453c6aeae7";
+        async function loadMember() {
+
+    const { data, error } = await supabase
+        .from("members")
+        .select("*")
+        .eq("id", memberId)
+        .single();
+
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    document.getElementById("pointsNumber").innerText = data.points;
+    document.getElementById("cardPoints").innerText = data.points;
+
+}
 </script>
     <script>
 async function loadProducts() {
@@ -692,6 +710,7 @@ async function loadProducts() {
 }
 
 loadProducts();
+loadMember();
 /* ========= Points ========= */
 
 let points = parseInt(localStorage.getItem("points")) || 0;
