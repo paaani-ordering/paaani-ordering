@@ -653,9 +653,9 @@ const supabase = window.supabase.createClient(
         return;
     }
 
-    points = data.points;
-checkDays = data.check_days || 0;
-lastDate = data.last_checkin;
+    points = data.points ?? 0;
+checkDays = data.check_days ?? 0;
+lastDate = data.last_checkin ?? null;
 
 renderPoints();
 renderCheckin();
@@ -713,8 +713,6 @@ async function loadProducts() {
 
 }
 
-loadProducts();
-loadMember();
 /* ========= Points ========= */
 
 let points = 0;
@@ -798,10 +796,6 @@ btn.addEventListener("click", async () => {
 
 points += 5;
 
-const { error } = await supabase
-    .from("members")
-   points += 5;
-
 const { error: updateError } = await supabase
     .from("members")
     .update({
@@ -816,10 +810,13 @@ if (updateError) {
     alert("Error al guardar los puntos");
     return;
 }
+lastDate = today;
 renderPoints();
 renderCheckin();
 
 });
+loadProducts();
+loadMember();
 </script>
 </body>
 </html>
