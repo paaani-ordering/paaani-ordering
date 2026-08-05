@@ -99,10 +99,84 @@ body{
     color:#999;
 }
 
-.member-card{
+.card-top{
+
     display:flex;
-    justify-content:center;
+
     align-items:center;
+
+}
+
+.card-logo{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+}
+
+.card-info{
+
+    margin-left:10px;
+
+}
+
+.card-name{
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.card-level{
+
+    font-size:12px;
+
+    opacity:.9;
+
+}
+
+.card-points{
+
+    margin-top:20px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.card-qr{
+
+    width:42px;
+
+    position:absolute;
+
+    right:16px;
+
+    bottom:16px;
+
+}
+.member-card{
+
+    width:220px;
+
+    height:130px;
+
+    border-radius:20px;
+
+    background:linear-gradient(135deg,#8ED8F8,#BFEFFF);
+
+    padding:16px;
+
+    color:#fff;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
 }
 
 .member-card img{
@@ -207,6 +281,35 @@ body{
 .checkin-days .gift{
     background:#FFE58F;
 }
+    .checkin-days .active{
+    background:#8ED8F8;
+    color:#fff;
+    font-weight:bold;
+}
+    .checkin-days span.active{
+    animation:pop .35s ease;
+}
+
+@keyframes pop{
+    0%{
+        transform:scale(.6);
+    }
+    70%{
+        transform:scale(1.15);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+
+.checkin-btn:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+}
+    .checkin-btn.checked{
+    background:#b9e8ff;
+    color:#fff;
+}
 /* 商品 */
 
 .products{
@@ -308,7 +411,7 @@ body{
 
 <div class="points-header">
 
-    <div class="points-left">
+<div class="points-left">
 
         <div class="points-title">
             Current Points
@@ -325,7 +428,22 @@ body{
     </div>
 
     <div class="member-card">
-    <img src="member-card.png" alt="Member Card">
+
+    <div class="card-top">
+        <img src="images/pani.png" class="card-logo">
+
+        <div class="card-info">
+            <div class="card-name">PAAANI</div>
+            <div class="card-level">VIP MEMBER</div>
+        </div>
+    </div>
+
+    <div class="card-points">
+       <span id="cardPoints">1280</span> Points
+    </div>
+
+    <img src="images/qrcode.png" class="card-qr">
+
 </div>
 
 </div>
@@ -340,28 +458,24 @@ body{
       </div>
 
       <div class="checkin-desc">
-        已连续签到 3 天 · 今日 +5 Points
-      </div>
+    Haz check-in hoy y gana +5 Points
+</div>
     </div>
 
-    <button class="checkin-btn">
-      Check in
-    </button>
+    <button class="checkin-btn" id="checkinBtn">
+    Check in
+</button>
 
   </div>
 
   <div class="checkin-days">
-
-    <span class="active">✓</span>
-    <span class="active">✓</span>
-    <span class="active">✓</span>
-
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
     <span>4</span>
     <span>5</span>
     <span>6</span>
-
     <span class="gift">🎁</span>
-
   </div>
 
 </div>
@@ -579,7 +693,72 @@ async function loadProducts() {
 
 loadProducts();
 
+/* ========= Daily Check-in ========= */
 
+const btn = document.getElementById("checkinBtn");
+const days = document.querySelectorAll(".checkin-days span:not(.gift)");
+const desc = document.querySelector(".checkin-desc");
+
+let checkDays = parseInt(localStorage.getItem("checkDays")) || 0;
+let lastDate = localStorage.getItem("checkDate");
+
+const today = new Date().toLocaleDateString();
+
+function renderCheckin() {
+
+    days.forEach((item,index)=>{
+
+        if(index < checkDays){
+
+            item.classList.add("active");
+            item.innerHTML="✓";
+
+        }else{
+
+            item.classList.remove("active");
+            item.innerHTML=index+1;
+
+        }
+
+    });
+
+    if(lastDate===today){
+
+        btn.innerText="Checked";
+        btn.disabled=true;
+
+        desc.innerHTML=`已连续签到 ${checkDays} 天`;
+
+    }else{
+
+        btn.innerText="Check in";
+        btn.disabled=false;
+
+        desc.innerHTML="今日签到 +5 Points";
+
+    }
+
+}
+
+renderCheckin();
+
+btn.addEventListener("click",()=>{
+
+    if(lastDate===today) return;
+
+    checkDays++;
+
+    if(checkDays>6){
+        checkDays=0;
+        alert("🎉 恭喜获得签到奖励！");
+    }
+
+    localStorage.setItem("checkDays",checkDays);
+    localStorage.setItem("checkDate",today);
+
+    renderCheckin();
+
+});
 </script>
 </body>
 </html>
