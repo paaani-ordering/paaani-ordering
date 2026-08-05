@@ -566,18 +566,44 @@
       }
 
 
-      if (data.session) {
+     const user = data.user;
 
-        showLoggedIn(data.user);
+if (user) {
 
-      } else {
+    const { data: member } = await supabaseClient
+        .from("members")
+        .select("id")
+        .eq("id", user.id)
+        .maybeSingle();
 
-        showMessage(
-          'Cuenta creada. Revisa tu correo para confirmar tu cuenta.'
-        );
+    if (!member) {
 
-      }
+        await supabaseClient
+            .from("members")
+            .insert({
+                id: user.id,
+                name: "",
+                email: user.email,
+                points: 15,
+                check_days: 0,
+                last_checkin: null
+            });
 
+    }
+
+}
+
+if (data.session) {
+
+    showLoggedIn(data.user);
+
+} else {
+
+    showMessage(
+        'Cuenta creada. Revisa tu correo para confirmar tu cuenta.'
+    );
+
+}
   });
 
 
