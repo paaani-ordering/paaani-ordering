@@ -632,24 +632,6 @@ body {
 
     <script>
 
-  checkinBtn.addEventListener("click", () => {
-
-    const today = new Date().toLocaleDateString();
-
-    // 今天已经签到，直接退出
-    if (localStorage.getItem("checkinDate") === today) {
-        return;
-    }
-
-    localStorage.setItem("checkinDate", today);
-
-    checkinBtn.textContent = "✓ Completado";
-    checkinBtn.disabled = true;
-    checkinBtn.classList.add("checked");
-
-    // 这里以后再加积分和签到天数
-});
-}
 const supabaseUrl = "https://oevwuadmtzujngtmkkbw.supabase.co";
 const supabaseKey = "sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl";
 
@@ -720,7 +702,7 @@ const desc = document.querySelector(".checkin-desc");
 let checkDays = parseInt(localStorage.getItem("checkDays")) || 0;
 let lastDate = localStorage.getItem("checkDate");
 
-const today = new Date().toLocaleDateString();
+const today = new Date().toISOString().split("T")[0];
 
 function renderCheckin() {
 
@@ -742,7 +724,7 @@ function renderCheckin() {
 
     if(lastDate===today){
 
-        btn.innerText="✓ Completado";
+        btn.innerHTML="✓ Completado";
         btn.disabled=true;
 
         desc.innerHTML = `Has hecho check-in durante ${checkDays} día${checkDays === 1 ? "" : "s"} consecutivo${checkDays === 1 ? "" : "s"}`;
@@ -770,10 +752,12 @@ btn.addEventListener("click",()=>{
         alert("🎉 ¡Has conseguido tu recompensa semanal!");
     }
 
-    localStorage.setItem("checkDays",checkDays);
-    localStorage.setItem("checkDate",today);
+    localStorage.setItem("checkDays", checkDays);
+localStorage.setItem("checkDate", today);
 
-    renderCheckin();
+lastDate = today;
+
+renderCheckin();
 
 });
 </script>
