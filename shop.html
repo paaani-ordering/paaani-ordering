@@ -653,8 +653,12 @@ const supabase = window.supabase.createClient(
         return;
     }
 
-    document.getElementById("pointsNumber").innerText = data.points;
-    document.getElementById("cardPoints").innerText = data.points;
+    points = data.points;
+checkDays = data.check_days || 0;
+lastDate = data.last_checkin;
+
+renderPoints();
+renderCheckin();
 
 }
 </script>
@@ -775,7 +779,7 @@ function renderCheckin() {
 
 renderCheckin();
 
-btn.addEventListener("click",()=>{
+btn.addEventListener("click", async () => {
 
     if(lastDate===today) return;
 
@@ -796,9 +800,21 @@ btn.addEventListener("click",()=>{
 localStorage.setItem("checkDate", today);
 
 points += 5;
-localStorage.setItem("points", points);
 
-lastDate = today;
+const { error } = await supabase
+    .from("members")
+    .update({
+        points: points,
+        check_days: checkDays,
+        last_checkin: today
+    })
+    .eq("id", memberId);
+
+if (error) {
+    console.log(error);
+    alert("Error al guardar los puntos");
+    return;
+}
 
 renderPoints();
 renderCheckin();
