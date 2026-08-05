@@ -631,6 +631,26 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
+        const checkinBtn = document.getElementById("checkinBtn");
+
+if (checkinBtn) {
+  const today = new Date().toLocaleDateString();
+  const lastCheckin = localStorage.getItem("checkinDate");
+
+  if (lastCheckin === today) {
+    checkinBtn.textContent = "Registrado ✓";
+    checkinBtn.disabled = true;
+    checkinBtn.classList.add("checked");
+  }
+
+  checkinBtn.addEventListener("click", () => {
+    localStorage.setItem("checkinDate", today);
+
+    checkinBtn.textContent = "✓ Checked";
+    checkinBtn.disabled = true;
+    checkinBtn.classList.add("checked");
+  });
+}
 const supabaseUrl = "https://oevwuadmtzujngtmkkbw.supabase.co";
 const supabaseKey = "sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl";
 
@@ -727,15 +747,14 @@ function renderCheckin() {
         btn.innerText="Checked";
         btn.disabled=true;
 
-        desc.innerHTML=`已连续签到 ${checkDays} 天`;
+        desc.innerHTML = `Has hecho check-in durante ${checkDays} días seguidos`;
 
     }else{
 
         btn.innerText="Check in";
         btn.disabled=false;
 
-        desc.innerHTML="今日签到 +5 Points";
-
+        desc.innerHTML = "Haz check-in hoy y gana +5 Points";
     }
 
 }
