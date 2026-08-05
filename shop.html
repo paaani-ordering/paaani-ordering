@@ -63,43 +63,46 @@ body{
 
 .points-card{
     width:100%;
-    margin:-28px 0 12px;
-    padding:16px;
-    border-radius:28px;
-    box-sizing:border-box;
+    margin:-28px 0 16px;
+    padding:18px 0 12px;
+    background:transparent;
 }
-.points-title{
-    color:#999;
-    font-size:16px;
-    font-weight:500;
-    margin-bottom:8px;
-}
-.points{
-    font-size:30px;
-    font-weight:800;
-}
-
-   .points-row{
-    width:100%;
+    .points-header{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    margin:20px 0 12px;
+    align-items:flex-start;
 }
-    
-.member{
-    display:inline-flex;
+
+.points-left{
+    display:flex;
+    flex-direction:column;
+}
+
+.points-number{
+    font-size:58px;
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-2px;
+    margin-top:6px;
+}
+
+.points-label{
+    font-size:15px;
+    color:#999;
+    margin-top:4px;
+}
+
+.member-card{
+    display:flex;
     align-items:center;
-
-    margin-top:0;
-
-    padding:6px 12px;
-
-    font-size:13px;
-
+    padding:8px 14px;
+    background:#FFF8E8;
+    color:#D2A436;
     border-radius:999px;
+    font-size:14px;
+    font-weight:700;
 }
-   
+
     
 /* 分类 */
 
@@ -300,9 +303,28 @@ body{
 
 <div class="points-card">
 
-<div class="points-row">
-    <div class="points">1280 Points</div>
-    <div class="member">⭐ Gold</div>
+<div class="points-header">
+
+    <div class="points-left">
+
+        <div class="points-title">
+            Current Points
+        </div>
+
+        <div class="points-number">
+            1280
+        </div>
+
+        <div class="points-label">
+            Points
+        </div>
+
+    </div>
+
+    <div class="member-card">
+        ⭐ Gold
+    </div>
+
 </div>
   
 <div class="checkin-card">
