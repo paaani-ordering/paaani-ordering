@@ -815,8 +815,10 @@ renderPoints();
 renderCheckin();
 
 });
-loadProducts();
-loadMember();
+window.onload = async () => {
+    await loadMember();
+    await loadProducts();
+};
 </script>
 </body>
 </html>
