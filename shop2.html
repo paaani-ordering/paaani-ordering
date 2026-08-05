@@ -556,7 +556,29 @@ loadProducts();
         return;
     }
 
-    console.log(data);
+    productsContainer.innerHTML = "";
+
+data.forEach(product => {
+
+  productsContainer.innerHTML += `
+    <div class="card">
+      <img class="product-image" src="${product.image}" alt="${product.name}">
+      
+      <h3>${product.name}</h3>
+
+      <p>${product.description || ""}</p>
+
+      <div class="price">
+        €${product.price}
+      </div>
+
+      <div class="points">
+        ${product.points} pts
+      </div>
+    </div>
+  `;
+
+});
 }
 </script>
 
