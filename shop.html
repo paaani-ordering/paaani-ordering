@@ -454,8 +454,8 @@ body{
 
     <div class="checkin-info">
       <div class="checkin-title">
-         Daily Check-in
-      </div>
+    Registro diario
+</div>
 
       <div class="checkin-desc">
     Haz check-in hoy y gana +5 Points
@@ -644,12 +644,22 @@ if (checkinBtn) {
   }
 
   checkinBtn.addEventListener("click", () => {
+
+    const today = new Date().toLocaleDateString();
+
+    // 今天已经签到，直接退出
+    if (localStorage.getItem("checkinDate") === today) {
+        return;
+    }
+
     localStorage.setItem("checkinDate", today);
 
-    checkinBtn.textContent = "✓ Checked";
+    checkinBtn.textContent = "✓ Completado";
     checkinBtn.disabled = true;
     checkinBtn.classList.add("checked");
-  });
+
+    // 这里以后再加积分和签到天数
+});
 }
 const supabaseUrl = "https://oevwuadmtzujngtmkkbw.supabase.co";
 const supabaseKey = "sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl";
