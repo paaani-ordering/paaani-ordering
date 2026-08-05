@@ -717,7 +717,7 @@ loadProducts();
 loadMember();
 /* ========= Points ========= */
 
-let points = parseInt(localStorage.getItem("points")) || 0;
+let points = 0;
 
 const pointsNumber = document.getElementById("pointsNumber");
 const cardPoints = document.getElementById("cardPoints");
@@ -803,11 +803,23 @@ points += 5;
 
 const { error } = await supabase
     .from("members")
-    .update({
-        points: points,
-        check_days: checkDays,
-        last_checkin: today
-    })
+   points += 5;
+
+renderPoints();
+renderCheckin();
+
+const { error } = await supabase
+.from("members")
+.update({
+    points: points,
+    check_days: checkDays,
+    last_checkin: today
+})
+.eq("id", memberId);
+
+if(error){
+    console.log(error);
+}
     .eq("id", memberId);
 
 if (error) {
