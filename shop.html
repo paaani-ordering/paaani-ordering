@@ -734,9 +734,8 @@ const btn = document.getElementById("checkinBtn");
 const days = document.querySelectorAll(".checkin-days span:not(.gift)");
 const desc = document.querySelector(".checkin-desc");
 
-let checkDays = parseInt(localStorage.getItem("checkDays")) || 0;
-let lastDate = localStorage.getItem("checkDate");
-
+let checkDays = 0;
+let lastDate = null;
 const today = new Date().toISOString().split("T")[0];
 const yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
@@ -819,7 +818,6 @@ if (updateError) {
     alert("Error al guardar los puntos");
     return;
 }
-
 renderPoints();
 renderCheckin();
 
