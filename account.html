@@ -578,17 +578,22 @@ if (user) {
 
     if (!member) {
 
-        await supabaseClient
-            .from("members")
-            .insert({
-                id: user.id,
-                name: "",
-                email: user.email,
-                points: 15,
-                check_days: 0,
-                last_checkin: null
-            });
+        const { error: insertError } = await supabaseClient
+  .from("members")
+  .insert({
+    id: user.id,
+    name: "",
+    email: user.email,
+    points: 15,
+    check_days: 0,
+    last_checkin: null
+  });
 
+console.log(insertError);
+
+if (insertError) {
+  alert(insertError.message);
+}
     }
 
 }
