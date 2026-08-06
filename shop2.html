@@ -153,6 +153,81 @@ main{
     font-size:14px;
 
 }
+    .check-days{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:18px 0 12px;
+
+}
+
+.day{
+
+    width:32px;
+    height:32px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:14px;
+    font-weight:800;
+
+    background:#fff;
+    border:2px solid #e7e7e7;
+    color:#999;
+
+    flex-shrink:0;
+
+}
+
+.day.done{
+
+    background:#8ED8F8;
+    color:white;
+    border:none;
+
+}
+
+.day.today{
+
+    background:#F7D86B;
+    color:#2B2B2B;
+
+    border:none;
+
+    transform:scale(1.12);
+
+}
+
+.day.gift{
+
+    background:#FFF5CC;
+
+    border:none;
+
+    font-size:17px;
+
+}
+
+.line{
+
+    width:12px;
+    height:3px;
+
+    background:#E6E6E6;
+
+}
+
+.line.done{
+
+    background:#8ED8F8;
+
+}
 
 .reward{
 
@@ -187,6 +262,19 @@ main{
     font-weight:800;
 
     cursor:pointer;
+
+}
+    .check-status{
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#666;
 
 }
 
@@ -408,12 +496,36 @@ Inicia sesión para conseguir puntos.
 </div>
 
 </div>
+<div class="check-days">
 
+    <div class="day done">1</div>
+    <div class="line done"></div>
+
+    <div class="day done">2</div>
+    <div class="line done"></div>
+
+    <div class="day today">3</div>
+    <div class="line"></div>
+
+    <div class="day">4</div>
+    <div class="line"></div>
+
+    <div class="day">5</div>
+    <div class="line"></div>
+
+    <div class="day">6</div>
+    <div class="line"></div>
+
+    <div class="day gift">🎁</div>
+
+</div>
 <div class="reward">
 
 <div>
 
-<div>Día 1 de 7</div>
+<div class="check-status">
+Día 3 de 7
+</div>
 
 <span>+5 pts</span>
 
