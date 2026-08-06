@@ -297,30 +297,16 @@ main{
     display:flex;
     gap:12px;
     margin:20px 0 18px;
+    width:100%;
 }
 
 .tab{
     flex:1;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    height:48px;
-
-    border-radius:24px;
-    background:#fff;
-
-    font-size:17px;
-    font-weight:700;
-    color:#333;
-
-    box-shadow:0 4px 12px rgba(0,0,0,.04);
-    transition:.25s;
-
+    display:flex !important;
+    justify-content:center !important;
+    align-items:center !important;
     text-align:center;
-    padding:0;
-    margin:0;
+    padding:0 !important;
 }
 .tab.active{
     background:var(--blue);
