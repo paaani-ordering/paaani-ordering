@@ -234,17 +234,20 @@ main{
 /* ---------- 商品 ---------- */
 
 .products{
-    display:flex;
-    flex-wrap:wrap;
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
     gap:16px;
+    padding:0;
 }
     
 .card{
-    width:calc(50% - 8px);
+    width:100%;
+    min-width:0;
     background:#fff;
     border-radius:22px;
     overflow:hidden;
-    box-shadow:0 8px 20px rgba(0,0,0,.06);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
 
 .product-image{
