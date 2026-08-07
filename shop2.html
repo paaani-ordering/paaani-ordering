@@ -431,23 +431,6 @@ box-shadow:0 6px 16px rgba(142,216,248,.35);
 
   z-index: 9999;
 }
-    .badge{
-    position:absolute;
-
-    top:12px;
-    left:12px;
-
-    background:#F7D86B;
-
-    color:#444;
-
-    padding:4px 10px;
-
-    border-radius:999px;
-
-    font-size:11px;
-    font-weight:700;
-}
 
 /* 每个按钮 */
 .nav-item {
@@ -801,7 +784,7 @@ list.forEach(product => {
 
   productsContainer.innerHTML += `
 <div class="card" onclick="openProduct(${product.id})">
-<div class="badge">${product.badge || ""}</div>
+
 <img
     class="product-image"
     src="${product.image}"
