@@ -497,7 +497,82 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 .nav-item.active {
   color: #8ed8f8;
 }
+.sheet-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
 
+    display:none;
+    align-items:flex-end;
+
+    z-index:999;
+}
+
+.sheet{
+    width:100%;
+    background:#fff;
+    border-radius:28px 28px 0 0;
+    padding:24px;
+
+    animation:up .25s;
+}
+
+@keyframes up{
+    from{
+        transform:translateY(100%);
+    }
+    to{
+        transform:translateY(0);
+    }
+}
+
+.sheet-bar{
+    width:42px;
+    height:5px;
+    background:#ddd;
+    border-radius:999px;
+    margin:auto;
+    margin-bottom:20px;
+}
+    .sheet img{
+    width:180px;
+    height:180px;
+    object-fit:contain;
+    display:block;
+    margin:10px auto 20px;
+}
+
+.sheet h2{
+    text-align:center;
+    font-size:22px;
+    margin-bottom:14px;
+}
+
+.option{
+    border:2px solid #eee;
+    border-radius:18px;
+    padding:16px;
+    margin-top:12px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.option.active{
+    border-color:#8ED8F8;
+    background:#F3FBFF;
+}
+
+.continue-btn{
+    width:100%;
+    margin-top:24px;
+    height:54px;
+    border:none;
+    border-radius:999px;
+    background:#8ED8F8;
+    color:#fff;
+    font-size:17px;
+    font-weight:800;
+}
 </style>
 </head>
 
@@ -705,7 +780,7 @@ loadProducts();
         .select("*")
         .eq("active", true)
         .order("display_order");
-window.productsResponse = data;
+window.products = data;
     if (error) {
         console.error(error);
         return;
@@ -727,9 +802,11 @@ list.forEach(product => {
   productsContainer.innerHTML += `
 <div class="card" onclick="openProduct(${product.id})">
 <div class="badge">${product.badge || ""}</div>
-<img class="product-image"
-src="${product.image}"
-alt="${product.name}">
+<img
+    class="product-image"
+    src="${product.image}"
+    alt="${product.name}"
+>
 
 <div class="info">
 
@@ -768,36 +845,84 @@ tabs.forEach(tab => {
     });
 
 }); 
-  function openProduct(id){
 
-    const product = window.productsResponse?.find(p => p.id == id);
+  document.getElementById("productSheet").onclick = function(e){
 
-    if(!product){
-        alert("Producto no encontrado");
-        return;
+    if(e.target === this){
+        this.style.display = "none";
     }
 
-    const usePoints = confirm(
-`${product.name}
+};
+    let buyType = "points";
 
-⭐ ${product.points} pts
+document.querySelectorAll(".option").forEach(item=>{
 
-确定使用积分兑换吗？
+    item.onclick=function(e){
 
-点击【确定】= 积分兑换
-点击【取消】= 现金购买 (€${product.price})`
-    );
+        e.stopPropagation();
 
-    if(usePoints){
-        // 跳到积分兑换
-        window.location.href = `checkout.html?id=${id}&type=points`;
-    }else{
-        // 跳到现金购买
-        window.location.href = `checkout.html?id=${id}&type=buy`;
-    }
+        document
+            .querySelectorAll(".option")
+            .forEach(x=>x.classList.remove("active"));
 
-}  
+        this.classList.add("active");
+
+        buyType=this.dataset.type;
+
+    };
+
+});
+    let currentProduct = null;
+
+function openProduct(id){
+
+    currentProduct = window.products.find(x=>x.id==id);
+
+    document.getElementById("sheetImage").src=currentProduct.image;
+    document.getElementById("sheetName").innerText=currentProduct.name;
+    document.getElementById("sheetPoints").innerText=
+        "⭐ "+currentProduct.points+" pts";
+    document.getElementById("sheetPrice").innerText=
+        "€"+currentProduct.price;
+
+    document.getElementById("productSheet").style.display="flex";
+}
+
+document.querySelector(".continue-btn").onclick=function(){
+
+    location.href=
+    `checkout.html?id=${currentProduct.id}&type=${buyType}`;
+
+};
 </script>
+<div id="productSheet" class="sheet-overlay">
 
+  <div class="sheet">
+
+    <div class="sheet-bar"></div>
+
+    <img id="sheetImage">
+
+    <h2 id="sheetName"></h2>
+    <p id="sheetDescription"></p>
+
+    <div id="sheetPoints" class="points"></div>
+
+    <div class="option active" data-type="points">
+      ⭐ 积分兑换
+    </div>
+
+    <div class="option" data-type="buy">
+      💳 现金购买
+      <span id="sheetPrice"></span>
+    </div>
+
+    <button class="continue-btn">
+      Continuar
+    </button>
+
+  </div>
+
+</div>
 </body>
 </html>
