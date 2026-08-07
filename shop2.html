@@ -705,7 +705,7 @@ loadProducts();
         .select("*")
         .eq("active", true)
         .order("display_order");
-
+window.productsResponse = data;
     if (error) {
         console.error(error);
         return;
@@ -725,7 +725,7 @@ list.forEach(product => {
         
 
   productsContainer.innerHTML += `
-<div class="card">
+<div class="card" onclick="openProduct(${product.id})">
 <div class="badge">${product.badge || ""}</div>
 <img class="product-image"
 src="${product.image}"
@@ -745,13 +745,6 @@ ${product.description || ""}
     ⭐ ${product.points} pts
 </div>
 
-<div class="price">
-    €${product.price}
-</div>
-
-<button class="exchange">
-    Canjear
-</button>
 </div>
 
 </div>
@@ -774,7 +767,36 @@ tabs.forEach(tab => {
 
     });
 
-});   
+}); 
+  function openProduct(id){
+
+    const product = window.productsResponse?.find(p => p.id == id);
+
+    if(!product){
+        alert("Producto no encontrado");
+        return;
+    }
+
+    const usePoints = confirm(
+`${product.name}
+
+⭐ ${product.points} pts
+
+确定使用积分兑换吗？
+
+点击【确定】= 积分兑换
+点击【取消】= 现金购买 (€${product.price})`
+    );
+
+    if(usePoints){
+        // 跳到积分兑换
+        window.location.href = `checkout.html?id=${id}&type=points`;
+    }else{
+        // 跳到现金购买
+        window.location.href = `checkout.html?id=${id}&type=buy`;
+    }
+
+}  
 </script>
 
 </body>
