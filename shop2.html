@@ -1,8 +1,3 @@
-<body>
-
-<h1 style="background:red;color:white;font-size:40px">
-TEST
-</h1>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,64 +45,91 @@ a{
 
 }
 
-header{
+/*================ HEADER ================*/
 
-    position:sticky;
-    top:0;
-    z-index:99;
+.header{
 
-    background:rgba(255,255,255,.75);
-    backdrop-filter:blur(20px);
-
-    padding:
-
-    20px
-    18px
-    14px;
-
-}
-
-.top{
+    padding:24px 20px 18px;
 
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 
 }
 
-.back{
-
-    width:40px;
-    height:40px;
-
-    border-radius:50%;
-    background:white;
+.greeting{
 
     display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+}
+
+.hello{
+
+    font-size:15px;
+
+    color:#888;
+
+    font-weight:700;
+
+}
+
+.shop-title{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#2B2B2B;
+
+}
+
+.points-card{
+
+    width:74px;
+
+    height:74px;
+
+    border-radius:22px;
+
+    background:#8ED8F8;
+
+    display:flex;
+
+    flex-direction:column;
+
     justify-content:center;
+
     align-items:center;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.05);
+    color:#fff;
+
+    box-shadow:0 12px 30px rgba(142,216,248,.35);
 
 }
 
-.title{
+.points-num{
 
-    font-size:24px;
+    font-size:26px;
+
     font-weight:800;
+
+    line-height:1;
 
 }
 
-.points{
+.points-text{
 
-    background:var(--blue);
-    color:white;
+    margin-top:2px;
 
-    padding:10px 18px;
+    font-size:13px;
 
-    border-radius:999px;
-
-    font-weight:800;
+    font-weight:700;
 
 }
 
@@ -120,64 +142,51 @@ main{
 /* ---------- Check-in ---------- */
 
 .checkin{
-    background:white;
-    border-radius:22px;    
-    padding:18px;          
-    box-shadow:0 10px 25px rgba(0,0,0,.05);
-    margin-bottom:16px;      
+    background:#fff;
+    border-radius:26px;
+    padding:22px;
+    margin-bottom:22px;
+    box-shadow:0 12px 35px rgba(0,0,0,.06);
 }
 
 .check-top{
-
     display:flex;
     justify-content:space-between;
-    align-items:center;
-
+    align-items:flex-start;
 }
 
 .check-title{
-
-    font-size:18px;
+    font-size:22px;
     font-weight:800;
-
 }
 
 .check-sub{
-
     margin-top:6px;
-
-    color:#666;
-
     font-size:14px;
-
+    color:#8A8A8A;
 }
-    .check-days{
+
+.check-days{
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:0;
-    margin:18px 0;
+    margin:24px 0;
 }
+
 .day{
-    width:30px;
-    height:30px;
-
+    width:34px;
+    height:34px;
     border-radius:50%;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
+    border:2px solid #E8E8E8;
     background:#fff;
-
-    border:2px solid #E7E7E7;
-
     color:#999;
-
     font-size:14px;
     font-weight:700;
-
     flex-shrink:0;
+    transition:.25s;
 }
 
 .day.done{
@@ -187,112 +196,76 @@ main{
 }
 
 .day.today{
-
     background:#F7D86B;
-
     border-color:#F7D86B;
-
     color:#333;
-
-    transform:scale(1.15);
-
+    transform:scale(1.18);
+    box-shadow:0 6px 15px rgba(247,216,107,.45);
 }
 
 .day.gift{
-
-    background:#FFF3BF;
-
-    border-color:#FFF3BF;
-
+    background:#FFF7D8;
+    border-color:#FFF7D8;
     font-size:18px;
-
 }
 
 .line{
-
-    width:10px;
-
-    height:2px;
-
-    background:#E5E5E5;
-
-    border-radius:99px;
-
+    width:12px;
+    height:3px;
+    background:#ECECEC;
+    border-radius:999px;
 }
+
 .line.done{
-
     background:#8ED8F8;
-
 }
 
 .reward{
-
     display:flex;
     justify-content:space-between;
-    align-items:center;
-
+    align-items:flex-end;
     margin-top:10px;
-
 }
-.reward span{
 
-    font-size:28px;
-    font-weight:800;
-    color:#27ae60;
-
-}
- .reward-left{
-
+.reward-left{
     display:flex;
     flex-direction:column;
-
-    gap:2px;
-
 }
-    .reward-points{
 
-    font-size:34px;
-
+.reward-points{
+    font-size:36px;
     font-weight:800;
-
-    color:#20B25C;
-
+    color:#21B15C;
     line-height:1;
-
+    margin-top:4px;
 }
 
 .check-btn{
-
-    width:135px;
-
-    height:42px;
-
+    width:138px;
+    height:46px;
     border:none;
-
-    border-radius:22px;
-
+    border-radius:999px;
     background:#8ED8F8;
-
     color:#fff;
-
     font-size:15px;
-
-    font-weight:700;
-
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(142,216,248,.35);
+    transition:.2s;
 }
-    .check-btn:active{
 
+.check-btn:hover{
+    transform:translateY(-2px);
+}
+
+.check-btn:active{
     transform:scale(.96);
-
 }
-    .check-status{
 
+.check-status{
     font-size:14px;
-
     font-weight:700;
-
-    color:#666;
-
+    color:#777;
 }
 
 /* ---------- 分类 ---------- */
@@ -494,90 +467,109 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
 <body>
 
-<header>
+<header class="header">
 
-<div class="top">
+    <div class="greeting">
 
-<div class="back">←</div>
+        <div class="hello">
+            ☀️ Buenos días
+        </div>
 
-<div class="title">
+        <div class="shop-title">
+            Tienda
+        </div>
 
-Tienda
+    </div>
 
-</div>
+    <div class="points-card">
 
-<div class="points">
+        <div class="points-num">
+            0
+        </div>
 
-0 pts
+        <div class="points-text">
+            pts
+        </div>
 
-</div>
-
-</div>
+    </div>
 
 </header>
 
 <main>
 
-<div class="checkin">
+ <div class="checkin">
 
-<div class="check-top">
+    <div class="check-header">
 
-<div>
+        <div>
 
-<div class="check-title">
-☀️ Check-in diario
-</div>
+            <div class="check-title">
+                🐶 Check-in diario
+            </div>
 
-<div class="check-sub">
-Inicia sesión para conseguir puntos.
-</div>
+            <div class="check-sub">
+                ¡Vuelve cada día para ganar más puntos!
+            </div>
 
-</div>
-
-</div>
-<div class="check-days">
-
-   <div class="day done">1</div>
-<div class="line done"></div>
-
-<div class="day done">2</div>
-<div class="line done"></div>
-
-<div class="day today">3</div>
-<div class="line"></div>
-
-<div class="day">4</div>
-<div class="line"></div>
-
-<div class="day">5</div>
-<div class="line"></div>
-
-<div class="day">6</div>
-<div class="line"></div>
-
-<div class="day gift">🎁</div>
-</div>
-<div class="reward">
-
-    <div class="reward-left">
-
-        <div class="check-status">
-            Día 3 de 7
         </div>
 
-        <div class="reward-points">
+        <div class="today-badge">
             +5 pts
         </div>
 
     </div>
 
-    <button class="check-btn">
-        🐾 Check-in
-    </button>
+    <div class="check-days">
 
-</div>
+        <div class="day done">1</div>
+        <div class="line done"></div>
 
-</div>
+        <div class="day done">2</div>
+        <div class="line done"></div>
+
+        <div class="day today">3</div>
+        <div class="line"></div>
+
+        <div class="day">4</div>
+        <div class="line"></div>
+
+        <div class="day">5</div>
+        <div class="line"></div>
+
+        <div class="day">6</div>
+        <div class="line"></div>
+
+        <div class="day gift">🎁</div>
+
+    </div>
+
+    <div class="reward">
+
+        <div class="reward-left">
+
+            <div class="check-status">
+
+                Día 3 de 7
+
+            </div>
+
+            <div class="reward-points">
+
+                +5 pts
+
+            </div>
+
+        </div>
+
+        <button class="check-btn">
+
+            Check-in
+
+        </button>
+
+    </div>
+
+</div>   
 
 <div class="tabs">
 
