@@ -316,6 +316,8 @@ main{
     overflow:hidden;
     box-shadow:0 6px 20px rgba(0,0,0,.05);
     transition:.25s;
+    width:100%;
+    box-sizing:border-box;
 }
 
 .card:active{
@@ -325,17 +327,16 @@ main{
     width:100%;
     aspect-ratio:1/1;
     object-fit:contain;
-    padding:10px;
-    background:#FAFBFD;
+    padding:8px;
 }
 .info{
     padding:14px;
 }
 
 .name{
-    font-size:16px;
-    line-height:1.35;
-    font-weight:800;
+    font-size:15px;
+    line-height:1.3;
+    font-weight:700;
     color:#2B2B2B;
 
     display:-webkit-box;
@@ -359,9 +360,26 @@ main{
 }
 
 .price{
-    font-size:26px;
+    font-size:22px;
     line-height:1;
     font-weight:800;
+}
+    .points{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:10px;
+
+    padding:6px 12px;
+
+    background:#FFF4C8;
+    color:#C18A00;
+
+    border-radius:999px;
+
+    font-size:13px;
+    font-weight:700;
 }
 
 .price span{
@@ -708,7 +726,7 @@ list.forEach(product => {
 
   productsContainer.innerHTML += `
 <div class="card">
-
+<div class="badge">${product.badge || ""}</div>
 <img class="product-image"
 src="${product.image}"
 alt="${product.name}">
@@ -723,14 +741,17 @@ ${product.name}
 ${product.description || ""}
 </div>
 
+<div class="points">
+    ⭐ ${product.points} pts
+</div>
+
 <div class="price">
-€${product.price}
+    €${product.price}
 </div>
 
 <button class="exchange">
-${product.points} pts
+    Canjear
 </button>
-
 </div>
 
 </div>
