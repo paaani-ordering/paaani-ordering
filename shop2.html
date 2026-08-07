@@ -572,11 +572,17 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
 <div class="tabs">
 
-<div class="tab active">Todo</div>
+    <div class="tab active" data-type="all">
+        Todo
+    </div>
 
-<div class="tab">Merch</div>
+    <div class="tab" data-type="merch">
+        Merch
+    </div>
 
-<div class="tab">Cupones</div>
+    <div class="tab" data-type="coupon">
+        Cupones
+    </div>
 
 </div>
 
@@ -652,6 +658,8 @@ const supabaseClient = window.supabase.createClient(
 );
 const productsContainer = document.querySelector(".products");
 
+let currentType = "all";
+
 loadProducts();
     async function loadProducts() {
 
@@ -667,7 +675,17 @@ loadProducts();
     }
     productsContainer.innerHTML = "";
 
-data.forEach(product => {
+// 分类过滤
+const list = data.filter(product => {
+
+    if(currentType === "all") return true;
+
+    return product.type === currentType;
+
+});
+
+list.forEach(product => {
+        
 
   productsContainer.innerHTML += `
 <div class="card">
@@ -700,6 +718,23 @@ ${product.points} pts
 `;
 });
 }
+ const tabs = document.querySelectorAll(".tab");
+
+tabs.forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+        tabs.forEach(t => t.classList.remove("active"));
+
+        tab.classList.add("active");
+
+        currentType = tab.dataset.type;
+
+        loadProducts();
+
+    });
+
+});   
 </script>
 
 </body>
