@@ -680,7 +680,7 @@ const list = data.filter(product => {
 
     if(currentType === "all") return true;
 
-    return product.type === currentType;
+    return (product.category || "").toLowerCase() === currentType.toLowerCase();
 
 });
 
