@@ -906,9 +906,35 @@ document.querySelector(".continue-btn").onclick=function(){
     if (pointsBox) {
         pointsBox.textContent = points;
     }
-
+    updateCheckinDays();
     alert("+5 pts 🎉");
 }
+    // ===== 更新签到圆圈 =====
+function updateCheckinDays() {
+    const days = document.querySelectorAll(".check-days .day:not(.gift)");
+
+    let checkinDay = parseInt(
+        localStorage.getItem("paaniCheckinDay")
+    ) || 1;
+
+    // 已完成的天数
+    const completedDay = checkinDay - 1;
+
+    days.forEach((day, index) => {
+        const dayNumber = index + 1;
+
+        day.classList.remove("done", "today");
+
+        if (dayNumber <= completedDay) {
+            day.classList.add("done");
+        } else if (dayNumber === checkinDay) {
+            day.classList.add("today");
+        }
+    });
+}
+
+// 页面打开时更新
+updateCheckinDays();
 </script>
 <div id="productSheet" class="sheet-overlay">
 
