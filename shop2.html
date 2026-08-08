@@ -870,6 +870,7 @@ let checkinDay = parseInt(localStorage.getItem("paaniCheckinDay")) || 1;
 checkStatus.textContent = `Día ${checkinDay} de 7`;
 
 checkBtn.addEventListener("click", () => {
+    alert("按钮被点击了");
 
     if (checkinDay >= 7) {
         alert("¡Ya completaste los 7 días! 🎁");
