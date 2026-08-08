@@ -911,27 +911,29 @@ document.querySelector(".continue-btn").onclick=function(){
 }
     // ===== 更新签到圆圈 =====
 function updateCheckinDays() {
-    const days = document.querySelectorAll(".check-days .day:not(.gift)");
+    const days = document.querySelectorAll(".check-days .day");
 
-    let checkinDay = parseInt(
-        localStorage.getItem("paaniCheckinDay")
-    ) || 1;
-
-    // 已完成的天数
-    const completedDay = checkinDay - 1;
+    const checkinDay =
+        parseInt(localStorage.getItem("paaniCheckinDay")) || 1;
 
     days.forEach((day, index) => {
+        if (day.classList.contains("gift")) return;
+
         const dayNumber = index + 1;
 
-        day.classList.remove("done", "today");
+        day.classList.remove("done");
+        day.classList.remove("today");
 
-        if (dayNumber <= completedDay) {
+        if (dayNumber < checkinDay) {
             day.classList.add("done");
         } else if (dayNumber === checkinDay) {
             day.classList.add("today");
         }
     });
 }
+window.addEventListener("DOMContentLoaded", function () {
+    updateCheckinDays();
+});    
 
 // 页面打开时更新
 updateCheckinDays();
