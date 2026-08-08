@@ -868,6 +868,7 @@ document.querySelector(".continue-btn").onclick=function(){
     let points = parseInt(localStorage.getItem("paaniPoints")) || 0;
 
     const today = new Date().toDateString();
+       alert("当前签到天数：" + checkinDay);
     const lastCheckin = localStorage.getItem("paaniLastCheckin");
 
     // 今天已经签到
