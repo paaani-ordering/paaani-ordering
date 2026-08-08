@@ -854,29 +854,7 @@ function openProduct(id){
     currentProduct = window.products.find(x=>x.id==id);
 
     document.getElementById("sheetImage").src=currentProduct.image;
-    let detailImages = [];
-
-if (currentProduct.images) {
-    try {
-        detailImages = Array.isArray(currentProduct.images)
-            ? currentProduct.images
-            : JSON.parse(currentProduct.images);
-    } catch (e) {
-        detailImages = [currentProduct.images];
-    }
-}
-
-const gallery = document.getElementById("sheetGallery");
-
-if (gallery) {
-    gallery.innerHTML = "";
-
-    detailImages.forEach(function(img) {
-        const image = document.createElement("img");
-        image.src = img;
-        gallery.appendChild(image);
-    });
-}
+    
     document.getElementById("sheetName").innerText=currentProduct.name;
     document.getElementById("sheetPoints").innerText=
         "⭐ "+currentProduct.points+" pts";
