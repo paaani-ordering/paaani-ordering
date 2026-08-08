@@ -902,7 +902,7 @@ extraImages
     .filter(img => img && img !== currentProduct.image)
     .forEach(img => {
         const image = document.createElement("img");
-        image.src = img;
+        image.src = img.trim();
         image.style.width = "100%";
         image.style.borderRadius = "14px";
         image.style.marginBottom = "12px";
