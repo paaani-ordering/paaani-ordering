@@ -908,7 +908,6 @@ document.querySelector(".continue-btn").onclick=function(){
         pointsBox.textContent = points;
     }
     updateCheckinDays();
-    alert("+5 pts 🎉");
 }
     // ===== 更新签到圆圈 =====
 function updateCheckinDays() {
@@ -918,7 +917,8 @@ function updateCheckinDays() {
     let checkinDay = parseInt(
         localStorage.getItem("paaniCheckinDay")
     ) || 1;
-
+const status = document.querySelector(".check-status");
+if (status) status.textContent = `Día ${checkinDay} de 7`;
     days.forEach((day, index) => {
 
         // 礼物不处理
