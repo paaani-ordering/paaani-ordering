@@ -913,22 +913,30 @@ document.querySelector(".continue-btn").onclick=function(){
 function updateCheckinDays() {
 
     const days = document.querySelectorAll(".check-days .day");
-
-    const checkinDay =
-        parseInt(localStorage.getItem("paaniCheckinDay")) || 1;
+    
+    let checkinDay = parseInt(
+        localStorage.getItem("paaniCheckinDay")
+    ) || 1;
 
     days.forEach((day, index) => {
 
+        // 礼物不处理
         if (day.classList.contains("gift")) return;
 
         const dayNumber = index + 1;
 
-        /* 先全部恢复灰色 */
+        // 先清除状态
         day.classList.remove("done");
         day.classList.remove("today");
 
-       
-        /* 已经签到的天数 */
+        // 恢复默认灰色
+        day.style.backgroundColor = "#fff";
+        day.style.borderColor = "#E5E5E5";
+        day.style.color = "#888";
+        day.style.transform = "scale(1)";
+        day.style.boxShadow = "none";
+
+        // 已完成 → 蓝色
         if (dayNumber < checkinDay) {
 
             day.classList.add("done");
@@ -936,10 +944,11 @@ function updateCheckinDays() {
             day.style.backgroundColor = "#8ED8F8";
             day.style.borderColor = "#8ED8F8";
             day.style.color = "#fff";
+
         }
 
-        /* 今天 */
-        if (dayNumber === checkinDay) {
+        // 今天 → 黄色
+        else if (dayNumber === checkinDay) {
 
             day.classList.add("today");
 
@@ -948,7 +957,9 @@ function updateCheckinDays() {
             day.style.color = "#333";
             day.style.transform = "scale(1.18)";
             day.style.boxShadow = "0 6px 15px rgba(247,216,107,.45)";
+
         }
+
     });
 }
 window.addEventListener("DOMContentLoaded", function () {
