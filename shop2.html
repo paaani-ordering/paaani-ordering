@@ -925,10 +925,12 @@ function updateCheckinDays() {
         day.classList.remove("today");
 
         if (dayNumber < checkinDay) {
-            day.classList.add("done");
-        } else if (dayNumber === checkinDay) {
-            day.classList.add("today");
-        }
+    day.classList.add("done");
+}
+
+if (dayNumber === checkinDay) {
+    day.classList.add("today");
+}
     });
 }
 window.addEventListener("DOMContentLoaded", function () {
