@@ -932,8 +932,6 @@ if (Array.isArray(currentProduct.images)) {
 // 去重
 images = [...new Set(images.filter(img => img && img.trim()))];
 
-const gallery = document.getElementById("sheetGallery");
-
 gallery.innerHTML = "";
 
 const slider = document.createElement("div");
