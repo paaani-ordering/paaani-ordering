@@ -639,7 +639,9 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
         </div>
 
-       <button class="check-btn" onclick="alert('按钮被点击了')">
+       <button class="check-btn" onclick="doCheckIn()">
+    Check-in
+</button>
 
             Check-in
 
@@ -861,16 +863,8 @@ document.querySelector(".continue-btn").onclick=function(){
     `checkout.html?id=${currentProduct.id}&type=${buyType}`;
 
 };
-    // ===== Check-in =====
-const checkBtn = document.querySelector(".check-btn");
-const checkStatus = document.querySelector(".check-status");
-
-let checkinDay = parseInt(localStorage.getItem("paaniCheckinDay")) || 1;
-
-checkStatus.textContent = `Día ${checkinDay} de 7`;
-
-checkBtn.addEventListener("click", () => {
-    alert("按钮被点击了");
+   function doCheckIn() {
+    let checkinDay = parseInt(localStorage.getItem("paaniCheckinDay")) || 1;
 
     if (checkinDay >= 7) {
         alert("¡Ya completaste los 7 días! 🎁");
@@ -881,10 +875,11 @@ checkBtn.addEventListener("click", () => {
 
     localStorage.setItem("paaniCheckinDay", checkinDay);
 
-    checkStatus.textContent = `Día ${checkinDay} de 7`;
+    document.querySelector(".check-status").textContent =
+        `Día ${checkinDay} de 7`;
 
     alert("+5 pts 🎉");
-});
+}
 </script>
 <div id="productSheet" class="sheet-overlay">
 
