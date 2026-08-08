@@ -639,14 +639,9 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
         </div>
 
-       <button class="check-btn" onclick="doCheckIn()">
+     <button class="check-btn" id="checkInBtn" onclick="doCheckIn()">
     Check-in
 </button>
-
-            Check-in
-
-        </button>
-
     </div>
 
 </div>   
@@ -863,51 +858,134 @@ document.querySelector(".continue-btn").onclick=function(){
     `checkout.html?id=${currentProduct.id}&type=${buyType}`;
 
 };
-   function doCheckIn() {
-    let checkinDay = parseInt(localStorage.getItem("paaniCheckinDay")) || 1;
-    let points = parseInt(localStorage.getItem("paaniPoints")) || 0;
+function updatePoints(points) {
 
-    const today = new Date().toDateString();
-       alert("当前签到天数：" + checkinDay);
-    const lastCheckin = localStorage.getItem("paaniLastCheckin");
-
-    // 今天已经签到
-    if (lastCheckin === today) {
-        alert("Hoy ya has hecho check-in ✅");
-        return;
-    }
-
-    // 7天完成
-    if (checkinDay > 7) {
-        alert("¡Ya completaste los 7 días! 🎁");
-        return;
-    }
-
-    // 签到
-    points += 5;
-
-    // 今天签到记录
-    localStorage.setItem("paaniLastCheckin", today);
-
-    // 如果是第7天，完成7天
-    if (checkinDay === 7) {
-        localStorage.setItem("paaniCheckinDay", "8");
-    } else {
-        localStorage.setItem("paaniCheckinDay", checkinDay + 1);
-    }
-
-    localStorage.setItem("paaniPoints", points);
-
-    // 更新页面
-    document.querySelector(".check-status").textContent =
-        `Día ${checkinDay} de 7`;
-
-    const pointsBox = document.querySelector(".points-num");
+    const pointsBox =
+        document.querySelector(".points-num");
 
     if (pointsBox) {
         pointsBox.textContent = points;
     }
+}
+
+
+function updateCheckinButton() {
+
+    const button =
+        document.getElementById("checkInBtn");
+
+    if (!button) return;
+
+    const today = new Date().toDateString();
+
+    const lastCheckin =
+        localStorage.getItem("paaniLastCheckin");
+
+    const checkinDay =
+        parseInt(
+            localStorage.getItem("paaniCheckinDay")
+        ) || 1;
+
+    if (lastCheckin === today) {
+
+        button.textContent = "✓ Checked in";
+        button.disabled = true;
+
+        button.style.opacity = "0.6";
+        button.style.cursor = "default";
+
+    } else if (checkinDay > 7) {
+
+        button.textContent = "✓ Completado";
+        button.disabled = true;
+
+        button.style.opacity = "0.6";
+        button.style.cursor = "default";
+
+    } else {
+
+        button.textContent = "Check-in";
+        button.disabled = false;
+
+        button.style.opacity = "1";
+        button.style.cursor = "pointer";
+    }
+}
+
+
+function doCheckIn() {
+
+    let checkinDay =
+        parseInt(
+            localStorage.getItem("paaniCheckinDay")
+        ) || 1;
+
+    let points =
+        parseInt(
+            localStorage.getItem("paaniPoints")
+        ) || 0;
+
+    const today = new Date().toDateString();
+
+    const lastCheckin =
+        localStorage.getItem("paaniLastCheckin");
+
+
+    if (lastCheckin === today) {
+
+        updateCheckinButton();
+
+        return;
+    }
+
+
+    if (checkinDay > 7) {
+
+        updateCheckinButton();
+
+        return;
+    }
+
+
+    // +5 积分
+    points += 5;
+
+
+    // 保存今天签到
+    localStorage.setItem(
+        "paaniLastCheckin",
+        today
+    );
+
+
+    // 进入下一天
+    if (checkinDay === 7) {
+
+        localStorage.setItem(
+            "paaniCheckinDay",
+            "8"
+        );
+
+    } else {
+
+        localStorage.setItem(
+            "paaniCheckinDay",
+            String(checkinDay + 1)
+        );
+    }
+
+
+    // 保存积分
+    localStorage.setItem(
+        "paaniPoints",
+        String(points)
+    );
+
+
+    // 更新页面
     updateCheckinDays();
+    updatePoints(points);
+    updateCheckinButton();
 }
     // ===== 更新签到圆圈 =====
 function updateCheckinDays() {
@@ -964,11 +1042,16 @@ if (status) status.textContent = `Día ${checkinDay} de 7`;
     });
 }
 window.addEventListener("DOMContentLoaded", function () {
-    updateCheckinDays();
-});    
 
-// 页面打开时更新
-updateCheckinDays();
+    updateCheckinDays();
+
+    const points =
+        parseInt(localStorage.getItem("paaniPoints")) || 0;
+
+    updatePoints(points);
+    updateCheckinButton();
+
+});
 </script>
 <div id="productSheet" class="sheet-overlay">
 
