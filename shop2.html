@@ -1043,7 +1043,9 @@ function doCheckIn() {
     // 更新页面
     updateCheckinDays();
 
-    updatePoints(points);
+   document.querySelectorAll(".points-num").forEach(function(el) {
+    el.textContent = String(points);
+});
 
     updateCheckinButton();
 }
