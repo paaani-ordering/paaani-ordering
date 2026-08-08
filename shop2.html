@@ -805,8 +805,7 @@ list.forEach(product => {
         
 
   productsContainer.innerHTML += `
-<div class="card" onclick="openProduct(${product.id})">
-
+<div class="card" onclick="openProduct('${product.id}')">
 <img
     class="product-image"
     src="${product.image}"
