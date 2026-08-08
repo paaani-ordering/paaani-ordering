@@ -854,8 +854,19 @@ function openProduct(id){
     currentProduct = window.products.find(x=>x.id==id);
 
     document.getElementById("sheetImage").src=currentProduct.image;
-    const detailImages = currentProduct.images || [];
-    const gallery = document.getElementById("sheetGallery");
+    let detailImages = [];
+
+if (currentProduct.images) {
+    try {
+        detailImages = Array.isArray(currentProduct.images)
+            ? currentProduct.images
+            : JSON.parse(currentProduct.images);
+    } catch (e) {
+        detailImages = [currentProduct.images];
+    }
+}
+
+const gallery = document.getElementById("sheetGallery");
 
 if (gallery) {
     gallery.innerHTML = "";
