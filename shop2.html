@@ -7,6 +7,7 @@
 <title>Tienda | Paaani</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<div id="productSheet" class="sheet-overlay">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -821,13 +822,13 @@ tabs.forEach(tab => {
 
 }); 
 
-  document.getElementById("productSheet").onclick = function(e){
+  document.getElementById("productSheet")?.addEventListener("click", function(e){
 
     if(e.target === this){
         this.style.display = "none";
     }
 
-};
+});
     let buyType = "points";
 
 document.querySelectorAll(".option").forEach(item=>{
@@ -864,12 +865,12 @@ function openProduct(id){
     document.getElementById("productSheet").style.display="flex";
 }
 
-document.querySelector(".continue-btn").onclick=function(){
+document.querySelector(".continue-btn")?.addEventListener("click", function(){
 
-    location.href=
+    location.href =
     `checkout.html?id=${currentProduct.id}&type=${buyType}`;
 
-};
+});
 function updatePoints(points) {
 
     const pointsBox =
@@ -1140,7 +1141,8 @@ localStorage.removeItem("paaniCheckinCompleted");
 });
     
 </script>
-<div id="productSheet" class="sheet-overlay">
+
+  <div id="productSheet" class="sheet-overlay">
 
   <div class="sheet">
 
