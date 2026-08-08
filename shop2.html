@@ -913,35 +913,43 @@ gallery.innerHTML = "";
     // 多图左右滑动
 let images = [];
 
+// 主图
 if (currentProduct.image) {
     images.push(currentProduct.image);
 }
 
-if (Array.isArray(currentProduct.images)) {
-    images = images.concat(currentProduct.images);
-} else if (currentProduct.images) {
-    try {
-        const parsed = JSON.parse(currentProduct.images);
-        if (Array.isArray(parsed)) {
-            images = images.concat(parsed);
+// 多图
+if (currentProduct.images) {
+    if (Array.isArray(currentProduct.images)) {
+        images = images.concat(currentProduct.images);
+    } else {
+        try {
+            const parsed = JSON.parse(currentProduct.images);
+            if (Array.isArray(parsed)) {
+                images = images.concat(parsed);
+            }
+        } catch (e) {
+            console.log("images 解析失败", e);
         }
-    } catch(e) {}
+    }
 }
 
-// 去重
-images = [...new Set(images.filter(img => img && img.trim()))];
-
-gallery.innerHTML = "";
+// 去重 + 清理空地址
+images = [...new Set(
+    images.filter(img => img && img.trim())
+)];
 
 const slider = document.createElement("div");
 slider.className = "image-slider";
 
 images.forEach(img => {
+
     const image = document.createElement("img");
 
     image.src = img.trim();
 
     slider.appendChild(image);
+
 });
 
 gallery.appendChild(slider);
