@@ -883,6 +883,31 @@ function openProduct(id){
     currentProduct = window.products.find(x=>x.id==id);
 
     document.getElementById("sheetImage").src=currentProduct.image;
+    const gallery = document.getElementById("sheetGallery");
+gallery.innerHTML = "";
+
+let extraImages = [];
+
+if (Array.isArray(currentProduct.images)) {
+    extraImages = currentProduct.images;
+} else if (currentProduct.images) {
+    try {
+        extraImages = JSON.parse(currentProduct.images);
+    } catch(e) {
+        extraImages = String(currentProduct.images).split(",").map(x => x.trim());
+    }
+}
+
+extraImages
+    .filter(img => img && img !== currentProduct.image)
+    .forEach(img => {
+        const image = document.createElement("img");
+        image.src = img;
+        image.style.width = "100%";
+        image.style.borderRadius = "14px";
+        image.style.marginBottom = "12px";
+        gallery.appendChild(image);
+    });
     
     document.getElementById("sheetName").innerText=currentProduct.name;
     document.getElementById("sheetPoints").innerText=
