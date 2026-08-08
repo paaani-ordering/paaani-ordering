@@ -861,13 +861,12 @@ document.querySelector(".continue-btn").onclick=function(){
 function updatePoints(points) {
 
     const pointsBox =
-        document.querySelector(".points-num");
+        document.getElementById("pointsNum");
 
     if (pointsBox) {
-        pointsBox.textContent = points;
+        pointsBox.textContent = String(points);
     }
 }
-
 
 function updateCheckinButton() {
 
