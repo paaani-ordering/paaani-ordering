@@ -571,9 +571,9 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
     <div class="points-card">
 
-        <div class="points-num">
-            0
-        </div>
+        <div class="points-num" id="pointsNum">
+    0
+</div>
 
         <div class="points-text">
             pts
@@ -865,18 +865,47 @@ document.querySelector(".continue-btn").onclick=function(){
 };
    function doCheckIn() {
     let checkinDay = parseInt(localStorage.getItem("paaniCheckinDay")) || 1;
+    let points = parseInt(localStorage.getItem("paaniPoints")) || 0;
 
-    if (checkinDay >= 7) {
+    const today = new Date().toDateString();
+    const lastCheckin = localStorage.getItem("paaniLastCheckin");
+
+    // 今天已经签到
+    if (lastCheckin === today) {
+        alert("Hoy ya has hecho check-in ✅");
+        return;
+    }
+
+    // 7天完成
+    if (checkinDay > 7) {
         alert("¡Ya completaste los 7 días! 🎁");
         return;
     }
 
-    checkinDay++;
+    // 签到
+    points += 5;
 
-    localStorage.setItem("paaniCheckinDay", checkinDay);
+    // 今天签到记录
+    localStorage.setItem("paaniLastCheckin", today);
 
+    // 如果是第7天，完成7天
+    if (checkinDay === 7) {
+        localStorage.setItem("paaniCheckinDay", "8");
+    } else {
+        localStorage.setItem("paaniCheckinDay", checkinDay + 1);
+    }
+
+    localStorage.setItem("paaniPoints", points);
+
+    // 更新页面
     document.querySelector(".check-status").textContent =
         `Día ${checkinDay} de 7`;
+
+    const pointsBox = document.querySelector(".points-num");
+
+    if (pointsBox) {
+        pointsBox.textContent = points;
+    }
 
     alert("+5 pts 🎉");
 }
