@@ -911,26 +911,49 @@ document.querySelector(".continue-btn").onclick=function(){
 }
     // ===== 更新签到圆圈 =====
 function updateCheckinDays() {
+
     const days = document.querySelectorAll(".check-days .day");
 
     const checkinDay =
         parseInt(localStorage.getItem("paaniCheckinDay")) || 1;
 
     days.forEach((day, index) => {
+
         if (day.classList.contains("gift")) return;
 
         const dayNumber = index + 1;
 
+        /* 先全部恢复灰色 */
         day.classList.remove("done");
         day.classList.remove("today");
 
-        if (dayNumber < checkinDay) {
-    day.classList.add("done");
-}
+        day.style.backgroundColor = "#fff";
+        day.style.borderColor = "#E5E5E5";
+        day.style.color = "#888";
+        day.style.transform = "scale(1)";
+        day.style.boxShadow = "none";
 
-if (dayNumber === checkinDay) {
-    day.classList.add("today");
-}
+        /* 已经签到的天数 */
+        if (dayNumber < checkinDay) {
+
+            day.classList.add("done");
+
+            day.style.backgroundColor = "#8ED8F8";
+            day.style.borderColor = "#8ED8F8";
+            day.style.color = "#fff";
+        }
+
+        /* 今天 */
+        if (dayNumber === checkinDay) {
+
+            day.classList.add("today");
+
+            day.style.backgroundColor = "#F7D86B";
+            day.style.borderColor = "#F7D86B";
+            day.style.color = "#333";
+            day.style.transform = "scale(1.18)";
+            day.style.boxShadow = "0 6px 15px rgba(247,216,107,.45)";
+        }
     });
 }
 window.addEventListener("DOMContentLoaded", function () {
