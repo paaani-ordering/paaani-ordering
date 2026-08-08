@@ -554,6 +554,17 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
     font-size:17px;
     font-weight:800;
 }
+    #sheetGallery {
+    width: 100%;
+    margin-top: 18px;
+}
+
+#sheetGallery img {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+    border-radius: 14px;
+}
 </style>
 </head>
 
@@ -843,6 +854,18 @@ function openProduct(id){
     currentProduct = window.products.find(x=>x.id==id);
 
     document.getElementById("sheetImage").src=currentProduct.image;
+    const detailImages = currentProduct.images || [];
+    const gallery = document.getElementById("sheetGallery");
+
+if (gallery) {
+    gallery.innerHTML = "";
+
+    detailImages.forEach(function(img) {
+        const image = document.createElement("img");
+        image.src = img;
+        gallery.appendChild(image);
+    });
+}
     document.getElementById("sheetName").innerText=currentProduct.name;
     document.getElementById("sheetPoints").innerText=
         "⭐ "+currentProduct.points+" pts";
@@ -1126,6 +1149,7 @@ localStorage.removeItem("paaniCheckinCompleted");
     updateCheckinButton();
 
 });
+    
 </script>
 <div id="productSheet" class="sheet-overlay">
 
@@ -1134,6 +1158,8 @@ localStorage.removeItem("paaniCheckinCompleted");
     <div class="sheet-bar"></div>
 
     <img id="sheetImage">
+
+    <div id="sheetGallery"></div>
 
     <h2 id="sheetName"></h2>
     <p id="sheetDescription"></p>
