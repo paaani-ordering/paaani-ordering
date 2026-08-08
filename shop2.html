@@ -881,7 +881,7 @@ function updateCheckinButton() {
     const lastCheckin =
         localStorage.getItem("paaniLastCheckin");
 
-    const checkinDay =
+    let checkinDay =
         parseInt(
             localStorage.getItem("paaniCheckinDay")
         ) || 1;
@@ -894,15 +894,28 @@ function updateCheckinButton() {
         button.style.opacity = "0.6";
         button.style.cursor = "default";
 
-    } else if (checkinDay > 7) {
+   } else if (checkinDay > 7) {
 
-        button.textContent = "✓ Completado";
-        button.disabled = true;
+    checkinDay = 1;
 
-        button.style.opacity = "0.6";
-        button.style.cursor = "default";
+    localStorage.setItem(
+        "paaniCheckinDay",
+        "1"
+    );
 
-    } else {
+    localStorage.removeItem(
+        "paaniCheckinCompleted"
+    );
+
+    updateCheckinDays();
+
+    button.textContent = "Check-in";
+    button.disabled = false;
+
+    button.style.opacity = "1";
+    button.style.cursor = "pointer";
+
+} else {
 
         button.textContent = "Check-in";
         button.disabled = false;
@@ -931,23 +944,60 @@ function doCheckIn() {
         localStorage.getItem("paaniLastCheckin");
 
 
-    if (lastCheckin === today) {
+    // =========================
+    // 检查是否漏签
+    // =========================
 
-        updateCheckinButton();
+    if (lastCheckin) {
 
-        return;
+        const todayDate = new Date();
+        const lastDate = new Date(lastCheckin);
+
+        const todayOnly = new Date(
+            todayDate.getFullYear(),
+            todayDate.getMonth(),
+            todayDate.getDate()
+        );
+
+        const lastOnly = new Date(
+            lastDate.getFullYear(),
+            lastDate.getMonth(),
+            lastDate.getDate()
+        );
+
+        const diffDays =
+            Math.round(
+                (todayOnly - lastOnly) /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        // 今天已经签到
+        if (diffDays === 0) {
+
+            updateCheckinButton();
+
+            return;
+        }
+
+
+        // 漏了一天或更多 → 重新从第1天开始
+        if (diffDays > 1) {
+
+            checkinDay = 1;
+
+            localStorage.setItem(
+                "paaniCheckinDay",
+                "1"
+            );
+        }
     }
 
 
-    if (checkinDay > 7) {
+    // =========================
+    // 获得 5 积分
+    // =========================
 
-        updateCheckinButton();
-
-        return;
-    }
-
-
-    // +5 积分
     points += 5;
 
 
@@ -958,15 +1008,24 @@ function doCheckIn() {
     );
 
 
-    // 进入下一天
-    if (checkinDay === 7) {
+    // =========================
+    // 7天完成后开启新一轮
+    // =========================
 
-        localStorage.setItem(
-            "paaniCheckinDay",
-            "8"
-        );
+   if (checkinDay === 7) {
 
-    } else {
+    localStorage.setItem(
+        "paaniCheckinCompleted",
+        "true"
+    );
+
+    localStorage.setItem(
+        "paaniCheckinDay",
+        "8"
+    );
+
+} else {
+        // 正常进入下一天
 
         localStorage.setItem(
             "paaniCheckinDay",
@@ -984,7 +1043,9 @@ function doCheckIn() {
 
     // 更新页面
     updateCheckinDays();
+
     updatePoints(points);
+
     updateCheckinButton();
 }
     // ===== 更新签到圆圈 =====
@@ -992,11 +1053,23 @@ function updateCheckinDays() {
 
     const days = document.querySelectorAll(".check-days .day");
     
-    let checkinDay = parseInt(
-        localStorage.getItem("paaniCheckinDay")
-    ) || 1;
+   let checkinDay = parseInt(
+    localStorage.getItem("paaniCheckinDay")
+) || 1;
+
+const completed =
+    localStorage.getItem("paaniCheckinCompleted") === "true";
+
 const status = document.querySelector(".check-status");
-if (status) status.textContent = `Día ${checkinDay} de 7`;
+
+if (status) {
+
+    if (completed) {
+        status.textContent = "¡7 días completados! 🎉";
+    } else {
+        status.textContent = `Día ${checkinDay} de 7`;
+    }
+}
     days.forEach((day, index) => {
 
         // 礼物不处理
@@ -1016,8 +1089,7 @@ if (status) status.textContent = `Día ${checkinDay} de 7`;
         day.style.boxShadow = "none";
 
         // 已完成 → 蓝色
-        if (dayNumber < checkinDay) {
-
+       if (dayNumber < checkinDay) {
             day.classList.add("done");
 
             day.style.backgroundColor = "#8ED8F8";
