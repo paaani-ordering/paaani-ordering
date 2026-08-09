@@ -974,6 +974,9 @@ images.forEach(img => {
     image.style.width = "100%";
     image.style.minWidth = "100%";
     image.style.maxWidth = "100%";
+    image.style.height = "auto";
+    image.style.objectFit = "contain";
+    image.style.display = "block";
     image.style.scrollSnapAlign = "start";
 
     image.onerror = function () {
