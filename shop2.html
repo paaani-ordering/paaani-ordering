@@ -951,12 +951,14 @@ images.forEach(img => {
 
     const image = document.createElement("img");
 
-    image.src = img.trim();
+    image.src = String(img).trim();
 
-    console.log("正在加载图片:", img);
+    image.alt = currentProduct.name || "";
 
-    image.onerror = function() {
-        console.error("图片加载失败:", image.src);
+    image.loading = "eager";
+
+    image.onerror = function () {
+        console.error("图片加载失败:", this.src);
     };
 
     slider.appendChild(image);
