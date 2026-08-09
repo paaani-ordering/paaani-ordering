@@ -934,6 +934,14 @@ images = [...new Set(
 const slider = document.createElement("div");
 slider.className = "image-slider";
 
+slider.style.display = "flex";
+slider.style.flexDirection = "row";
+slider.style.flexWrap = "nowrap";
+slider.style.width = "100%";
+slider.style.overflowX = "auto";
+slider.style.overflowY = "hidden";
+slider.style.scrollSnapType = "x mandatory";
+    
 slider.style.overflowX = "auto";
 slider.style.overflowY = "hidden";
 slider.style.touchAction = "pan-x";
@@ -962,6 +970,11 @@ images.forEach(img => {
     image.alt = currentProduct.name || "";
 
     image.loading = "eager";
+    image.style.flex = "0 0 100%";
+    image.style.width = "100%";
+    image.style.minWidth = "100%";
+    image.style.maxWidth = "100%";
+    image.style.scrollSnapAlign = "start";
 
     image.onerror = function () {
         console.error("图片加载失败:", this.src);
