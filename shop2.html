@@ -927,27 +927,13 @@ function openProduct(id){
     const gallery = document.getElementById("sheetGallery");
 gallery.innerHTML = "";
 
-    // 多图左右滑动
+// 多图左右滑动
 let images = [];
 
-// 主图
-if (currentProduct.image) {
-    images.push(currentProduct.image);
-}
-
-// Mochila Paani 多图
-if (currentProduct.name === "Mochila Paani") {
-
-    images = [
-        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani.png",
-        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-2.png",
-        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-3.png",
-        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-4.png",
-        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-5.png",
-        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-6.png",
-        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-7.png"
-    ];
-
+if (currentProduct.images && Array.isArray(currentProduct.images)) {
+    images = currentProduct.images;
+} else if (currentProduct.image) {
+    images = [currentProduct.image];
 }
 
 // 去重 + 清理空地址
