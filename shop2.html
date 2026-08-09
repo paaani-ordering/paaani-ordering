@@ -953,14 +953,15 @@ images.forEach(img => {
 
     image.src = img.trim();
 
+    console.log("正在加载图片:", img);
+
+    image.onerror = function() {
+        console.error("图片加载失败:", image.src);
+    };
+
     slider.appendChild(image);
 
 });
-    console.log("正在加载图片:", img);
-
-image.onerror = function() {
-    console.error("图片加载失败:", image.src);
-};
 
 gallery.appendChild(slider);
     
