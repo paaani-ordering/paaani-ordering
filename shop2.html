@@ -571,15 +571,16 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 }
     .image-slider {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    overflow: visible;
 }
   .image-slider img {
-    flex: 0 0 100%;
-    width: 100%;
-    min-width: 100%;
+    flex:none;
+    width: 85%;
+    min-width:0;
+    max-width:85%;
+    margin:0 auto 12px;
     height: auto;
     display: block;
     object-fit: contain;
