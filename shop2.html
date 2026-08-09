@@ -1091,8 +1091,30 @@ if (sheet) {
 
 document.querySelector(".continue-btn")?.addEventListener("click", function(){
 
+    if (!currentProduct) return;
+
+    const orderItem = {
+        id: currentProduct.id,
+        name: currentProduct.name,
+        image: currentProduct.image,
+        price: Number(currentProduct.price) || 0,
+        points: Number(currentProduct.points) || 0,
+        type: buyType,
+        quantity: 1
+    };
+
+    // 只保存“当前这一次订单”
+    // 不增加购物车页面
+    localStorage.setItem(
+        "paaaani_cart",
+        JSON.stringify({
+            [currentProduct.id + "_" + buyType]: orderItem
+        })
+    );
+
+    // 进入现有结算页面
     location.href =
-    `checkout.html?id=${currentProduct.id}&type=${buyType}`;
+        `checkout.html?id=${currentProduct.id}&type=${buyType}`;
 
 });
 function updatePoints(points) {
