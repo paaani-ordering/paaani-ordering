@@ -923,20 +923,19 @@ if (currentProduct.image) {
     images.push(currentProduct.image);
 }
 
-// 多图
-if (currentProduct.images) {
-    if (Array.isArray(currentProduct.images)) {
-        images = images.concat(currentProduct.images);
-    } else {
-        try {
-            const parsed = JSON.parse(currentProduct.images);
-            if (Array.isArray(parsed)) {
-                images = images.concat(parsed);
-            }
-        } catch (e) {
-            console.log("images 解析失败", e);
-        }
-    }
+// Mochila Paani 多图
+if (currentProduct.name === "Mochila Paani") {
+
+    images = [
+        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani.png",
+        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-2.png",
+        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-3.png",
+        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-4.png",
+        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-5.png",
+        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-6.png",
+        "https://oevwuadmtzujngtmkkbw.supabase.co/storage/v1/object/public/shop_products/mochila-paani-7.png"
+    ];
+
 }
 
 // 去重 + 清理空地址
