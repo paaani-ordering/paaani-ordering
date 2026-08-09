@@ -625,6 +625,14 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
     margin: 8px 20px 0;
     color: #292929;
 }
+    #sheetMaterial{
+    margin: -10px 22px 18px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #aaa;
+    text-align: center;
+    font-weight: 500;
+}
 </style>
 </head>
 
@@ -802,6 +810,7 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
 
     <h2 id="sheetName"></h2>
     <p id="sheetDescription"></p>
+    <p id="sheetMaterial"></p>
 
     <div id="sheetPoints" class="points"></div>
 
@@ -1021,6 +1030,8 @@ gallery.appendChild(counter);
 
     document.getElementById("sheetDescription").innerText =
          currentProduct.description || "";
+    document.getElementById("sheetMaterial").innerText =
+    currentProduct.material ? "Material: " + currentProduct.material : "";
     
     document.getElementById("sheetPoints").innerText=
         "⭐ "+currentProduct.points+" pts";
