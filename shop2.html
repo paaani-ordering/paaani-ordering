@@ -995,6 +995,65 @@ gallery.appendChild(counter);
         "€"+currentProduct.price;
 
     document.getElementById("productSheet").style.display="flex";
+    const sheet = document.querySelector("#productSheet .sheet");
+
+let sheetStartY = 0;
+let sheetStartX = 0;
+let sheetDragging = false;
+
+if (sheet) {
+    sheet.addEventListener("touchstart", function(e) {
+        sheetStartY = e.touches[0].clientY;
+        sheetStartX = e.touches[0].clientX;
+        sheetDragging = false;
+        sheet.style.transition = "none";
+    }, { passive: true });
+
+    sheet.addEventListener("touchmove", function(e) {
+        const currentY = e.touches[0].clientY;
+        const currentX = e.touches[0].clientX;
+
+        const deltaY = currentY - sheetStartY;
+        const deltaX = currentX - sheetStartX;
+
+        // 只有明显向下滑，才启动下拉
+        if (deltaY > 10 && Math.abs(deltaY) > Math.abs(deltaX) * 1.2) {
+            sheetDragging = true;
+            sheet.style.transform = `translateY(${deltaY}px)`;
+        }
+    }, { passive: true });
+
+    sheet.addEventListener("touchend", function() {
+        if (!sheetDragging) {
+            sheet.style.transition = "";
+            return;
+        }
+
+        const currentTransform = sheet.style.transform;
+        const match = currentTransform.match(/translateY\(([-\d.]+)px\)/);
+        const deltaY = match ? parseFloat(match[1]) : 0;
+
+        if (deltaY > 120) {
+            sheet.style.transition = "transform 0.25s ease";
+            sheet.style.transform = "translateY(100%)";
+
+            setTimeout(() => {
+                document.getElementById("productSheet").style.display = "none";
+                sheet.style.transform = "";
+                sheet.style.transition = "";
+            }, 250);
+        } else {
+            sheet.style.transition = "transform 0.25s ease";
+            sheet.style.transform = "translateY(0)";
+
+            setTimeout(() => {
+                sheet.style.transition = "";
+            }, 250);
+        }
+
+        sheetDragging = false;
+    }, { passive: true });
+}
 }
 
 document.querySelector(".continue-btn")?.addEventListener("click", function(){
