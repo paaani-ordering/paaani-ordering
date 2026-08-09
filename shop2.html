@@ -990,6 +990,10 @@ gallery.appendChild(counter);
 });
     
     document.getElementById("sheetName").innerText=currentProduct.name;
+
+    document.getElementById("sheetDescription").innerText =
+         currentProduct.description || "";
+    
     document.getElementById("sheetPoints").innerText=
         "⭐ "+currentProduct.points+" pts";
     document.getElementById("sheetPrice").innerText=
