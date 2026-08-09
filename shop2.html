@@ -946,6 +946,25 @@ images = [...new Set(
 const slider = document.createElement("div");
 slider.className = "image-slider";
 
+slider.style.overflowX = "auto";
+slider.style.overflowY = "hidden";
+slider.style.touchAction = "pan-x";
+slider.style.webkitOverflowScrolling = "touch";
+
+let startX = 0;
+let startScrollLeft = 0;
+
+slider.addEventListener("touchstart", function(e) {
+    startX = e.touches[0].pageX;
+    startScrollLeft = slider.scrollLeft;
+}, { passive: true });
+
+slider.addEventListener("touchmove", function(e) {
+    const x = e.touches[0].pageX;
+    const distance = startX - x;
+    slider.scrollLeft = startScrollLeft + distance;
+}, { passive: true });    
+
 images.forEach(img => {
 
     const image = document.createElement("img");
