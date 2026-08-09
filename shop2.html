@@ -569,42 +569,32 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, A
     border-radius: 14px;
     object-fit:contain;
 }
-    .image-slider {
+ .image-slider {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
-    overflow: visible;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    touch-action: pan-x;
 }
-  .image-slider img {
-    flex:none;
-    width: 85%;
-    min-width:0;
-    max-width:85%;
-    margin:0 auto 12px;
+
+.image-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.image-slider img {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin: 0;
     height: auto;
     display: block;
     object-fit: contain;
     scroll-snap-align: start;
-}
-
-.image-slider::-webkit-scrollbar {
-  display: none;
-}
-
-.image-slider img {
-  flex: 0 0 100%;
-  width: 100%;
-  min-width: 100%;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  scroll-snap-align: start;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-    #sheetImage {
-    display: none;
 }
 </style>
 </head>
