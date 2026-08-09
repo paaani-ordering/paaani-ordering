@@ -934,19 +934,15 @@ images = [...new Set(
 const slider = document.createElement("div");
 slider.className = "image-slider";
 
-slider.style.display = "flex";
-slider.style.flexDirection = "row";
-slider.style.flexWrap = "nowrap";
-slider.style.width = "100%";
-slider.style.overflowX = "auto";
-slider.style.overflowY = "hidden";
-slider.style.scrollSnapType = "x mandatory";
-    
-slider.style.overflowX = "auto";
-slider.style.overflowY = "hidden";
-slider.style.touchAction = "pan-x";
-slider.style.webkitOverflowScrolling = "touch";
-
+slider.style.setProperty("display", "flex", "important");
+slider.style.setProperty("flex-direction", "row", "important");
+slider.style.setProperty("flex-wrap", "nowrap", "important");
+slider.style.setProperty("width", "100%", "important");
+slider.style.setProperty("overflow-x", "auto", "important");
+slider.style.setProperty("overflow-y", "hidden", "important");
+slider.style.setProperty("scroll-snap-type", "x mandatory", "important");
+slider.style.setProperty("touch-action", "pan-x", "important");
+slider.style.setProperty("-webkit-overflow-scrolling", "touch");
 let startX = 0;
 let startScrollLeft = 0;
 
@@ -970,15 +966,14 @@ images.forEach(img => {
     image.alt = currentProduct.name || "";
 
     image.loading = "eager";
-    image.style.flex = "0 0 100%";
-    image.style.width = "100%";
-    image.style.minWidth = "100%";
-    image.style.maxWidth = "100%";
-    image.style.height = "auto";
-    image.style.objectFit = "contain";
-    image.style.display = "block";
-    image.style.scrollSnapAlign = "start";
-
+   image.style.setProperty("flex", "0 0 100%", "important");
+   image.style.setProperty("width", "100%", "important");
+   image.style.setProperty("min-width", "100%", "important");
+   image.style.setProperty("max-width", "100%", "important");
+   image.style.setProperty("height", "auto", "important");
+   image.style.setProperty("object-fit", "contain", "important");
+   image.style.setProperty("display", "block", "important");
+   image.style.setProperty("scroll-snap-align", "start", "important");
     image.onerror = function () {
         console.error("图片加载失败:", this.src);
     };
