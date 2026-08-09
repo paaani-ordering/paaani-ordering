@@ -932,6 +932,15 @@ images = [...new Set(
 
 const slider = document.createElement("div");
 slider.className = "image-slider";
+const counter = document.createElement("div");
+counter.className = "image-counter";
+counter.textContent = `1 / ${images.length}`;
+
+counter.style.textAlign = "center";
+counter.style.fontSize = "13px";
+counter.style.color = "#999";
+counter.style.marginTop = "8px";
+counter.style.marginBottom = "12px";    
 
 slider.style.setProperty("display", "flex", "important");
 slider.style.setProperty("flex-direction", "row", "important");
@@ -972,6 +981,12 @@ images.forEach(img => {
 });
 
 gallery.appendChild(slider);
+gallery.appendChild(counter);
+
+    slider.addEventListener("scroll", () => {
+    const index = Math.round(slider.scrollLeft / slider.clientWidth);
+    counter.textContent = `${index + 1} / ${images.length}`;
+});
     
     document.getElementById("sheetName").innerText=currentProduct.name;
     document.getElementById("sheetPoints").innerText=
