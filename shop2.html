@@ -905,7 +905,7 @@ document.querySelectorAll(".option").forEach(item=>{
 function openProduct(id){
 
     currentProduct = window.products.find(x=>x.id==id);
-
+    console.log("当前商品 images =", currentProduct.images);
     document.getElementById("sheetImage").src=currentProduct.image;
     const gallery = document.getElementById("sheetGallery");
 gallery.innerHTML = "";
