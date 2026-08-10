@@ -1030,10 +1030,8 @@ gallery.appendChild(counter);
 
     document.getElementById("sheetDescription").innerText =
          currentProduct.description || "";
-    document.getElementById("sheetSpecification").innerText =
-    currentProduct.specification
-        ? "Material: " + currentProduct.specification
-        : "";
+   document.getElementById("sheetSpecification").innerText =
+    currentProduct.specification || "";
     
     document.getElementById("sheetPoints").innerText=
         "⭐ "+currentProduct.points+" pts";
