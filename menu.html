@@ -564,155 +564,353 @@ function handleAddProduct(product) {
   openOptionModal(product, options);
 }
 
-
-// =========================
-// 打开大小选择窗口
-// =========================
 function openOptionModal(product, options) {
 
-  const oldModal = document.getElementById('optionOverlay');
+    const oldModal = document.getElementById('optionOverlay');
 
-  if (oldModal) {
-    oldModal.remove();
-  }
-
-  const groupName =
-    options[0]?.group_name || 'Tamaño';
-
-  const overlay = document.createElement('div');
-
-  overlay.id = 'optionOverlay';
-
-  overlay.style.cssText = `
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
-    z-index:2000;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-  `;
-
-  overlay.innerHTML = `
-
-    <div style="
-      background:white;
-      width:100%;
-      max-width:600px;
-      border-radius:24px 24px 0 0;
-      padding:24px 20px 30px;
-      margin-bottom:72px;
-      max-height:calc(100vh-72px);
-      overflow-y:auto;
-    ">
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-bottom:8px;
-      ">
-
-        <h2 style="
-          margin:0;
-          font-size:24px;
-        ">
-          ${product.name}
-        </h2>
-
-        <button
-          id="closeOptionModal"
-          type="button"
-          style="
-            border:none;
-            background:none;
-            font-size:30px;
-            cursor:pointer;
-          "
-        >
-          ×
-        </button>
-
-      </div>
-
-      <div style="
-        font-size:16px;
-        font-weight:bold;
-        margin:20px 0 12px;
-      ">
-        ${groupName}
-      </div>
-
-      <div id="optionButtons"></div>
-
-    </div>
-  `;
-
-  document.body.appendChild(overlay);
-
-  const buttonsContainer =
-    document.getElementById('optionButtons');
-
-  options.forEach(option => {
-
-    const finalPrice =
-      Number(product.price) +
-      Number(option.price_delta || 0);
-
-    const button =
-      document.createElement('button');
-
-    button.type = 'button';
-
-    button.style.cssText = `
-      width:100%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:16px 18px;
-      margin-bottom:10px;
-      border:2px solid #8ed8f8;
-      border-radius:16px;
-      background:white;
-      color:#222;
-      font-size:17px;
-      cursor:pointer;
-    `;
-
-    button.innerHTML = `
-      <strong>${option.option_name}</strong>
-
-      <span>
-        ${formatPrice(finalPrice)}
-      </span>
-    `;
-
-    button.addEventListener('click', () => {
-
-      addToCart(product, option);
-
-      overlay.remove();
-    });
-
-    buttonsContainer.appendChild(button);
-  });
-
-  document
-    .getElementById('closeOptionModal')
-    .addEventListener('click', () => {
-      overlay.remove();
-    });
-
-  // 点黑色背景关闭
-  overlay.addEventListener('click', event => {
-
-    if (event.target === overlay) {
-      overlay.remove();
+    if (oldModal) {
+        oldModal.remove();
     }
-  });
+
+    const groupName = options[0]?.group_name || 'Tamaño';
+
+    const overlay = document.createElement('div');
+
+    overlay.id = 'optionOverlay';
+
+    overlay.style.cssText = `
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.45);
+        z-index:2000;
+        display:flex;
+        align-items:flex-end;
+        justify-content:center;
+    `;
+
+    overlay.innerHTML = `
+        <div style="
+            background:white;
+            width:100%;
+            max-width:600px;
+            border-radius:24px 24px 0 0;
+            padding:24px 20px 30px;
+            margin-bottom:72px;
+            max-height:calc(100vh - 72px);
+            overflow-y:auto;
+        ">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-bottom:18px;
+            ">
+
+                <h2 style="
+                    margin:0;
+                    font-size:24px;
+                ">
+                    ${product.name}
+                </h2>
+
+                <button
+                    id="closeOptionModal"
+                    type="button"
+                    style="
+                        border:none;
+                        background:none;
+                        font-size:30px;
+                        cursor:pointer;
+                        color:#1688E8;
+                    "
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <h3 style="
+                margin:0 0 14px;
+                font-size:18px;
+            ">
+                ${groupName}
+            </h3>
+
+            <div id="optionButtons"></div>
+
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const buttonsContainer =
+        document.getElementById('optionButtons');
+
+
+    /* =========================
+       EXTRAS → 多选
+    ========================= */
+
+    if (groupName.toLowerCase() === 'extras') {
+
+        let selectedOptions = [];
+
+        const renderExtras = () => {
+
+            const totalExtra = selectedOptions.reduce(
+                (sum, option) =>
+                    sum + Number(option.price_delta || 0),
+                0
+            );
+
+            buttonsContainer.innerHTML = '';
+
+            options.forEach(option => {
+
+                const selected =
+                    selectedOptions.some(
+                        item => item.id === option.id
+                    );
+
+                const row =
+                    document.createElement('button');
+
+                row.type = 'button';
+
+                row.style.cssText = `
+                    width:100%;
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    padding:16px 18px;
+                    margin-bottom:10px;
+                    border:2px solid ${selected ? '#8ED8F8' : '#E5E5E5'};
+                    border-radius:16px;
+                    background:${selected ? '#F4FCFF' : '#fff'};
+                    color:#222;
+                    font-size:17px;
+                    font-weight:700;
+                    cursor:pointer;
+                `;
+
+                row.innerHTML = `
+                    <span style="
+                        display:flex;
+                        align-items:center;
+                        gap:12px;
+                    ">
+
+                        <span style="
+                            width:22px;
+                            height:22px;
+                            border:2px solid #8ED8F8;
+                            border-radius:6px;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            color:#8ED8F8;
+                            font-size:16px;
+                        ">
+                            ${selected ? '✓' : ''}
+                        </span>
+
+                        ${option.option_name}
+
+                    </span>
+
+                    <span>
+                        +${formatPrice(Number(option.price_delta || 0))}
+                    </span>
+                `;
+
+                row.addEventListener('click', () => {
+
+                    if (selected) {
+
+                        selectedOptions =
+                            selectedOptions.filter(
+                                item => item.id !== option.id
+                            );
+
+                    } else {
+
+                        selectedOptions.push(option);
+
+                    }
+
+                    renderExtras();
+                });
+
+                buttonsContainer.appendChild(row);
+            });
+
+
+            /* 总价 + 加入购物车 */
+
+            const totalBox =
+                document.createElement('div');
+
+            totalBox.style.cssText = `
+                margin-top:16px;
+            `;
+
+            totalBox.innerHTML = `
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    margin-bottom:12px;
+                    font-size:18px;
+                    font-weight:800;
+                ">
+                    <span>Total</span>
+
+                    <span>
+                        ${formatPrice(
+                            Number(product.price) + totalExtra
+                        )}
+                    </span>
+                </div>
+
+                <button
+                    id="confirmExtras"
+                    type="button"
+                    style="
+                        width:100%;
+                        height:50px;
+                        border:none;
+                        border-radius:16px;
+                        background:#8ED8F8;
+                        color:white;
+                        font-size:17px;
+                        font-weight:800;
+                        cursor:pointer;
+                    "
+                >
+                    Añadir al pedido
+                </button>
+            `;
+
+            buttonsContainer.appendChild(totalBox);
+
+
+            document
+                .getElementById('confirmExtras')
+                .addEventListener('click', () => {
+
+                    if (selectedOptions.length === 0) {
+
+                        addToCart(product, null);
+
+                    } else {
+
+                        const combinedOption = {
+
+                            id:
+                                'extras_' +
+                                selectedOptions
+                                    .map(option => option.id)
+                                    .join('_'),
+
+                            option_name:
+                                selectedOptions
+                                    .map(option => option.option_name)
+                                    .join(' + '),
+
+                            group_name: 'Extras',
+
+                            price_delta:
+                                totalExtra
+
+                        };
+
+                        addToCart(
+                            product,
+                            combinedOption
+                        );
+                    }
+
+                    overlay.remove();
+                });
+        };
+
+        renderExtras();
+
+    } else {
+
+
+        /* =========================
+           其他选项 → 保持单选
+        ========================= */
+
+        options.forEach(option => {
+
+            const finalPrice =
+                Number(product.price) +
+                Number(option.price_delta || 0);
+
+            const button =
+                document.createElement('button');
+
+            button.type = 'button';
+
+            button.style.cssText = `
+                width:100%;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                padding:16px 18px;
+                margin-bottom:10px;
+                border:2px solid #8ED8F8;
+                border-radius:16px;
+                background:white;
+                color:#222;
+                font-size:17px;
+                font-weight:700;
+                cursor:pointer;
+            `;
+
+            button.innerHTML = `
+                <strong>
+                    ${option.option_name}
+                </strong>
+
+                <span>
+                    ${formatPrice(finalPrice)}
+                </span>
+            `;
+
+            button.addEventListener('click', () => {
+
+                addToCart(product, option);
+
+                overlay.remove();
+
+            });
+
+            buttonsContainer.appendChild(button);
+        });
+    }
+
+
+    document
+        .getElementById('closeOptionModal')
+        .addEventListener('click', () => {
+            overlay.remove();
+        });
+
+
+    overlay.addEventListener('click', event => {
+
+        if (event.target === overlay) {
+            overlay.remove();
+        }
+
+    });
 }
-
-
+  
 // =========================
 // 分类按钮
 // =========================
