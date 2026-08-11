@@ -665,21 +665,19 @@ if (groupName.toLowerCase() === 'extras') {
     const renderExtras = () => {
 
         const totalExtra = selectedOptions.reduce(
-            (sum, option) =>
-                sum + Number(option.price_delta || 0),
+           (sum, index) =>
+        sum + Number(options[index].price_delta || 0),
             0
-        );
+     );
 
         buttonsContainer.innerHTML = '';
 
-        options.forEach(option => {
+        options.forEach((option, index) => {
 
             const optionKey = getOptionKey(option);
 
             const selected =
-                selectedOptions.some(
-                    item => getOptionKey(item) === optionKey
-                );
+                 selectedOptions.includes(index);
 
             const row =
                 document.createElement('button');
@@ -739,26 +737,23 @@ if (groupName.toLowerCase() === 'extras') {
 
             row.addEventListener('click', () => {
 
-                const index =
-                    selectedOptions.findIndex(
-                        item =>
-                            getOptionKey(item) === optionKey
-                    );
+    if (selectedOptions.includes(index)) {
 
-                if (index !== -1) {
+        // 已选择 → 取消
+        selectedOptions =
+            selectedOptions.filter(
+                i => i !== index
+            );
 
-                    // 已选择 → 取消
-                    selectedOptions.splice(index, 1);
+    } else {
 
-                } else {
+        // 未选择 → 加入
+        selectedOptions.push(index);
 
-                    // 未选择 → 加入
-                    selectedOptions.push(option);
+    }
 
-                }
-
-                renderExtras();
-            });
+    renderExtras();
+});
 
             buttonsContainer.appendChild(row);
         });
@@ -831,13 +826,12 @@ if (groupName.toLowerCase() === 'extras') {
                         id:
                             'extras_' +
                             selectedOptions
-                                .map(option => getOptionKey(option))
-                                .join('_'),
-
+                               .map(index => options[index].option_name)
+                               .join('_')
                         option_name:
-                            selectedOptions
-                                .map(option => option.option_name)
-                                .join(' + '),
+                           selectedOptions
+                              .map(index => options[index].option_name)
+                              .join(' + ')
 
                         group_name: 'Extras',
 
