@@ -821,23 +821,23 @@ if (groupName.toLowerCase() === 'extras') {
 
                 } else {
 
-                    const combinedOption = {
+                   const combinedOption = {
+    id:
+        'extras_' +
+        selectedOptions
+            .map(index => options[index].option_name)
+            .join('_'),
 
-                        id:
-                            'extras_' +
-                            selectedOptions
-                               .map(index => options[index].option_name)
-                               .join('_')
-                        option_name:
-                           selectedOptions
-                              .map(index => options[index].option_name)
-                              .join(' + ')
+    option_name:
+        selectedOptions
+            .map(index => options[index].option_name)
+            .join(' + '),
 
-                        group_name: 'Extras',
+    group_name: 'Extras',
 
-                        price_delta:
-                            totalExtra
-                    };
+    price_delta:
+        totalExtra
+};
 
                     addToCart(
                         product,
