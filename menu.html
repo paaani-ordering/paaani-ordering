@@ -878,7 +878,7 @@ function openOptionModal(product, options) {
                 </strong>
 
                 <span>
-                    ${formatPrice(finalPrice)}
+                    +${formatPrice(Number(option.price_delta || 0))}
                 </span>
             `;
 
