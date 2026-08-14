@@ -553,11 +553,22 @@ function renderProducts(products) {
 // =========================
   function updateProductButtons() {
     document.querySelectorAll('.add[data-product-id]').forEach(button => {
+
+        // 有商品选项 → 始终显示 Elegir
+        if (button.classList.contains('has-options')) {
+            button.textContent = 'Elegir';
+            return;
+        }
+
+        // 没有选项 → 显示数量或 +
         const productId = button.dataset.productId;
 
         const quantity = Object.values(cart)
             .filter(item => String(item.id) === String(productId))
-            .reduce((total, item) => total + Number(item.quantity || 0), 0);
+            .reduce(
+                (total, item) => total + Number(item.quantity || 0),
+                0
+            );
 
         button.textContent = quantity > 0 ? quantity : '+';
     });
