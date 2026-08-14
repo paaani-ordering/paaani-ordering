@@ -500,10 +500,18 @@ function renderProducts(products) {
 
     item.className = 'product';
 
+    // 判断这个商品有没有选项
+    const productOptions = allOptions.filter(option =>
+      option.product_id === product.id &&
+      option.is_available !== false
+    );
+
+    const hasOptions = productOptions.length > 0;
+
     item.innerHTML = `
       ${
         product.image_url
-          ? `<img src="${product.image_url}" alt="${product.name}">`
+          ? `< img src="${product.image_url}" alt="${product.name}">`
           : ''
       }
 
@@ -521,7 +529,13 @@ function renderProducts(products) {
 
       </div>
 
-     <button class="add" type="button" data-product-id="${product.id}">+</button>
+      <button
+        class="add ${hasOptions ? 'has-options' : ''}"
+        type="button"
+        data-product-id="${product.id}"
+      >
+        ${hasOptions ? 'Elegir' : '+'}
+      </button>
     `;
 
     item.querySelector('.add').addEventListener('click', () => {
@@ -530,8 +544,9 @@ function renderProducts(products) {
 
     menu.appendChild(item);
   });
-}
 
+  updateProductButtons();
+}
 
 // =========================
 // 点击商品 +
