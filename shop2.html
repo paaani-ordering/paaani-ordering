@@ -1195,7 +1195,13 @@ function updateCheckinButton() {
 }
 
 
-function doCheckIn() {
+async function doCheckIn() {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+         alert('Por favor, inicia sesión con tu correo electrónico para hacer check-in.');
+         return;
+    }
 
     let checkinDay =
         parseInt(
