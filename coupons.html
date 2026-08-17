@@ -616,6 +616,8 @@
       .select("*")
 
       .eq("is_active", true)
+      
+      .eq("is_public", true)
 
       .or(
         `start_at.is.null,start_at.lte.${now}`
