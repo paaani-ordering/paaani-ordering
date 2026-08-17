@@ -1289,34 +1289,66 @@ if (checkinDay <= 4) {
   // 第7天：赠送无门槛95折优惠券
   // ==============================
 
-  const coupon = {
-    id: "CHECKIN95_" + Date.now(),
-    name: "签到95折优惠券",
-    description: "无门槛95折优惠券",
-    discount: 0.95,
-    minAmount: 0,
-    used: false,
-    createdAt: new Date().toISOString()
-  };
+// 当前登录用户
+const {
+  data: { user }
+} = await sb.auth.getUser();
 
-  // 获取现有优惠券
-  const coupons = JSON.parse(
-    localStorage.getItem("paaniCoupons") || "[]"
-  );
+if (!user) {
+  alert("请先登录账号");
+  return;
+}
 
-  // 添加优惠券
-  coupons.push(coupon);
+// 领取时间
+const claimedAt = new Date();
 
-  // 保存优惠券
-  localStorage.setItem(
-    "paaniCoupons",
-    JSON.stringify(coupons)
-  );
+// 过期时间：1个月后
+const expiresAt = new Date(claimedAt);
+expiresAt.setMonth(expiresAt.getMonth() + 1);
+
+// ==============================
+// 检查本轮签到券是否已经发过
+// ==============================
+
+const { data: existingCoupon, error: checkError } = await sb
+  .from("user_coupons")
+  .select("id")
+  .eq("user_id", user.id)
+  .eq("coupon_id", 3)
+  .eq("is_used", false)
+  .gt("expires_at", new Date().toISOString())
+  .maybeSingle();
+
+if (checkError) {
+  console.error("检查签到优惠券失败：", checkError);
+  alert("优惠券领取失败，请稍后再试");
+  return;
+}
+
+if (existingCoupon) {
+  console.log("用户已有有效的签到5%优惠券，不重复发放");
+} else {
+
+  // 写入 user_coupons
+  const { error: couponError } = await sb
+    .from("user_coupons")
+    .insert({
+      user_id: user.id,
+      coupon_id: 3,
+      claimed_at: claimedAt.toISOString(),
+      expires_at: expiresAt.toISOString(),
+      is_used: false
+    });
+
+  if (couponError) {
+    console.error("签到优惠券发放失败：", couponError);
+    alert("优惠券领取失败，请稍后再试");
+    return;
+  }
 
   alert("🎉 连续签到7天！\n获得一张无门槛95折优惠券！");
 }
-
-
+    
 // ==============================
 // 保存今天签到
 // ==============================
