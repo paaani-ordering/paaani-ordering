@@ -1268,56 +1268,7 @@ async function doCheckIn() {
         }
     }
 
-
-    // =========================
-    // 获得 5 积分
-    // =========================
-
-    points += 5;
-
-    // ==============================
-// 签到奖励
-// ==============================
-
-if (checkinDay <= 4) {
-
-  // 第1～4天：+5积分
-  points += 5;
-
-} else if (checkinDay <= 6) {
-
-  // 第5～6天：+8积分
-  points += 8;
-
-} else if (checkinDay === 7) {
-
-  // ==============================
-  // 第7天：赠送95折无门槛优惠券
-  // ==============================
-
-  const coupon = {
-    id: "CHECKIN95_" + Date.now(),
-    type: "discount",
-    discount: 0.95,
-    name: "签到95折优惠券",
-    description: "无门槛95折优惠券",
-    minAmount: 0,
-    used: false,
-    createdAt: new Date().toISOString()
-  };
-
-  // 保存优惠券
-  const coupons = JSON.parse(
-    localStorage.getItem("paaniCoupons") || "[]"
-  );
-
-  coupons.push(coupon);
-
-  localStorage.setItem(
-    "paaniCoupons",
-    JSON.stringify(coupons)
-  );
-
+ 
  // ==============================
 // 签到奖励
 // ==============================
