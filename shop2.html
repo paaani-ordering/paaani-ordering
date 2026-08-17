@@ -1544,12 +1544,6 @@ function updateCheckinDays() {
     localStorage.getItem("paaniCheckinDay")
 ) || 1;
 
-    // ===== 临时测试第7天 =====
-localStorage.setItem("paaniCheckinDay", "7");
-localStorage.removeItem("paaniLastCheckin");
-checkinDay = 7;
-// ===== 测试结束 =====
-
 const completed =
     localStorage.getItem("paaniCheckinCompleted") === "true";
 
@@ -1607,9 +1601,6 @@ if (status) {
     });
 }
 window.addEventListener("DOMContentLoaded", function () {
-    // ===== 临时测试第7天 =====
-localStorage.removeItem("paaniLastCheckin");
-localStorage.setItem("paaniCheckinDay", "7");
     updateCheckinDays();
 
     const points =
@@ -1683,6 +1674,8 @@ function goToMyCoupons() {
 
   </div>
 </div>
-
+<button onclick="showCheckinCouponModal()">
+  Test coupon
+</button>
 </body>
 </html>
