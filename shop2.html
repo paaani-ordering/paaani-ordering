@@ -1211,8 +1211,6 @@ async function doCheckIn() {
 
     localStorage.setItem("paaniCheckinDay", "7");
     checkinDay = 7;
-
-        checkinDay = 7;
     
     let points =
         parseInt(
@@ -1260,8 +1258,7 @@ localStorage.removeItem("paaniLastCheckin");
 localStorage.setItem("paaniCheckinDay", "7");
 
 updateCheckinButton();
-            updateCheckinButton();
-
+        
             return;
         }
 
@@ -1302,7 +1299,7 @@ if (checkinDay <= 4) {
 // 当前登录用户
 const {
   data: { user }
-} = await sb.auth.getUser();
+} = await supabaseClient.auth.getUser();
 
 if (!user) {
   alert("请先登录账号");
@@ -1320,7 +1317,7 @@ expiresAt.setMonth(expiresAt.getMonth() + 1);
 // 检查本轮签到券是否已经发过
 // ==============================
 
-const { data: existingCoupon, error: checkError } = await sb
+const { data: existingCoupon, error: checkError } = await supabaseClient
   .from("user_coupons")
   .select("id")
   .eq("user_id", user.id)
@@ -1340,8 +1337,8 @@ if (existingCoupon) {
 } else {
 
   // 写入 user_coupons
-  const { error: couponError } = await sb
-    .from("user_coupons")
+  const { error: couponError } = await supabaseClient
+  .from("user_coupons")
     .insert({
       user_id: user.id,
       coupon_id: 3,
