@@ -1196,6 +1196,7 @@ function updateCheckinButton() {
 
 
 async function doCheckIn() {
+    localStorage.removeItem("paaniLastCheckin");
     const { data: { user } } = await supabaseClient.auth.getUser();
 
     if (!user) {
