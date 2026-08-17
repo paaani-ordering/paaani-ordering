@@ -1196,7 +1196,7 @@ function updateCheckinButton() {
 
 
 async function doCheckIn() {
-    localStorage.removeItem("paaniLastCheckin");
+    
     const { data: { user } } = await supabaseClient.auth.getUser();
 
     if (!user) {
@@ -1255,7 +1255,11 @@ async function doCheckIn() {
 
         // 今天已经签到
         if (diffDays === 0) {
+            // 临时测试第7天
+localStorage.removeItem("paaniLastCheckin");
+localStorage.setItem("paaniCheckinDay", "7");
 
+updateCheckinButton();
             updateCheckinButton();
 
             return;
