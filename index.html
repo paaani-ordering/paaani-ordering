@@ -65,7 +65,7 @@
     
     .welcome h1 {    /* 大标题 */
       margin: 0;   /* 清除浏览器自带外边距 */
-      font-size: 27px;
+      font-size: 28px;
       line-height: 1.15;
       color: var(--blue);
 }
@@ -85,227 +85,63 @@
       white-space: nowrap;
 }
 
-    /* 活动 */
-    .section {
-      padding: 25px 22px 0;
-    }
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 13px;
-    }
-
-    .section-title h2 {
-      margin: 0;
-      font-size: 16px;
-      color: var(--blue);
-    }
-
-    .section-title a {
-      color: var(--blue);
-      font-size: 13px;
-      text-decoration: none;
-    }
-
-    .promo {
-      min-height: 180px;
-      border-radius: 25px;
-      background:
-        linear-gradient(
-          135deg,
-          #F6D778,
-          #FFEAB0
-        );
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .promo-tag {
-      display: inline-block;
-      background: white;
-      color: var(--blue);
-      font-size: 11px;
-      font-weight: bold;
-      padding: 7px 11px;
-      border-radius: 20px;
-    }
-
-    .promo h3 {
-      font-size: 28px;
-      line-height: 1;
-      color: var(--blue);
-      margin: 14px 0 6px;
-    }
-
-    .promo p {
-      margin: 0;
-      font-size: 13px;
-      color: #53616A;
-    }
-
-    .promo-coffee {
-      position: absolute;
-      right: 12px;
-      bottom: -5px;
-      font-size: 90px;
-      transform: rotate(-6deg);
-    }
-
-    /* 推荐 */
-    .products {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 12px;
-    }
-
-    .product {
-      background: white;
-      border-radius: 21px;
-      padding: 12px;
-      min-height: 175px;
-    }
-
-    .product-image {
-      height: 105px;
-      background: #F9F4E9;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 58px;
-    }
-
-    .product-name {
-      margin-top: 10px;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .product-label {
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    /* Pani 卡片 */
-    .pani-card {
-      margin: 26px 22px;
-      background: var(--blue);
-      border-radius: 25px;
-      color: white;
-      padding: 23px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .pani-card h3 {
-      margin: 0 0 6px;
-      font-size: 21px;
-    }
-
-    .pani-card p {
-      margin: 0;
-      max-width: 65%;
-      font-size: 12px;
-      opacity: .8;
-      line-height: 1.5;
-    }
-
-    .pani-dog {
-      position: absolute;
-      right: 17px;
-      bottom: 4px;
-      font-size: 65px;
-    }
-
-    /* =========================
-   底部导航
-========================= */
-
-.bottom-nav {
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-
-  width: 100%;
-  max-width: 480px;
-  height: 72px;
-
-  background: #ffffff;
-  border-top: 1px solid #eeeeee;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-
-  padding-bottom: env(safe-area-inset-bottom);
-
-  z-index: 9999;
+/* 底部导航 */
+    .bottom-nav {   /* 白色导航栏 */
+       position: fixed;   /* 固定在底部 */
+       left: 50%;
+       bottom: 0;   /* 屏幕最下面 */
+       transform: translateX(-50%);
+       width: 100%;   /* 手机上占宽 */
+       max-width: 480px;
+       height: 72px;   /* 底部导航栏高度 */
+       background: #ffffff;
+       border-top: 1px solid #eeeeee;   /* 分割线 */
+       display: flex;  /* 四个按钮横向排列 */
+       justify-content: space-around;   /* 四个按钮平均分布 */
+       align-items: center;   /* 四个按钮上下居中 */
+       padding-bottom: env(safe-area-inset-bottom);
+       z-index: 9999;   /* 让底部导航栏处于页面最上层 */
 }
 
-/* 每个按钮 */
-.nav-item {
-  flex: 1;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 4px;
-
-  text-decoration: none;
-
-  color: #9a9a9a;
-
-  font-size: 11px;
-  font-weight: 600;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-  -webkit-tap-highlight-color: transparent;
+    .nav-item {   /* 每个按钮 */
+       flex: 1;   /* 四个按钮平均分配宽度 */
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       gap: 4px;   /* 图标和文字距离 */
+       color: #9a9a9a;   /* 没选中的颜色 */
+       font-size: 11px;
+       font-weight: 600;   /* 文字粗细 */
+       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;   /* 字体 */
+       -webkit-tap-highlight-color: transparent;    /* 手机点击链接时不出现浏览器默认方块 */
 }
 
-/* 图标 */
-.nav-icon {
-  position: relative;
-
-  width: 23px;
-  height: 23px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    .nav-icon {   /* 图标 */
+       position: relative;
+       display: flex;
+       align-items: center;
+       justify-content: center;
 }
 
-.nav-icon svg {
-  width: 23px;
-  height: 23px;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+    .nav-icon svg {    
+       width: 23px;   /* 图标大小 */
+       height: 23px;   /* 图标大小 */
+       fill: none;   /* 图标内不填充颜色 */
+       stroke: currentColor;   /* 图标线条颜色跟随 */
+       stroke-width: 1.8;   /* 图标线条粗细 */
+       stroke-linecap: round;
+       stroke-linejoin: round;
 }
 
-/* 当前页面 */
-.nav-item.active {
-  color: #8ed8f8;
+    .nav-item.active {   /* 当前页面 */
+       color: #8ed8f8;
 }
 
-/* 防止页面内容被底栏挡住 */
-body {
-  padding-bottom: calc(90px + env(safe-area-inset-bottom));
+     body {   /* 防止页面内容被底栏挡住 */
+        padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }
 
-    @media (min-width: 600px) {
-      .app {
-        box-shadow: 0 0 50px rgba(0,0,0,.08);
-      }
-    }
    /* 用餐方式 */
 .dining-options{
     display:grid;
