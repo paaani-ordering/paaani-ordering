@@ -142,279 +142,142 @@
         padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }
 
-   /* 用餐方式 */
-.dining-options{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-    padding:20px 22px 30px;
-
-    overflow:visible;
+/* 三个卡片 */
+    .dining-options{   /* 控制三个卡片外层 */
+       display:grid;   /* 网格布局 */
+       grid-template-columns:repeat(3,1fr);   /* 一行放三个且一样宽 */
+       gap:18px;   /* 三个卡片间距 */
+       padding:20px 22px 30px;   /* 外层区域内边距 */
+       overflow:visible;   /* 允许里面内容超出区域后仍显示 */
 }
-.dining-card{
-    width:100%;
-    height:150px;
-
-    background:#FFF6DE;
-    border-radius:30px;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-
-    padding:4px 12px 8px;
-    box-sizing:border-box;
-
-    overflow:hidden;
-
-    box-shadow:none;
-    transition:.25s;
-    text-decoration:none;
+    .dining-card{    /* 控制每一个卡片 */
+       width:100%;   /* 卡片占满所在列宽度 */
+       height:150px;   /* 卡片高度 */
+       background:#FFF6DE;   /* 默认背景 */
+       border-radius:30px;   /* 圆角 */
+       display:flex;   
+       flex-direction:column;    /* 卡片内部纵向排列 */
+       align-items:center;   /* 内部元素水平居中 */
+       justify-content:flex-start;   /* 内容从顶部开始排 */
+       padding:4px 12px 8px;   /* 卡片内部 */
+       box-sizing:border-box;
+       overflow:hidden;
+       transition:.25s;   /* 点击缩放动画 */
 }
 
-.dining-card:nth-child(2){
-    background:#EDF6FF;
+    .dining-card:nth-child(2){   /* 第二张卡片 */
+       background:#EDF6FF;
 }
 
-.dining-card:nth-child(3){
-    background:#FFF6DE;
-}
-    .dining-card:active{
-
-    transform:scale(.98);
-
+    .dining-card:active{   
+       transform:scale(.96);   /* 点击卡片时会缩小 */
 }
 
-.dining-icon{
-    width:100%;
-    height:120px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    margin-top:-8px;
-    margin-bottom:-8px;
+    .dining-icon{   /* 卡片里装图片区域 */
+       width:100%;
+       height:120px;   /* 图片区域高度 */
+       display:flex;
+       justify-content:center;
+       align-items:center;
+       margin-top:-8px;
+       margin-bottom:-8px;
 }
 
-.dining-icon img{
-    max-width:110%;
-    max-height:110%;
-    width:auto;
-    height:auto;
-    object-fit:contain;
+    .dining-icon img{   /* 控制图片 */
+       max-width:110%;   /* 图片最大可超出容器10% */
+       max-height:110%;
+       width:auto;   /* 保持原比例 */
+       height:auto;
+       object-fit:contain;   /* 确保图片完整不裁剪 */
 }
 
-.dining-card strong{
-
-    width:100%;
-
-    text-align:center;
-
-    font-family:Georgia,"Times New Roman",serif;
-
-    font-size:12px;
-
-    font-weight:700;
-
-    color:#5E88CF;
-
-    line-height:1.2;
-
-    margin-top:0;
-
-    margin-bottom:2px;
-
-    white-space:nowrap;
+    .dining-card strong{   /* 标题文字 */
+       width:100%;
+       text-align:center;
+       font-family:Georgia,"Times New Roman",serif;   /* 字体 */
+       font-size:12px;
+       font-weight:700;   /* 粗细 */
+       color:#5E88CF;
+       line-height:1.2;
+       margin-top:0;   /* 标题上方不留额外外边距 */
+       margin-bottom:2px;   /* 距下面爱心 */
+       white-space:nowrap;   /* 强制一行 */
 }
-   .heart{
-
-    color:#6EA8E5;
-
-    font-size:15px;
-
-    margin-top:-2px;
-
-    margin-bottom:0;
-
-    line-height:1;
-}
-  
-    /* 邮箱订阅优惠 */
-
-.email-section {
-  padding:0 20px;
-  margin-bottom:20px;
+   .heart{   /* 爱心 */
+      color:#6EA8E5;
+      font-size:15px;
+      margin-top:-2px;   /* 往上调 */
+      margin-bottom:0;   /* 下面不留额外空间 */
+      line-height:1;
 }
 
-.email-card {
-  background: #FFEAAB;
-  border-radius: 25px;
-  padding: 20px 22px;
+/* 集章 */
+    .stamp-section {   /* 集章区域和页面左右边距 */
+       margin:0 20px;
 }
 
-.email-card h2 {
-  margin: 0 0 8px;
-  color: #8ed8f8;
-  font-size: 13px;
-  line-height: 1.15;
-}
-    .bienvenida {
-    font-size: 24px;
+    .stamp-card {    /* 控制蓝色集章卡 */
+       background: #8ed8f8;
+       border-radius: 25px;
+       padding: 22px 20px 24px;
 }
 
-.email-card p {
-  margin: 0 0 14px;
-  color: #53616A;
-  font-size: 12px;
-  line-height: 1.45;
-}
-.email-badge {
-  display: inline-block;
-  background: #FFFFFF;
-  color: #164F91;
-  padding: 8px 13px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  margin-bottom: 18px;
+    .stamp-top {   /* 控制卡片顶部 */
+       display: flex;   /* 左右横排 */
+       justify-content: space-between;   /* 一个靠左一个靠右 */
+       align-items: flex-start;   /* 顶部对齐 */
+       gap: 15px;   /* 左右两部分至少留 */
 }
 
-.email-card h2 {
-  margin: 0;
-  color: #8ed8f8;
-  font-size: 38px;
-  line-height: 1;
+    .stamp-title {   /* 大标题 */
+       margin: 0;   /* 清除默认外边距 */
+       color: #FFFFFF;
+       font-size: 22px;
+       line-height: 1.15;
+       font-weight: 700;
+       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;   /* 字体 */
 }
 
-.email-card h3 {
-  margin: 7px 0 10px;
-  color: #164F91;
-  font-size: 20px;
+    .stamp-subtitle {   /* 小字 */
+       margin-top: 5px;
+       font-size: 11px;
+       font-weight: 600;
+       letter-spacing: 2px;   /* 字间距 */
+       color: #FFFFFF;
+       white-space: nowrap;   /* 强制一行 */
+}
+    
+    .stamp-btn {   /* 控制右边白色按钮 */
+       border: none;   /* 无边框 */
+       background: #FFFFFF;
+       color: #83D3F4;
+       border-radius: 30px;
+       padding: 10px 17px;
+       font-size: 12px;
+       font-weight: 700;
+       white-space: nowrap;
 }
 
-.email-card p {
-  margin: 0 0 8px;
-  color: #53616A;
-  font-size: 13px;
-  line-height: 1.5;
+    .stamp-cups {   /* 集章图标 */
+       display: grid;
+       grid-template-columns: repeat(4, 1fr);   /* 一行四个 */
+       gap: 18px 16px;   /* 上下间距 左右间距 */
+       margin-top: 28px;   /* 图标区域距离上面标题距离 */
+       width: 100%;
 }
 
-.email-benefits {
-  color: #164F91;
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 18px;
+    .stamp {   /* 控制每一个图标 */
+       width: 100%;
+       max-width: 75px;   /* 最大不超过 */
+       height: auto;   /* 保持原比例 */
+       justify-self: center;
+       opacity: 0.25;   /* 透明度 */
 }
 
-.email-form {
-  display: flex;
-  gap: 8px;
+    .stamp.active {   /* 已经集到的章 */
+       opacity: 1;
 }
-
-.email-form input {
-  width: 100%;
-  min-width: 0;
-  border: none;
-  outline: none;
-  background: #FFFFFF;
-  border-radius: 15px;
-  padding: 14px;
-  font-size: 13px;
-}
-
-.email-form button {
-  border: none;
-  background: #8ed8f8;
-  color: #FFFFFF;
-  border-radius: 15px;
-  padding: 0 15px;
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.email-consent {
-  display: flex;
-  align-items: flex-start;
-  gap: 7px;
-  margin-top: 13px;
-  color: #53616A;
-  font-size: 10px;
-  line-height: 1.35;
-}
-
-.email-consent input {
-  margin: 1px 0 0;
-}
-    /* ===== 集章卡 ===== */
-
-.stamp-section {
-  margin:0 20px;
-}
-
-.stamp-card {
-  background: #8ed8f8;
-  border-radius: 25px;
-  padding: 22px 20px 24px;
-}
-
-.stamp-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 15px;
-}
-
-.stamp-title {
-    margin: 0;
-    color: #FFFFFF;
-    font-size: 22px;
-    line-height: 1.15;
-    font-weight: 700;
-    font-family: inherit;
-}
-
-.stamp-subtitle {
-  margin-top: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: #FFFFFF;
-  white-space: nowrap;
-}
-.stamp-btn {
-  border: none;
-  background: #FFFFFF;
-  color: #83D3F4;
-  border-radius: 30px;
-  padding: 10px 17px;
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.stamp-cups {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px 16px;
-    margin-top: 28px;
-    width: 100%;
-}
-
-.stamp {
-    width: 100%;
-    max-width: 75px;
-    height: auto;
-    justify-self: center;
-    opacity: 0.25;
-}
-
-/* 已经集到的章 */
-.stamp.active {
-  opacity: 1;
-}
+    
     /* ===== 优惠券入口 ===== */
 
 .coupon-banner {
