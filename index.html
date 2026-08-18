@@ -12,11 +12,12 @@
 /* 大插画 */
   .hero{
      padding:20px 22px 30px;   
-}
+} 
+    
  .hero-image{
-     width:80%;   /* 图片大小 */
+     width:85%;   /* 图片大小 */
      display:block;
-     margin:-15px auto -15px;  /* 上 / 左右 / 下 */
+     margin:-5px auto -15px;  /* 上 / 左右 / 下 */
 }
     
 /* 网页尺寸计算 */
@@ -55,111 +56,34 @@
       padding-bottom: 30px;
 }
 
-    /* 欢迎 */
-
-    .welcome h1 {
-    margin: 0;
-    font-size: 27px;
-    line-height: 1.15;
-    color: var(--blue);
-}
-
-.welcome p {
-    color: var(--muted);
-    margin: 6px 0 0;
-    font-size: 12px;
-    line-height: 1.45;
-}
+/* 欢迎 */
     .welcome{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:18px;
-    padding:0px 22px 12px;
+      display:flex;
+      align-items:center;   /* 居中对齐 */
+      padding:0px 22px 12px;   /* 控制这段与下面三个卡片的距离 */
+}
+    
+    .welcome h1 {    /* 大标题 */
+      margin: 0;   /* 清除浏览器自带外边距 */
+      font-size: 27px;
+      line-height: 1.15;
+      color: var(--blue);
 }
 
-.welcome-text{
-    flex:1;
-    min-width:0;
+   .welcome p {     /* 小字 */
+      color: var(--muted);
+      margin: 6px 0 0;     /* 小字距上面标题距离 */
+      font-size: 12px;
+      line-height: 1.45;
+}
+
+   .welcome-text{
+      flex:1;
+      min-width:0;
 }
     .welcome-line{
-    white-space: nowrap;
+      white-space: nowrap;
 }
-
-    /* 主按钮 */
-    .order-area {
-      padding: 0 22px 20px;
-    }
-
-    .order-button {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 19px 21px;
-      background: var(--blue);
-      color: white;
-      border-radius: 22px;
-      text-decoration: none;
-      box-shadow:none;
-    }
-
-    .order-button strong {
-      display: block;
-      font-size: 19px;
-    }
-
-    .order-button small {
-      opacity: .75;
-      font-size: 12px;
-    }
-
-    .arrow {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--yellow);
-      color: var(--blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    /* 快捷入口 */
-    .quick {
-      padding: 0 22px;
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 10px;
-    }
-
-    .quick-card {
-      background: white;
-      border-radius: 19px;
-      padding: 17px 8px;
-      text-align: center;
-      box-shadow:none;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .quick-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      margin: 0 auto 9px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #FFF1C9;
-      font-size: 23px;
-    }
-
-    .quick-card strong {
-      font-size: 13px;
-    }
 
     /* 活动 */
     .section {
