@@ -306,54 +306,44 @@
        flex-shrink: 0;
 }
 
-.offers-text h2 {
-    margin: 0;
-
-    font-size: 25px;
-    line-height: 1.05;
-    font-weight: 700;
-
-    color: #59616c;
+    .offers-text h2 {   /* 大标题 */
+       margin: 0;
+       font-size: 25px;
+       line-height: 1.05;
+       font-weight: 700;
+       color: #8ed8f8;
 }
 
-.offers-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-top: 22px;
-    padding: 7px 15px;
-
-    background: #fffdf8;
-
-    border: 1.5px solid #62b8e8;
-    border-radius: 20px;
-
-    font-size: 12px;
-    font-weight: 700;
-
-    color: #62b8e8;
-    white-space: nowrap;
+    .offers-button {   /* 按钮 */
+       display: inline-flex;   /* 按钮宽度根据内容走 */
+       align-items: center;
+       justify-content: center;
+       margin-top: 22px;   /* 与标题距离 */
+       padding: 7px 15px;   /* 按钮内部空间 */
+       background: #fffdf8;
+       border: 1.5px solid ##8ed8f8;   /* 边 */
+       border-radius: 20px;
+       font-size: 12px;
+       font-weight: 700;
+       color: #62b8e8;
+       white-space: nowrap;
 }
 
-.offers-image {
-    width: 55%;
-    height: 100%;
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
+    .offers-image {   /* 右边图片 */
+       width: 55%;
+       height: 100%;
+       display: flex;
+       align-items: flex-end;   /* 图片靠底部 */
+       justify-content: flex-end;   /* 图片靠右边 */
 }
 
-.offers-image img {
-    display: block;
-
-    width: 100%;
-    max-width: 200px;
-    max-height: 150px;
-
-    object-fit: contain;
-    object-position: right bottom;
+   .offers-image img {
+      display: block;
+      width: 100%;
+      max-width: 200px;
+      max-height: 150px;
+      object-fit: contain;
+      object-position: right bottom;
 }
   </style>
 </head>
