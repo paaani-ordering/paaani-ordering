@@ -408,86 +408,67 @@ box-shadow:0 6px 16px rgba(142,216,248,.35);
 
 }
 
-.bottom-nav {
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-
-  width: 100%;
-  max-width: 480px;
-  height: 72px;
-
-  background: #ffffff;
-  border-top: 1px solid #eeeeee;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-
-  padding-bottom: env(safe-area-inset-bottom);
-
-  z-index: 9999;
+/* 底部导航 */
+    .bottom-nav {   /* 白色导航栏 */
+       position: fixed;   /* 固定在底部 */
+       left: 50%;
+       bottom: 0;   /* 屏幕最下面 */
+       transform: translateX(-50%);
+       width: 100%;   /* 手机上占宽 */
+       max-width: 480px;
+       height: 72px;   /* 底部导航栏高度 */
+       background: #ffffff;
+       border-top: 1px solid #eeeeee;   /* 分割线 */
+       display: flex;  /* 四个按钮横向排列 */
+       justify-content: space-around;   /* 四个按钮平均分布 */
+       align-items: center;   /* 四个按钮上下居中 */
+       padding-bottom: env(safe-area-inset-bottom);
+       z-index: 9999;   /* 让底部导航栏处于页面最上层 */
+}
+   .bottom-nav a,
+   .bottom-nav .nav-item {
+       text-decoration: none !important;
 }
 
-/* 每个按钮 */
-.nav-item {
-  flex: 1;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 4px;
-
-  text-decoration: none;
-
-  color: #9a9a9a;
-
-  font-size: 11px;
-  font-weight: 600;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-  -webkit-tap-highlight-color: transparent;
+    .nav-item {   /* 每个按钮 */
+       flex: 1;   /* 四个按钮平均分配宽度 */
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       gap: 4px;   /* 图标和文字距离 */
+       color: #9a9a9a;   /* 没选中的颜色 */
+       font-size: 11px;
+       font-weight: 600;   /* 文字粗细 */
+       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;   /* 字体 */
+       -webkit-tap-highlight-color: transparent;    /* 手机点击链接时不出现浏览器默认方块 */
 }
 
-/* 图标 */
-.nav-icon {
-  position: relative;
-
-  width: 23px;
-  height: 23px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    .nav-icon {   /* 图标 */
+       position: relative;
+       display: flex;
+       align-items: center;
+       justify-content: center;
 }
 
-.nav-icon svg {
-  width: 23px;
-  height: 23px;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+    .nav-icon svg {    
+       width: 23px;   /* 图标大小 */
+       height: 23px;   /* 图标大小 */
+       fill: none;   /* 图标内不填充颜色 */
+       stroke: currentColor;   /* 图标线条颜色跟随 */
+       stroke-width: 1.8;   /* 图标线条粗细 */
+       stroke-linecap: round;
+       stroke-linejoin: round;
 }
 
-/* 当前页面 */
-.nav-item.active {
-  color: #8ed8f8;
+    .nav-item.active {   /* 当前页面 */
+       color: #8ed8f8;
 }
-.sheet-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
 
-    display:none;
-    align-items:flex-end;
-
-    z-index:999;
+     body {   /* 防止页面内容被底栏挡住 */
+        padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }
+
 
 .sheet{
     width:100%;
