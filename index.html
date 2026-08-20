@@ -568,62 +568,33 @@
       </div>
    </section>
 
-<!-- 今日新品 -->
-
-<section class="daily-news">
-
-  <h2 class="daily-news-title">
-    Novedades del día 🐾
-  </h2>
-
-  <div class="daily-products" id="dailyProducts">
-
-    <!-- Supabase 商品会自动显示在这里 -->
-
-  </div>
-
-  <a href="menu.html" class="daily-menu-button">
-    Ver menú completo
-    <span>→</span>
-  </a >
-
-</section>
-
-<script>
-
-const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
-
-const SUPABASE_ANON_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
-
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
   
-/* =========================
-   从 Supabase 读取今日新品
-========================= */
+<!-- 今日新品 -->
+   <section class="daily-news">
+     <h2 class="daily-news-title">
+       Novedades del día 🐾
+     </h2>
+     <div class="daily-products" id="dailyProducts">   <!-- Supabase 商品会自动显示在这里 -->
+     </div>
+     <a href="menu.html" class="daily-menu-button">
+        Ver menú completo
+       <span>→</span>
+     </a >
+   </section>
 
-async function loadDailyNewProducts() {
-
-    const container =
-        document.getElementById('dailyProducts');
-
-
-    if (!container) {
-        return;
-    }
-
-
-    /* =========================
-       查询 Supabase
-    ========================= */
-
-    const { data: products, error } =
+   <script>
+   const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
+   const SUPABASE_ANON_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
+   const supabaseClient = supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);   /* 从 Supabase 读取今日新品 */
+      async function loadDailyNewProducts() {   
+          const container =
+              document.getElementById('dailyProducts');
+          if (!container) {
+              return;
+       }
+    const { data: products, error } =   /* 查询 Supabase */
         await supabaseClient
-
         .from('products')
-
         .select(`
             id,
             name,
@@ -631,129 +602,67 @@ async function loadDailyNewProducts() {
             image_url,
             is_new
         `)
-
         .eq('is_new', true)
-
         .limit(3);
 
-
-    /* =========================
-       查询失败
-    ========================= */
-
-    if (error) {
-
+    if (error) {   /* 查询失败 */
         console.error(
-            '读取今日新品失败：',
+            'Error al cargar las novedades del día.',
             error
         );
-
         return;
     }
 
-
-    /* =========================
-       没有新品
-    ========================= */
-
-    if (!products || products.length === 0) {
-
+    if (!products || products.length === 0) {   /* 没有新品 */
         document.querySelector('.daily-news').style.display = 'none';
-
         return;
     }
 
+    container.innerHTML = '';     /* 清空原内容 */
 
-    /* =========================
-       清空原内容
-    ========================= */
-
-    container.innerHTML = '';
-
-
-    /* =========================
-       创建商品卡片
-    ========================= */
-
-    products.forEach(product => {
-
+    products.forEach(product => {   /* 创建商品卡片 */
         const card =
             document.createElement('div');
-
-
         card.className =
             'daily-product';
 
-
-        /* 价格 */
-
-        const price =
+        const price =    /* 价格 */
             Number(product.price || 0)
             .toFixed(2)
             .replace('.', ',');
 
-
-        /* 商品卡片内容 */
-
-        card.innerHTML = `
-
+        card.innerHTML = `   /* 商品卡片内容 */
             <span class="daily-tag">
                 Nuevo
             </span>
-
-
             <img
                 class="daily-product-image"
-
                 src="${product.image_url || ''}"
-
                 alt="${product.name || ''}"
             >
-
-
             <div class="daily-product-name">
-
                 ${product.name || ''}
-
             </div>
-
-
             <div class="daily-product-price">
-
                 ${price} €
-
             </div>
-
         `;
 
-
-        /* =========================
-           点击商品进入菜单
-        ========================= */
-
-        card.addEventListener(
+        card.addEventListener(   /* 点击商品进入菜单 */
             'click',
             function () {
-
                 window.location.href =
                     `menu.html?product=${product.id}`;
-
             }
         );
 
-
         card.style.cursor =
             'pointer';
-
-
         container.appendChild(card);
-
     });
-
 }
-
 loadDailyNewProducts();
-
+     
 </script>
   
 <!-- 底部导航 -->
