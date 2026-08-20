@@ -321,17 +321,17 @@
       width: 100%;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));   /* 一行平均分三列 */
-      gap: 11px;   /* 卡片间距 */
+      gap: 10px;   /* 卡片间距 */
 }
 
    .daily-product {   /* 每个卡片 */
       position: relative;
       min-width: 0;   /* 防止卡片撑宽 */
-      height：255px；
-      padding: 16px 8px 16px;   /* 内边距 */
-      background: rgba(255, 253, 248, 0.72);
+      height：245px；
+      padding: 14px 7px 16px;   /* 内边距 */
+      background: rgba(255, 255, 255, 0.48);
       border: 1px solid #e8dfcc;   /* 边 */
-      border-radius: 20px;   /* 圆角 */
+      border-radius: 18px;   /* 圆角 */
       box-sizing: border-box;
       text-align: center;
       overflow: visible;   /* 允许标签跑出卡片 */
@@ -339,9 +339,9 @@
 
    .daily-tag {   /* Nuevo 标签 */
       position: absolute;
-      top: -8px;   /* 上下位置 */
-      left: 10px;   /* 数字越大越往右 */
-      padding: 5px 12px;   /* 内部大小 标签太大减小这里 */
+      top: -9px;   /* 上下位置 */
+      left: 7px;   /* 数字越大越往右 */
+      padding: 5px 11px;   /* 内部大小 标签太大减小这里 */
       background: #8ED8F8;
       border-radius:999px;
       color: #FFFFFF;
@@ -353,10 +353,10 @@
 
    .daily-product-image {   /* 商品图片 */
       width: 100%;
-      height: 100px;   /* 图片区域高度 */
+      height: 105px;   /* 图片区域高度 */
       display: block;
       object-fit: contain;
-      margin: 10px auto 2px;   /* 外边距 */
+      margin: 8px auto 3px;   /* 外边距 */
 }
 
    .daily-product-name {   /* 商品名字 */
@@ -364,7 +364,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 4px;   /* 名字左右留 */
+      padding: 0 3px;   /* 名字左右留 */
       font-family: 'Nunito', sans-serif;   /* 字体 */
       font-size:11px;
       font-weight:600;
@@ -374,7 +374,7 @@
 }
 
    .daily-product-price {   /* 价格 */
-      margin-top: 5px;   /* 距离商品名字 */
+      margin-top: 7px;   /* 距离商品名字 */
       margin-bottom:8px;
       font-family: 'Nunito', sans-serif;
       font-size:12px;
