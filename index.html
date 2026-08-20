@@ -411,6 +411,104 @@
       text-decoration: none;
 }
 
+/* =========================
+   底部品牌理念
+========================= */
+
+.brand-info {
+    margin: 34px 20px 0;
+    padding: 20px 8px 18px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    background: rgba(255, 250, 239, 0.72);
+
+    border: 1px solid #E8DFCC;
+    border-radius: 22px;
+
+    box-sizing: border-box;
+}
+
+
+/* 每一列 */
+.brand-info-item {
+    padding: 0 8px;
+    text-align: center;
+}
+
+
+/* 中间竖线 */
+.brand-info-item:not(:last-child) {
+    border-right: 1px solid #E8DFCC;
+}
+
+
+/* 图标 */
+.brand-info-icon {
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 7px;
+
+    font-size: 27px;
+    line-height: 1;
+
+    color: #C99552;
+}
+
+
+/* 标题 */
+.brand-info-title {
+    min-height: 38px;
+
+    font-family: Georgia, 'Times New Roman', serif;
+
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    color: #18324B;
+}
+
+
+/* 下面的小字 */
+.brand-info-text {
+    margin-top: 8px;
+
+    font-family: Georgia, 'Times New Roman', serif;
+
+    font-size: 10px;
+    line-height: 1.4;
+    font-weight: 400;
+
+    color: #8C8982;
+}
+
+
+/* 版权文字 */
+.brand-copyright {
+    margin: 14px 20px 26px;
+
+    text-align: center;
+
+    font-family: Georgia, 'Times New Roman', serif;
+
+    font-size: 10px;
+    line-height: 1.4;
+
+    color: #929292;
+}
+
+
+/* 蓝色爱心 */
+.brand-copyright span {
+    color: #8ED8F8;
+}
+    
 /* 底部导航 */
     .bottom-nav {   /* 白色导航栏 */
        position: fixed;   /* 固定在底部 */
@@ -674,6 +772,77 @@
 loadDailyNewProducts();
      
 </script>
+
+<!-- 品牌理念 -->
+
+<section class="brand-info">
+
+    <!-- 1 -->
+    <div class="brand-info-item">
+
+        <div class="brand-info-icon">
+            ♧
+        </div>
+
+        <div class="brand-info-title">
+            Ingredientes<br>
+            seleccionados
+        </div>
+
+        <div class="brand-info-text">
+            Elegimos lo mejor<br>
+            cada día.
+        </div>
+
+    </div>
+
+
+    <!-- 2 -->
+    <div class="brand-info-item">
+
+        <div class="brand-info-icon">
+            ♡
+        </div>
+
+        <div class="brand-info-title">
+            Hecho con<br>
+            cariño
+        </div>
+
+        <div class="brand-info-text">
+            Preparamos todo<br>
+            con amor.
+        </div>
+
+    </div>
+
+
+    <!-- 3 -->
+    <div class="brand-info-item">
+
+        <div class="brand-info-icon">
+            ♡
+        </div>
+
+        <div class="brand-info-title">
+            Tu momento<br>
+            Paaaani
+        </div>
+
+        <div class="brand-info-text">
+            Disfruta, relájate<br>
+            y vuelve.
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="brand-copyright">
+    © Paaaani Café · Todos los derechos reservados
+    <span>♥</span>
+</div>  
   
 <!-- 底部导航 -->
    <nav class="bottom-nav">
