@@ -353,6 +353,205 @@
       object-fit: contain;
       object-position: right bottom;
 }
+
+    /* =========================
+   今日新品
+========================= */
+
+.daily-news {
+    margin: 0 20px 24px;
+    padding: 22px 14px 20px;
+
+    background: rgba(255, 248, 233, 0.75);
+    border: 1px solid #f1e7cf;
+    border-radius: 24px;
+
+    box-sizing: border-box;
+}
+
+
+/* 标题 */
+
+.daily-news-title {
+    margin: 0 0 18px 4px;
+
+    font-size: 22px;
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    color: #18324B;
+}
+
+
+/* =========================
+   三个商品
+========================= */
+
+.daily-products {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 9px;
+}
+
+
+/* 商品卡片 */
+
+.daily-product {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 10px 7px 13px;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    border: 1px solid rgba(225, 215, 195, 0.8);
+
+    border-radius: 18px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    overflow: visible;
+}
+
+
+/* =========================
+   Nuevo 标签
+========================= */
+
+.daily-tag {
+    position: absolute;
+
+    top: -7px;
+    left: 5px;
+
+    padding: 4px 8px;
+
+    border-radius: 10px;
+
+    background: #8ED8F8;
+
+    color: #18324B;
+
+    font-size: 9px;
+    line-height: 1;
+
+    font-weight: 800;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   商品图片
+========================= */
+
+.daily-product-image {
+    width: 100%;
+    height: 95px;
+
+    display: block;
+
+    object-fit: contain;
+
+    margin: 4px auto 7px;
+}
+
+
+/* =========================
+   商品名字
+========================= */
+
+.daily-product-name {
+    min-height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 2px;
+
+    font-size: 13px;
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    color: #18324B;
+
+    word-break: break-word;
+}
+
+
+/* =========================
+   价格
+========================= */
+
+.daily-product-price {
+    margin-top: 7px;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    color: #18324B;
+}
+
+
+/* =========================
+   查看完整菜单
+========================= */
+
+.daily-menu-button {
+    width: 78%;
+    height: 48px;
+
+    margin: 20px auto 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    border: 2px solid #8ED8F8;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.25);
+
+    color: #5FAFD5;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+    box-sizing: border-box;
+}
+
+
+.daily-menu-button span {
+    font-size: 19px;
+}
+
+
+/* 防止链接下划线 */
+
+.daily-news a,
+.daily-news a:visited,
+.daily-news a:hover,
+.daily-news a:active {
+    text-decoration: none;
+}
   </style>
 </head>
 
@@ -458,6 +657,192 @@
       </div>
    </section>
 
+<!-- 今日新品 -->
+
+<section class="daily-news">
+
+  <h2 class="daily-news-title">
+    Novedades del día 🐾
+  </h2>
+
+  <div class="daily-products" id="dailyProducts">
+
+    <!-- Supabase 商品会自动显示在这里 -->
+
+  </div>
+
+  <a href=" " class="daily-menu-button">
+    Ver menú completo
+    <span>→</span>
+  </a >
+
+</section>
+
+<script>
+
+/* =========================
+   从 Supabase 读取今日新品
+========================= */
+
+async function loadDailyNewProducts() {
+
+    const container =
+        document.getElementById('dailyProducts');
+
+
+    if (!container) {
+        return;
+    }
+
+
+    /* =========================
+       查询 Supabase
+    ========================= */
+
+    const { data: products, error } =
+        await supabaseClient
+
+        .from('products')
+
+        .select(`
+            id,
+            name,
+            price,
+            image_url,
+            is_new
+        `)
+
+        .eq('is_new', true)
+
+        .limit(3);
+
+
+    /* =========================
+       查询失败
+    ========================= */
+
+    if (error) {
+
+        console.error(
+            '读取今日新品失败：',
+            error
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       没有新品
+    ========================= */
+
+    if (!products || products.length === 0) {
+
+        document.querySelector('.daily-news').style.display = 'none';
+
+        return;
+    }
+
+
+    /* =========================
+       清空原内容
+    ========================= */
+
+    container.innerHTML = '';
+
+
+    /* =========================
+       创建商品卡片
+    ========================= */
+
+    products.forEach(product => {
+
+        const card =
+            document.createElement('div');
+
+
+        card.className =
+            'daily-product';
+
+
+        /* 价格 */
+
+        const price =
+            Number(product.price || 0)
+            .toFixed(2)
+            .replace('.', ',');
+
+
+        /* 商品卡片内容 */
+
+        card.innerHTML = `
+
+            <span class="daily-tag">
+                Nuevo
+            </span>
+
+
+            <img
+                class="daily-product-image"
+
+                src="${product.image_url || ''}"
+
+                alt="${product.name || ''}"
+            >
+
+
+            <div class="daily-product-name">
+
+                ${product.name || ''}
+
+            </div>
+
+
+            <div class="daily-product-price">
+
+                ${price} €
+
+            </div>
+
+        `;
+
+
+        /* =========================
+           点击商品进入菜单
+        ========================= */
+
+        card.addEventListener(
+            'click',
+            function () {
+
+                window.location.href =
+                    `menu.html?product=${product.id}`;
+
+            }
+        );
+
+
+        card.style.cursor =
+            'pointer';
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   页面加载后运行
+========================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    loadDailyNewProducts
+);
+
+</script>
   
 <!-- 底部导航 -->
    <nav class="bottom-nav">
