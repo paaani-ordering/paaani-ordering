@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#FFF8E9">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <title>Paaani Café</title>
 
@@ -680,6 +682,15 @@
 
 <script>
 
+const SUPABASE_URL = 'https://oevwuadmtzujngtmkkbw.supabase.co';
+
+const SUPABASE_ANON_KEY = 'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+  
 /* =========================
    从 Supabase 读取今日新品
 ========================= */
