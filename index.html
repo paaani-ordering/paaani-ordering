@@ -221,7 +221,7 @@
 
 /* 集章 */
     .stamp-section {   /* 集章区域和页面左右边距 */
-       margin:0 20px;
+       margin:0 20px 30px;
 }
 
     .stamp-card {    /* 控制蓝色集章卡 */
@@ -356,204 +356,113 @@
       object-position: right bottom;
 }
 
-    /* =========================
-   今日新品
-========================= */
-
-.daily-news {
-    margin: 0 20px 24px;
-    padding: 22px 14px 20px;
-
-    background: rgba(255, 248, 233, 0.75);
-    border: 1px solid #f1e7cf;
-    border-radius: 24px;
-
-    box-sizing: border-box;
+/* 今日新品 */
+   .daily-news {
+      margin: 0 20px 24px;   /* 大卡片外面边距 */
+      padding: 22px 14px 20px;   /* 内边距 */
+      background: rgba(255, 248, 233, 0.75);
+      border-radius: 24px;
+      box-sizing: border-box;
 }
 
-
-/* 标题 */
-
-.daily-news-title {
-    margin: 0 0 18px 4px;
-
-    font-size: 22px;
-    line-height: 1.2;
-
-    font-weight: 800;
-
-    color: #18324B;
+   .daily-news-title {   /* 标题 */
+      margin: 0 0 18px 4px;   /* 标题外部距离 */
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 800;
+      color: #8ed8f8;
 }
 
-
-/* =========================
-   三个商品
-========================= */
-
-.daily-products {
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    gap: 9px;
+   .daily-products {   /* 三个商品 */
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));   /* 一行平均分三列 */
+      gap: 9px;   /* 卡片间距 */
 }
 
-
-/* 商品卡片 */
-
-.daily-product {
-    position: relative;
-
-    min-width: 0;
-
-    padding: 10px 7px 13px;
-
-    background: rgba(255, 255, 255, 0.55);
-
-    border: 1px solid rgba(225, 215, 195, 0.8);
-
-    border-radius: 18px;
-
-    box-sizing: border-box;
-
-    text-align: center;
-
-    overflow: visible;
+   .daily-product {   /* 每个卡片 */
+      position: relative;
+      min-width: 0;   /* 防止卡片撑宽 */
+      padding: 8px 7px 10px;   /* 内边距 */
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(225, 215, 195, 0.8);   /* 边 */
+      border-radius: 18px;   /* 圆角 */
+      box-sizing: border-box;
+      text-align: center;
+      overflow: visible;   /* 允许标签跑出卡片 */
 }
 
-
-/* =========================
-   Nuevo 标签
-========================= */
-
-.daily-tag {
-    position: absolute;
-
-    top: -7px;
-    left: 5px;
-
-    padding: 4px 8px;
-
-    border-radius: 10px;
-
-    background: #8ED8F8;
-
-    color: #18324B;
-
-    font-size: 9px;
-    line-height: 1;
-
-    font-weight: 800;
-
-    z-index: 2;
+   .daily-tag {   /* Nuevo 标签 */
+      position: absolute;
+      top: -7px;   /* 上下位置 */
+      left: 2px;   /* 数字越大越往右 */
+      padding: 4px 8px;   /* 内部大小 标签太大减小这里 */
+      border-radius: 10px;
+      background: #8ED8F8;
+      color: #FFFFFF;
+      font-size: 9px;
+      line-height: 1;   /* 控制文字行高 */
+      font-weight: 800;
+      z-index: 2;   /* 不会被挡住 */
 }
 
-
-/* =========================
-   商品图片
-========================= */
-
-.daily-product-image {
-    width: 100%;
-    height: 95px;
-
-    display: block;
-
-    object-fit: contain;
-
-    margin: 4px auto 7px;
+   .daily-product-image {   /* 商品图片 */
+      width: 100%;
+      height: 95px;   /* 图片区域高度 */
+      display: block;
+      object-fit: contain;
+      margin: 4px auto 7px;   /* 外边距 */
 }
 
-
-/* =========================
-   商品名字
-========================= */
-
-.daily-product-name {
-    min-height: 34px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 2px;
-
-    font-size: 13px;
-    line-height: 1.2;
-
-    font-weight: 700;
-
-    color: #18324B;
-
-    word-break: break-word;
+   .daily-product-name {   /* 商品名字 */
+      min-height: 34px;   /* 最小高度 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2px;   /* 名字左右留 */
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 700;
+      color: #18324B;
+      word-break: break-word;   /* 允许自动换行 */
 }
 
-
-/* =========================
-   价格
-========================= */
-
-.daily-product-price {
-    margin-top: 7px;
-
-    font-size: 13px;
-
-    font-weight: 800;
-
-    color: #18324B;
+   .daily-product-price {   /* 价格 */
+      margin-top: 7px;   /* 距离商品名字 */
+      font-size: 12px;
+      font-weight: 800;
+      color: #18324B;
 }
 
-
-/* =========================
-   查看完整菜单
-========================= */
-
-.daily-menu-button {
-    width: 78%;
-    height: 48px;
-
-    margin: 20px auto 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 13px;
-
-    border: 2px solid #8ED8F8;
-
-    border-radius: 999px;
-
-    background: rgba(255, 255, 255, 0.25);
-
-    color: #5FAFD5;
-
-    font-size: 15px;
-
-    font-weight: 800;
-
-    text-decoration: none;
-
-    box-sizing: border-box;
+   .daily-menu-button {   /* 查看完整菜单按钮 */
+      width: 78%;   /* 按钮宽度是大卡片的 */
+      height: 48px;   /* 高度 */
+      margin: 20px auto 0;   /* 与商品距离 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;   /* 文字和箭头的距离 */
+      border: 2px solid #8ED8F8;   /* 边 */
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.25);
+      color: #8ED8F8;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;   /* 取消下划线 */
+      box-sizing: border-box;
 }
 
-
-.daily-menu-button span {
-    font-size: 19px;
+   .daily-menu-button span {   /* 箭头 */
+      font-size: 19px;
 }
 
-
-/* 防止链接下划线 */
-
-.daily-news a,
-.daily-news a:visited,
-.daily-news a:hover,
-.daily-news a:active {
-    text-decoration: none;
+   .daily-news a,   /* 防止链接下划线 */
+   .daily-news a:visited,
+   .daily-news a:hover,
+   .daily-news a:active {
+      text-decoration: none;
 }
+    
   </style>
 </head>
 
