@@ -219,74 +219,6 @@
       text-decoration: none;    /* 去掉下划线 */
 }
 
-/* 集章 */
-    .stamp-section {   /* 集章区域和页面左右边距 */
-       margin:0 20px 30px;
-}
-
-    .stamp-card {    /* 控制蓝色集章卡 */
-       background: #8ed8f8;
-       border-radius: 25px;
-       padding: 22px 20px 24px;
-}
-
-    .stamp-top {   /* 控制卡片顶部 */
-       display: flex;   /* 左右横排 */
-       justify-content: space-between;   /* 一个靠左一个靠右 */
-       align-items: flex-start;   /* 顶部对齐 */
-       gap: 15px;   /* 左右两部分至少留 */
-}
-
-    .stamp-title {   /* 大标题 */
-       margin: 0;   /* 清除默认外边距 */
-       color: #FFFFFF;
-       font-size: 21px;
-       line-height: 1.15;
-       font-weight: 700;
-       font-family:Georgia,"Times New Roman",serif;   /* 字体 */
-       white-space: nowrap;   /* 强制一行 */
-}
-
-    .stamp-subtitle {   /* 小字 */
-       margin-top: 5px;
-       font-size: 11px;
-       font-weight: 600;
-       letter-spacing: 1px;   /* 字间距 */
-       color: #FFFFFF;
-       white-space: nowrap;   /* 强制一行 */
-}
-    
-    .stamp-btn {   /* 控制右边白色按钮 */
-       border: none;   /* 无边框 */
-       background: #FFFFFF;
-       color: #83D3F4;
-       border-radius: 30px;
-       padding: 8px 13px;
-       font-size: 11px;
-       font-weight: 700;
-       white-space: nowrap;
-}
-
-    .stamp-cups {   /* 集章图标 */
-       display: grid;
-       grid-template-columns: repeat(4, 1fr);   /* 一行四个 */
-       gap: 18px 16px;   /* 上下间距 左右间距 */
-       margin-top: 28px;   /* 图标区域距离上面标题距离 */
-       width: 100%;
-}
-
-    .stamp {   /* 控制每一个图标 */
-       width: 100%;
-       max-width: 75px;   /* 最大不超过 */
-       height: auto;   /* 保持原比例 */
-       justify-self: center;
-       opacity: 0.25;   /* 透明度 */
-}
-
-    .stamp.active {   /* 已经集到的章 */
-       opacity: 1;
-}
-
 /* 更多优惠券 */
     .offers-banner {
        display: block;
@@ -356,6 +288,74 @@
       object-position: right bottom;
 }
 
+/* 集章 */
+    .stamp-section {   /* 集章区域和页面左右边距 */
+       margin:0 20px 10px;
+}
+
+    .stamp-card {    /* 控制蓝色集章卡 */
+       background: #8ed8f8;
+       border-radius: 25px;
+       padding: 22px 20px 24px;
+}
+
+    .stamp-top {   /* 控制卡片顶部 */
+       display: flex;   /* 左右横排 */
+       justify-content: space-between;   /* 一个靠左一个靠右 */
+       align-items: flex-start;   /* 顶部对齐 */
+       gap: 15px;   /* 左右两部分至少留 */
+}
+
+    .stamp-title {   /* 大标题 */
+       margin: 0;   /* 清除默认外边距 */
+       color: #FFFFFF;
+       font-size: 21px;
+       line-height: 1.15;
+       font-weight: 700;
+       font-family:Georgia,"Times New Roman",serif;   /* 字体 */
+       white-space: nowrap;   /* 强制一行 */
+}
+
+    .stamp-subtitle {   /* 小字 */
+       margin-top: 5px;
+       font-size: 11px;
+       font-weight: 600;
+       letter-spacing: 1px;   /* 字间距 */
+       color: #FFFFFF;
+       white-space: nowrap;   /* 强制一行 */
+}
+    
+    .stamp-btn {   /* 控制右边白色按钮 */
+       border: none;   /* 无边框 */
+       background: #FFFFFF;
+       color: #83D3F4;
+       border-radius: 30px;
+       padding: 8px 13px;
+       font-size: 11px;
+       font-weight: 700;
+       white-space: nowrap;
+}
+
+    .stamp-cups {   /* 集章图标 */
+       display: grid;
+       grid-template-columns: repeat(4, 1fr);   /* 一行四个 */
+       gap: 18px 16px;   /* 上下间距 左右间距 */
+       margin-top: 28px;   /* 图标区域距离上面标题距离 */
+       width: 100%;
+}
+
+    .stamp {   /* 控制每一个图标 */
+       width: 100%;
+       max-width: 75px;   /* 最大不超过 */
+       height: auto;   /* 保持原比例 */
+       justify-self: center;
+       opacity: 0.25;   /* 透明度 */
+}
+
+    .stamp.active {   /* 已经集到的章 */
+       opacity: 1;
+}
+    
 /* 今日新品 */
    .daily-news {
       margin: 0 20px 24px;   /* 大卡片外面边距 */
