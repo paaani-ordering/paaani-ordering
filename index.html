@@ -221,7 +221,7 @@
 
 /* 集章 */
     .stamp-section {   /* 集章区域和页面左右边距 */
-       margin:0 20px 0;
+       margin:0 20px 30px;
 }
 
     .stamp-card {    /* 控制蓝色集章卡 */
@@ -369,7 +369,7 @@
       margin: 0 0 18px 4px;   /* 标题外部距离 */
       font-size: 22px;
       font-family: 'Nunito', sans-serif;
-      font-weight: 800;
+      font-weight: 700;
       line-height: 1.2;
       color: #8ed8f8;
 }
@@ -631,8 +631,9 @@
             Number(product.price || 0)
             .toFixed(2)
             .replace('.', ',');
-
-        card.innerHTML = `   /* 商品卡片内容 */
+      
+         /* 商品卡片内容 */
+        card.innerHTML = `   
             <span class="daily-tag">
                 Nuevo
             </span>
