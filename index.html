@@ -328,7 +328,8 @@
       position: relative;
       min-width: 0;   /* 防止卡片撑宽 */
       height：255px；
-      padding: 14px 8px 18px;   /* 内边距 */
+      padding: 16px 8px 16px;   /* 内边距 */
+      background: rgba(255, 253, 248, 0.72);
       border: 1px solid #e8dfcc;   /* 边 */
       border-radius: 20px;   /* 圆角 */
       box-sizing: border-box;
@@ -338,13 +339,13 @@
 
    .daily-tag {   /* Nuevo 标签 */
       position: absolute;
-      top: -10px;   /* 上下位置 */
-      left: 8px;   /* 数字越大越往右 */
-      padding: 5px 11px;   /* 内部大小 标签太大减小这里 */
+      top: -8px;   /* 上下位置 */
+      left: 10px;   /* 数字越大越往右 */
+      padding: 5px 12px;   /* 内部大小 标签太大减小这里 */
       background: #8ED8F8;
       border-radius:999px;
       color: #FFFFFF;
-      font-size: 11px;
+      font-size: 10px;
       line-height: 1;   /* 控制文字行高 */
       font-weight: 700;
       z-index: 2;   /* 不会被挡住 */
@@ -352,47 +353,48 @@
 
    .daily-product-image {   /* 商品图片 */
       width: 100%;
-      height: 98px;   /* 图片区域高度 */
+      height: 100px;   /* 图片区域高度 */
       display: block;
       object-fit: contain;
-      margin: 10px auto 9px;   /* 外边距 */
+      margin: 10px auto 2px;   /* 外边距 */
 }
 
    .daily-product-name {   /* 商品名字 */
-      min-height: 42px;   /* 最小高度 */
+      min-height: 40px;   /* 最小高度 */
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0 4px;   /* 名字左右留 */
       font-family: 'Nunito', sans-serif;   /* 字体 */
-      font-size:13px;
-      font-weight:500;
+      font-size:12px;
+      font-weight:600;
       line-height: 1.2;
-      color: #65798a;
+      color: #586875;
       word-break: break-word;   /* 允许自动换行 */
 }
 
    .daily-product-price {   /* 价格 */
-      margin-top: 8px;   /* 距离商品名字 */
+      margin-top: 5px;   /* 距离商品名字 */
       margin-bottom:8px;
-      font-size:13px;
-      font-weight:500;
-      color: #91877c;
+      font-family: 'Nunito', sans-serif;
+      font-size:12px;
+      font-weight:600;
+      color: #8a8178;
 }
 
    .daily-menu-button {   /* 查看完整菜单按钮 */
-      width: 72%;   /* 按钮宽度是大卡片的 */
-      height: 44px;   /* 高度 */
-      margin: 24px auto 0;   /* 与商品距离 */
+      width: 68%;   /* 按钮宽度是大卡片的 */
+      height: 42px;   /* 高度 */
+      margin: 22px auto 0;   /* 与商品距离 */
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;   /* 文字和箭头的距离 */
-      border: 1.5px solid #8ED8F8;
-      color: #69bfdf;
+      border: 1px solid #8ED8F8;
+      color: #6fc4e4;
       background:transparent;
       border-radius: 999px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       text-decoration: none;   /* 取消下划线 */
       box-sizing: border-box;
