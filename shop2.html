@@ -1323,13 +1323,13 @@ async function getCurrentMember() {
                 .from("members")
 
                 .insert({
-                    user_id: user.id,
-                    email: user.email,
-                    points: 15,
-                    check_days: 0,
-                    last_checkin: null
-                })
-
+    user_id: user.id,
+    name: user.user_metadata?.name || user.email?.split("@")[0] || "Cliente",
+    email: user.email,
+    points: 15,
+    check_days: 0,
+    last_checkin: null
+})
                 .select()
 
                 .single();
