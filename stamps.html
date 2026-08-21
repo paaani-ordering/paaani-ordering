@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Tarjeta de sellos | Paaani</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet">
+
+<style>
+
+/* =========================
+   基础设置
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family: 'Nunito', sans-serif;
+
+    color: #59616c;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.72),
+            rgba(255,255,255,0.72)
+        ),
+        url("paaani-bg.png");
+
+    background-repeat: repeat;
+    background-size: 300px auto;
+
+    min-height: 100vh;
+}
+
+
+/* =========================
+   手机页面
+========================= */
+
+.app {
+    width: 100%;
+    max-width: 430px;
+
+    margin: 0 auto;
+
+    padding: 22px 20px 110px;
+}
+
+
+/* =========================
+   返回按钮
+========================= */
+
+.back-button {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.8);
+
+    color: #59616c;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    margin-bottom: 24px;
+}
+
+
+/* =========================
+   标题
+========================= */
+
+.page-title {
+    margin: 0;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    color: #59616c;
+}
+
+.page-subtitle {
+    margin: 5px 0 24px;
+
+    font-size: 14px;
+
+    color: #999;
+}
+
+
+/* =========================
+   集章卡
+========================= */
+
+.stamp-card {
+
+    background: #8ED8F8;
+
+    border-radius: 28px;
+
+    padding: 28px 22px 30px;
+
+    text-align: center;
+}
+
+
+/* 卡片标题 */
+
+.stamp-card-title {
+
+    margin: 0;
+
+    font-size: 26px;
+    font-weight: 800;
+
+    color: #fff;
+}
+
+
+/* 说明 */
+
+.stamp-card-text {
+
+    margin-top: 5px;
+
+    font-size: 14px;
+
+    color: rgba(255,255,255,.9);
+}
+
+
+/* =========================
+   8个印章
+========================= */
+
+.stamps {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px 14px;
+
+    margin-top: 30px;
+}
+
+
+/* 单个印章 */
+
+.stamp {
+
+    width: 62px;
+    height: 62px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    border: 2px dashed rgba(255,255,255,.55);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: rgba(255,255,255,.75);
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+
+/* 已获得 */
+
+.stamp.done {
+
+    background: #FFF4C8;
+
+    border: none;
+
+    color: #C18A00;
+
+    transform: rotate(-5deg);
+}
+
+
+/* =========================
+   进度
+========================= */
+
+.stamp-progress {
+
+    margin-top: 26px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #fff;
+}
+
+
+/* =========================
+   提示卡片
+========================= */
+
+.reward-info {
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    background: rgba(255,255,255,.85);
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    color: #777;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- 返回 -->
+    <button
+        class="back-button"
+        onclick="history.back()">
+        ←
+    </button>
+
+
+    <!-- 标题 -->
+    <h1 class="page-title">
+        Tarjeta de sellos
+    </h1>
+
+    <div class="page-subtitle">
+        Paaani Rewards
+    </div>
+
+
+    <!-- 集章卡 -->
+    <div class="stamp-card">
+
+        <h2 class="stamp-card-title">
+            8 cafés + 1 gratis
+        </h2>
+
+        <div class="stamp-card-text">
+            Colecciona tus sellos ☕
+        </div>
+
+
+        <!-- 8个章 -->
+        <div class="stamps">
+
+            <div class="stamp">1</div>
+            <div class="stamp">2</div>
+            <div class="stamp">3</div>
+            <div class="stamp">4</div>
+
+            <div class="stamp">5</div>
+            <div class="stamp">6</div>
+            <div class="stamp">7</div>
+            <div class="stamp">8</div>
+
+        </div>
+
+
+        <div class="stamp-progress">
+            0 / 8 sellos
+        </div>
+
+    </div>
+
+
+    <!-- 说明 -->
+    <div class="reward-info">
+
+        ☕ Consigue 1 sello con cada café participante.<br>
+
+        🎁 Al completar 8 sellos,
+        recibirás 1 café gratis.
+
+    </div>
+
+</div>
+
+</body>
+</html>
