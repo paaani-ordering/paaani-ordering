@@ -109,96 +109,106 @@ body {
 ========================= */
 
 .stamp-card {
+    background: rgba(255,255,255,0.92);
 
-    background: #8ED8F8;
+    border-radius: 22px;
 
-    border-radius: 28px;
+    padding: 22px 18px 24px;
 
-    padding: 28px 22px 30px;
-
-    text-align: center;
+    box-shadow: 0 6px 20px rgba(89,97,108,0.06);
 }
 
 
-/* 卡片标题 */
+/* 卡片顶部 */
+
+.stamp-card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+
+    margin-bottom: 22px;
+}
+
+
+/* 已获得 */
 
 .stamp-card-title {
-
     margin: 0;
 
-    font-size: 26px;
+    font-size: 18px;
     font-weight: 800;
 
-    color: #fff;
+    color: #59616c;
 }
 
 
-/* 说明 */
+/* 数字 */
+
+.stamp-count {
+    font-size: 20px;
+    font-weight: 800;
+
+    color: #F4B942;
+}
+
+
+/* 小说明 */
 
 .stamp-card-text {
-
-    margin-top: 5px;
-
     font-size: 14px;
+    font-weight: 600;
 
-    color: rgba(255,255,255,.9);
+    color: #59616c;
 }
-
 
 /* =========================
    8个印章
 ========================= */
 
 .stamps {
-
     display: grid;
-
     grid-template-columns: repeat(4, 1fr);
 
-    gap: 20px 14px;
+    column-gap: 16px;
+    row-gap: 24px;
 
-    margin-top: 30px;
+    margin-top: 6px;
+
+    padding: 4px 2px 8px;
 }
 
 
-/* 单个印章 */
+/* 单个杯子印章 */
 
 .stamp {
+    width: 64px;
+    height: 64px;
 
-    width: 62px;
-    height: 62px;
+    object-fit: contain;
 
-    margin: auto;
+    display: block;
+    margin: 0 auto;
 
-    border-radius: 50%;
+    opacity: 0.28;
 
-    border: 2px dashed rgba(255,255,255,.55);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    color: rgba(255,255,255,.75);
-
-    font-size: 17px;
-    font-weight: 800;
-}
-
-
-/* 已获得 */
-
-.stamp.done {
-
-    background: #FFF4C8;
+    filter: grayscale(1);
 
     border: none;
+    border-radius: 0;
 
-    color: #C18A00;
-
-    transform: rotate(-5deg);
+    transition: 0.25s;
 }
 
+
+/* 已获得的印章 */
+
+.stamp.done {
+    opacity: 1;
+
+    filter: none;
+
+    transform: rotate(-4deg) scale(1.05);
+}
 
 /* =========================
    进度
@@ -268,14 +278,21 @@ body {
     <!-- 集章卡 -->
     <div class="stamp-card">
 
-        <h2 class="stamp-card-title">
-            8 cafés + 1 gratis
-        </h2>
+       <div class="stamp-card-header">
 
-        <div class="stamp-card-text">
-            Colecciona tus sellos ☕
-        </div>
+    <h2 class="stamp-card-title">
+        Has conseguido
+    </h2>
 
+    <span class="stamp-count">
+        0
+    </span>
+
+    <div class="stamp-card-text">
+        sellos
+    </div>
+
+</div>
 
         <!-- 8个章 -->
         <div class="stamps">
