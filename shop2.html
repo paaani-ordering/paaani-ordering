@@ -1240,318 +1240,208 @@ function updatePoints(points) {
         pointsBox.textContent = String(points);
     }
 }
-    
-function updateCheckinButton() {
 
-    const button =
-        document.getElementById("checkInBtn");
+/* =========================================
+   获取本地日期 YYYY-MM-DD
+========================================= */
 
-    if (!button) return;
+function getLocalDateString(date = new Date()) {
 
-    const today = new Date().toDateString();
+    const year = date.getFullYear();
 
-    const lastCheckin =
-        localStorage.getItem("paaniLastCheckin");
+    const month =
+        String(date.getMonth() + 1).padStart(2, "0");
 
-    let checkinDay =
-        parseInt(
-            localStorage.getItem("paaniCheckinDay")
-        ) || 1;
+    const day =
+        String(date.getDate()).padStart(2, "0");
 
-    if (lastCheckin === today) {
-
-        button.textContent = "✓ Checked in";
-        button.disabled = true;
-
-        button.style.opacity = "0.6";
-        button.style.cursor = "default";
-
-   } else if (checkinDay > 7) {
-
-    checkinDay = 1;
-
-    localStorage.setItem(
-        "paaniCheckinDay",
-        "1"
-    );
-
-    localStorage.removeItem(
-        "paaniCheckinCompleted"
-    );
-
-    updateCheckinDays();
-
-    button.textContent = "Check-in";
-    button.disabled = false;
-
-    button.style.opacity = "1";
-    button.style.cursor = "pointer";
-
-} else {
-
-        button.textContent = "Check-in";
-        button.disabled = false;
-
-        button.style.opacity = "1";
-        button.style.cursor = "pointer";
-    }
+    return `${year}-${month}-${day}`;
 }
 
 
-async function doCheckIn() {
-    
-    const { data: { user } } = await supabaseClient.auth.getUser();
+/* =========================================
+   获取 / 创建当前会员
+========================================= */
+
+async function getCurrentMember() {
+
+    const {
+        data: { user }
+    } = await supabaseClient.auth.getUser();
+
 
     if (!user) {
-         alert('Por favor, inicia sesión con tu correo electrónico para hacer check-in.');
-         return;
+        return {
+            user: null,
+            member: null
+        };
     }
 
-    let checkinDay =
-        parseInt(
-            localStorage.getItem("paaniCheckinDay")
-        ) || 1;
-    
-    let points =
-        parseInt(
-            localStorage.getItem("paaniPoints")
-        ) || 0;
 
-    const today = new Date().toDateString();
+    let { data: member, error } =
+        await supabaseClient
 
-    const lastCheckin =
-        localStorage.getItem("paaniLastCheckin");
+            .from("members")
+
+            .select(`
+                id,
+                user_id,
+                email,
+                points,
+                check_days,
+                last_checkin
+            `)
+
+            .eq("user_id", user.id)
+
+            .maybeSingle();
 
 
-    // =========================
-    // 检查是否漏签
-    // =========================
+    if (error) {
 
-    if (lastCheckin) {
-
-        const todayDate = new Date();
-        const lastDate = new Date(lastCheckin);
-
-        const todayOnly = new Date(
-            todayDate.getFullYear(),
-            todayDate.getMonth(),
-            todayDate.getDate()
+        console.error(
+            "Error al cargar member:",
+            error
         );
 
-        const lastOnly = new Date(
-            lastDate.getFullYear(),
-            lastDate.getMonth(),
-            lastDate.getDate()
-        );
+        return {
+            user,
+            member: null
+        };
+    }
 
-        const diffDays =
-            Math.round(
-                (todayOnly - lastOnly) /
-                (1000 * 60 * 60 * 24)
+
+    /* 这个账号第一次进入商城 */
+    if (!member) {
+
+        const {
+            data: newMember,
+            error: insertError
+        } =
+            await supabaseClient
+
+                .from("members")
+
+                .insert({
+                    user_id: user.id,
+                    email: user.email,
+                    points: 15,
+                    check_days: 0,
+                    last_checkin: null
+                })
+
+                .select()
+
+                .single();
+
+
+        if (insertError) {
+
+            console.error(
+                "Error al crear member:",
+                insertError
             );
 
-
-        // 今天已经签到
-        if (diffDays === 0) {
-
-            updateCheckinButton();
-        
-            return;
+            return {
+                user,
+                member: null
+            };
         }
 
 
-        // 漏了一天或更多 → 重新从第1天开始
-        if (diffDays > 1) {
+        member = newMember;
+    }
 
-            checkinDay = 1;
 
-            localStorage.setItem(
-                "paaniCheckinDay",
-                "1"
-            );
+    return {
+        user,
+        member
+    };
+}
+
+
+/* =========================================
+   更新签到圆圈和文字
+========================================= */
+
+function updateCheckinDays(checkinDay = 0) {
+
+    const days =
+        document.querySelectorAll(
+            ".check-days .day"
+        );
+
+    const status =
+        document.querySelector(
+            ".check-status"
+        );
+
+
+    checkinDay =
+        Number(checkinDay || 0);
+
+
+    /* 下面文字 */
+
+    if (status) {
+
+        if (checkinDay >= 7) {
+
+            status.textContent =
+                "¡7 días completados! 🎉";
+
+        } else if (checkinDay > 0) {
+
+            status.textContent =
+                `Día ${checkinDay} de 7`;
+
+        } else {
+
+            status.textContent =
+                "Día 1 de 7";
+
         }
     }
 
- 
- // ==============================
-// 签到奖励
-// ==============================
 
-if (checkinDay <= 4) {
+    /* 圆圈 */
 
-  // 第1～4天：+5积分
-  points += 5;
-
-} else if (checkinDay <= 6) {
-
-  // 第5～6天：+8积分
-  points += 8;
-
-} else if (checkinDay === 7) {
-
-  // ==============================
-  // 第7天：赠送无门槛95折优惠券
-  // ==============================
-
-// 当前登录用户
-const {
-  data: { user }
-} = await supabaseClient.auth.getUser();
-
-if (!user) {
-  alert("请先登录账号");
-  return;
-}
-
-// 领取时间
-const claimedAt = new Date();
-
-// 过期时间：1个月后
-const expiresAt = new Date(claimedAt);
-expiresAt.setMonth(expiresAt.getMonth() + 1);
-
-// ==============================
-// 检查本轮签到券是否已经发过
-// ==============================
-
-const { data: existingCoupon, error: checkError } = await supabaseClient
-  .from("user_coupons")
-  .select("id")
-  .eq("user_id", user.id)
-  .eq("coupon_id", 3)
-  .eq("is_used", false)
-  .gt("expires_at", new Date().toISOString())
-  .maybeSingle();
-
-if (checkError) {
-  console.error("检查签到优惠券失败：", checkError);
-  alert("优惠券领取失败，请稍后再试");
-  return;
-}
-
-if (existingCoupon) {
-  console.log("用户已有有效的签到5%优惠券，不重复发放");
-} else {
-
-  // 写入 user_coupons
-  const { error: couponError } = await supabaseClient
-  .from("user_coupons")
-    .insert({
-      user_id: user.id,
-      coupon_id: 3,
-      claimed_at: claimedAt.toISOString(),
-      expires_at: expiresAt.toISOString(),
-      is_used: false
-    });
-
-  if (couponError) {
-    console.error("签到优惠券发放失败：", couponError);
-    alert("优惠券领取失败，请稍后再试");
-    return;
-  }
-
-  showCheckinCouponModal();
-}
-
-}    
-    
-// ==============================
-// 保存今天签到
-// ==============================
-
-localStorage.setItem(
-  "paaniLastCheckin",
-  today
-);
-
-
-// ==============================
-// 7天完成后开启新一轮
-// ==============================
-
-if (checkinDay === 7) {
-
-  localStorage.setItem(
-    "paaniCheckinCompleted",
-    "true"
-  );
-
-  // 下一轮从第1天开始
-  localStorage.setItem(
-    "paaniCheckinDay",
-    "7"
-  );
-
-} else {
-
-  localStorage.setItem(
-    "paaniCheckinDay",
-    String(checkinDay)
-  );
-}
-
-
-// ==============================
-// 保存积分
-// ==============================
-
-localStorage.setItem(
-  "paaniPoints",
-  String(points)
-);
-
-
-// ==============================
-// 更新签到页面
-// ==============================
-
-updateCheckinDays();
-
-   document.querySelectorAll(".points-num").forEach(function(el) {
-    el.textContent = String(points);
-});
-
-    updateCheckinButton();
-}
-    // ===== 更新签到圆圈 =====
-function updateCheckinDays() {
-
-    const days = document.querySelectorAll(".check-days .day");
-    
-   let checkinDay = parseInt(
-    localStorage.getItem("paaniCheckinDay")
-) || 1;
-
-const completed =
-    localStorage.getItem("paaniCheckinCompleted") === "true";
-
-const status = document.querySelector(".check-status");
-
-if (status) {
-
-    if (completed) {
-        status.textContent = "¡7 días completados! 🎉";
-    } else {
-        status.textContent = `Día ${checkinDay} de 7`;
-    }
-}
     days.forEach((day, index) => {
-    
-        const dayNumber = index + 1;
 
-        // 先清除状态
+        const dayNumber =
+            index + 1;
+
+
+        /* 默认灰色 */
+
         day.classList.remove("done");
         day.classList.remove("today");
 
-        // 恢复默认灰色
         day.style.backgroundColor = "#fff";
         day.style.borderColor = "#E5E5E5";
         day.style.color = "#888";
         day.style.transform = "scale(1)";
         day.style.boxShadow = "none";
 
-        // 已完成 → 蓝色
-           if (completed || dayNumber < checkinDay) {
+
+        /* 完成7天：全部蓝色 */
+
+        if (checkinDay >= 7) {
+
+            day.classList.add("done");
+
+            day.style.backgroundColor = "#8ED8F8";
+            day.style.borderColor = "#8ED8F8";
+            day.style.color = "#fff";
+
+            return;
+        }
+
+
+        /* 已经完成的前几天 */
+
+        if (dayNumber < checkinDay) {
+
             day.classList.add("done");
 
             day.style.backgroundColor = "#8ED8F8";
@@ -1560,7 +1450,9 @@ if (status) {
 
         }
 
-        // 今天 → 黄色
+
+        /* 当前签到天 */
+
         else if (dayNumber === checkinDay) {
 
             day.classList.add("today");
@@ -1568,23 +1460,367 @@ if (status) {
             day.style.backgroundColor = "#F7D86B";
             day.style.borderColor = "#F7D86B";
             day.style.color = "#333";
-            day.style.transform = "scale(1.18)";
-            day.style.boxShadow = "0 6px 15px rgba(247,216,107,.45)";
 
+            day.style.transform =
+                "scale(1.18)";
+
+            day.style.boxShadow =
+                "0 6px 15px rgba(247,216,107,.45)";
         }
 
     });
 }
-window.addEventListener("DOMContentLoaded", function () {
-    updateCheckinDays();
 
-    const points =
-        parseInt(localStorage.getItem("paaniPoints")) || 0;
+
+/* =========================================
+   更新签到按钮
+========================================= */
+
+function updateCheckinButton(lastCheckin) {
+
+    const button =
+        document.getElementById(
+            "checkInBtn"
+        );
+
+    if (!button) return;
+
+
+    const today =
+        getLocalDateString();
+
+
+    if (lastCheckin === today) {
+
+        button.textContent =
+            "✓ Checked in";
+
+        button.disabled = true;
+
+        button.style.opacity = "0.6";
+        button.style.cursor = "default";
+
+    } else {
+
+        button.textContent =
+            "Check-in";
+
+        button.disabled = false;
+
+        button.style.opacity = "1";
+        button.style.cursor = "pointer";
+    }
+}
+
+
+/* =========================================
+   签到
+========================================= */
+
+async function doCheckIn() {
+
+    const {
+        user,
+        member
+    } = await getCurrentMember();
+
+
+    if (!user) {
+
+        alert(
+            "Por favor, inicia sesión con tu correo electrónico para hacer check-in."
+        );
+
+        return;
+    }
+
+
+    if (!member) {
+
+        alert(
+            "No se pudieron cargar los datos de tu cuenta."
+        );
+
+        return;
+    }
+
+
+    const today =
+        getLocalDateString();
+
+
+    /* 今天已经签到 */
+
+    if (member.last_checkin === today) {
+
+        updateCheckinButton(
+            member.last_checkin
+        );
+
+        return;
+    }
+
+
+    let checkinDay =
+        Number(member.check_days || 0);
+
+    let points =
+        Number(member.points || 0);
+
+
+    /* =====================================
+       判断是否连续签到
+    ===================================== */
+
+    if (!member.last_checkin) {
+
+        /* 第一次签到 */
+        checkinDay = 1;
+
+    } else {
+
+        const todayDate =
+            new Date(today + "T00:00:00");
+
+        const lastDate =
+            new Date(
+                member.last_checkin +
+                "T00:00:00"
+            );
+
+
+        const diffDays =
+            Math.round(
+                (todayDate - lastDate) /
+                86400000
+            );
+
+
+        if (diffDays === 1) {
+
+            /* 连续签到 */
+
+            if (checkinDay >= 7) {
+
+                /* 上一轮已经完成7天 */
+                checkinDay = 1;
+
+            } else {
+
+                checkinDay += 1;
+            }
+
+        } else {
+
+            /* 漏签，重新从第1天 */
+            checkinDay = 1;
+        }
+    }
+
+
+    /* =====================================
+       签到奖励
+    ===================================== */
+
+    if (checkinDay <= 4) {
+
+        /* 第1～4天 +5 */
+        points += 5;
+
+    } else if (checkinDay <= 6) {
+
+        /* 第5～6天 +8 */
+        points += 8;
+
+    } else if (checkinDay === 7) {
+
+        /* =================================
+           第7天发95折优惠券
+        ================================= */
+
+        const claimedAt =
+            new Date();
+
+        const expiresAt =
+            new Date(claimedAt);
+
+        expiresAt.setMonth(
+            expiresAt.getMonth() + 1
+        );
+
+
+        const {
+            data: existingCoupon,
+            error: checkError
+        } =
+            await supabaseClient
+
+                .from("user_coupons")
+
+                .select("id")
+
+                .eq("user_id", user.id)
+
+                .eq("coupon_id", 3)
+
+                .eq("is_used", false)
+
+                .gt(
+                    "expires_at",
+                    new Date().toISOString()
+                )
+
+                .maybeSingle();
+
+
+        if (checkError) {
+
+            console.error(
+                "检查签到优惠券失败：",
+                checkError
+            );
+
+            return;
+        }
+
+
+        if (!existingCoupon) {
+
+            const {
+                error: couponError
+            } =
+                await supabaseClient
+
+                    .from("user_coupons")
+
+                    .insert({
+                        user_id: user.id,
+                        coupon_id: 3,
+                        claimed_at:
+                            claimedAt.toISOString(),
+                        expires_at:
+                            expiresAt.toISOString(),
+                        is_used: false
+                    });
+
+
+            if (couponError) {
+
+                console.error(
+                    "签到优惠券发放失败：",
+                    couponError
+                );
+
+                return;
+            }
+
+
+            showCheckinCouponModal();
+        }
+    }
+
+
+    /* =====================================
+       保存到当前账号的 Supabase
+    ===================================== */
+
+    const {
+        error: updateError
+    } =
+        await supabaseClient
+
+            .from("members")
+
+            .update({
+                points: points,
+                check_days: checkinDay,
+                last_checkin: today
+            })
+
+            .eq(
+                "user_id",
+                user.id
+            );
+
+
+    if (updateError) {
+
+        console.error(
+            "Error al guardar el check-in:",
+            updateError
+        );
+
+        alert(
+            "No se pudo guardar el check-in."
+        );
+
+        return;
+    }
+
+
+    /* =====================================
+       页面立即刷新
+    ===================================== */
 
     updatePoints(points);
-    updateCheckinButton();
 
-});
+    document
+        .querySelectorAll(".points-num")
+        .forEach(function(el) {
+
+            el.textContent =
+                String(points);
+        });
+
+
+    updateCheckinDays(
+        checkinDay
+    );
+
+    updateCheckinButton(
+        today
+    );
+}
+
+
+/* =========================================
+   页面打开时读取当前账号
+========================================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+        const {
+            user,
+            member
+        } = await getCurrentMember();
+
+
+        if (!user || !member) {
+
+            updateCheckinDays(0);
+            updateCheckinButton(null);
+
+            return;
+        }
+
+
+        updatePoints(
+            Number(member.points || 0)
+        );
+
+
+        updateCheckinDays(
+            Number(member.check_days || 0)
+        );
+
+
+        updateCheckinButton(
+            member.last_checkin
+        );
+    }
+);    
 
 function showCheckinCouponModal() {
   document
