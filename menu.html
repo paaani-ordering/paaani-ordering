@@ -202,60 +202,61 @@
 }
 
 /* 价格 */
-.price {
-  font-weight: 700;
-  font-size: 13px;
+  .price {
+    font-weight: 700;
+    font-size: 13px;
 }
 
 /* 普通 + 按钮 */
-.add {
-  border: none;   /* 去掉边框 */
-  width: 35px;
-  height: 35px;
-  min-width: 35px;
-  border-radius: 50%;   /* 变圆形 */
-  background: #FFEAAB;
-  color: #5cb5f0;
-  font-size: 17px;
-  cursor: pointer;
+  .add {
+    border: none;   /* 去掉边框 */
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    border-radius: 50%;   /* 变圆形 */
+    background: #FFEAAB;
+    color: #5cb5f0;
+    font-size: 17px;
+    cursor: pointer;
 }
 
 /* 有选项的 Elegir */
-.add.has-options {
-  width: 50px;
-  height: 30px;
-  min-width: 50px;
-  border-radius: 19px;   /* 做成胶囊 */
-  background: #FFEAAB;
-  color: #5cb5f0;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
+  .add.has-options {
+    width: 50px;
+    height: 30px;
+    min-width: 50px;
+    border-radius: 19px;   /* 做成胶囊 */
+    background: #FFEAAB;
+    color: #5cb5f0;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
 }
     
 /* 购物车 */
-.cart {
-  position: fixed;
-  bottom: calc(70px + env(safe-area-inset-bottom));
-  left: 15px;
-  right: 15px;
-  max-width: 570px;
-  margin: auto;
-  background: #8ed8f8;
-  color: white;
-  padding: 14px 18px;
-  border-radius: 16px;
-  display: flex;
-  justify-content: space-between;
+  .cart {
+    position: fixed;   /* 固定在屏幕上 */
+    bottom: calc(70px + env(safe-area-inset-bottom));   /* 控制购物车距离屏幕底部位置 */
+    left: 15px;
+    right: 15px;
+    max-width: 570px;   /* 最大宽度 */
+    margin: auto;
+    background: #8ed8f8;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.bottom-space {
-  height: 78px;
+  .bottom-space {
+    height: 78px;   /* 页面底部占位空白 */
 }
+    
 /* 底部导航 */
     .bottom-nav {   /* 白色导航栏 */
        position: fixed;   /* 固定在底部 */
@@ -316,7 +317,7 @@
      body {   /* 防止页面内容被底栏挡住 */
         padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }
-
+    
   </style>
 </head>
 
