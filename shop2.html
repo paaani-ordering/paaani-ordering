@@ -4,13 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paaani | Las Palmas</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
+    
+/* 颜色 */
 :root{
     --blue:#8ED8F8;
     --yellow:#F7D86B;
@@ -20,19 +19,23 @@
     --card:#ffffff;
     --radius:22px;
 }
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+    
+/* 手机主体 */
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: transparent;
+      padding-bottom: 30px;
 }
-
+    
 /* 背景 */    
     body {
-      margin: 0 auto;
       width: 100%;
       max-width: 430px;
       font-family: Arial, sans-serif;
+      margin: 0 auto;
       background-image:   
       linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
       url("paaani-bg.png");
@@ -40,11 +43,7 @@
       background-size: 300px auto;
       background-position: top left;
 }
-    
-    
-/*================ HEADER ================*/
-
-    
+       
 .header{
 
     padding:20px;
@@ -1241,7 +1240,7 @@ function updatePoints(points) {
         pointsBox.textContent = String(points);
     }
 }
-
+    
 function updateCheckinButton() {
 
     const button =
@@ -1480,7 +1479,7 @@ if (checkinDay === 7) {
   // 下一轮从第1天开始
   localStorage.setItem(
     "paaniCheckinDay",
-    "0"
+    "7"
   );
 
 } else {
@@ -1537,10 +1536,7 @@ if (status) {
     }
 }
     days.forEach((day, index) => {
-
-        // 礼物不处理
-        if (day.classList.contains("gift")) return;
-
+    
         const dayNumber = index + 1;
 
         // 先清除状态
@@ -1555,7 +1551,7 @@ if (status) {
         day.style.boxShadow = "none";
 
         // 已完成 → 蓝色
-       if (dayNumber < checkinDay) {
+           if (completed || dayNumber < checkinDay) {
             day.classList.add("done");
 
             day.style.backgroundColor = "#8ED8F8";
