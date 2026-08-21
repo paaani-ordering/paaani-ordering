@@ -183,17 +183,9 @@ body {
     display: block;
     margin: 0 auto;
 
-    opacity: 0.32;
-
-filter:
-    brightness(0)
-    saturate(100%)
-    invert(82%)
-    sepia(18%)
-    saturate(1048%)
-    hue-rotate(169deg)
-    brightness(101%)
-    contrast(95%);
+    /* 未获得：淡灰色 */
+    opacity: 0.28;
+    filter: grayscale(1);
 
     border: none;
     border-radius: 0;
@@ -202,11 +194,10 @@ filter:
 }
 
 
-/* 已获得的印章 */
 
+/* 已获得 */
 .stamp.done {
     opacity: 1;
-
     filter: none;
 
     transform: rotate(-4deg) scale(1.05);
