@@ -12,9 +12,7 @@
 
 <style>
 
-/* =========================
-   基础设置
-========================= */
+/* 基础设置 */
 
 * {
     box-sizing: border-box;
@@ -41,9 +39,7 @@ body {
 }
 
 
-/* =========================
-   手机页面
-========================= */
+/* 手机页面 */
 
 .app {
     width: 100%;
@@ -55,9 +51,7 @@ body {
 }
 
 
-/* =========================
-   返回按钮
-========================= */
+/* 返回按钮 */
 
 .back-button {
     width: 38px;
@@ -189,9 +183,17 @@ body {
     display: block;
     margin: 0 auto;
 
-    opacity: 0.28;
+    opacity: 0.32;
 
-    filter: grayscale(1);
+filter:
+    brightness(0)
+    saturate(100%)
+    invert(82%)
+    sepia(18%)
+    saturate(1048%)
+    hue-rotate(169deg)
+    brightness(101%)
+    contrast(95%);
 
     border: none;
     border-radius: 0;
