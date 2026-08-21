@@ -7,25 +7,31 @@
   <title>Mi cuenta | Paaani</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #f8f8f5;
-      font-family: Arial, sans-serif;
-      color: #222;
-      padding-bottom: calc(95px + env(safe-area-inset-bottom));
-    }
-
-    .page {
+   
+/* 手机主体 */
+    .app {
       width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
+      max-width: 430px;
       min-height: 100vh;
-    }
-
+      margin: 0 auto;
+      background: transparent;
+      padding-bottom: 30px;
+}
+    
+/* 背景 */    
+    body {
+      width: 100%;
+      max-width: 430px;
+      font-family: Arial, sans-serif;
+      margin: 0 auto;
+      background-image:   
+      linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+      url("paaani-bg.png");
+      background-repeat: repeat;
+      background-size: 300px auto;
+      background-position: top left;
+}
+ 
     /* 顶部 */
     .header {
       background: #8ed8f8;
