@@ -323,40 +323,40 @@
 
 <body>
 
-<header>
-
-  <div class="shop-title">
-  <img src="paaani-logo.png" class="shop-title-logo" alt="Paaani Café">
-</div>
-
-  <div class="shop-main">
-
+<header>  
+<!-- logo -->
+   <div class="shop-title">
+   <img src="paaani-logo.png" class="shop-title-logo" alt="Paaani">
+   </div>
+   <!-- 店铺名称 -->  
+   <div class="shop-main">
     <div>
       <div class="shop-name">☆ Paaani</div>
+      </div>
+     
+      <!-- 用餐方式 -->  
+      <div class="order-types">
+        <button class="order-type active" data-type="dinein">
+          Comer aquí
+        </button>
+        <button class="order-type" data-type="takeaway">
+          Para llevar
+        </button>
+      </div>
+   </div>
+  <!-- 小字 -->  
+    <div class="shop-notice">
+       ☀︎ Productos preparados al momento · Disfrútalos recién hechos
     </div>
-
-    <div class="order-types">
-  <button class="order-type active" data-type="dinein">
-    Comer aquí
-  </button>
-
-  <button class="order-type" data-type="takeaway">
-    Para llevar
-  </button>
-</div>
-  </div>
-
-  <div class="shop-notice">
-    ☀︎ Productos preparados al momento · Disfrútalos recién hechos
-  </div>
-
 </header>
+  
 <div class="menu-layout">
 <div class="categories">
 
+<!-- 左侧分类烂 --> 
   <button class="active" data-category="a6fca325-d92c-4475-9254-7a9e512cb240">
   Cafés especiales
-</button>
+  </button>
 
   <button data-category="518f932f-6a26-4b33-9dc4-002225e208f6">
     Cafés
@@ -437,7 +437,7 @@ if (urlType === 'dinein' || urlType === 'takeaway') {
 if (!localStorage.getItem('paaani_order_type')) {
   localStorage.setItem('paaani_order_type', 'dinein');
 }
-// =========================
+
 // 读取商品 + 商品选项
 // =========================
 async function loadProducts() {
