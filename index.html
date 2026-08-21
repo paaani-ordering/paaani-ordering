@@ -299,31 +299,11 @@
        opacity: 1;
 }
     .stamp-card {
-      text-decoration: none;
-      color: inherit;
-      display: block;
+       background: #8ed8f8;
+       border-radius: 25px;
+       padding: 22px 20px 24px;
+       cursor: pointer;
 }
-
-.stamp-card .stamp-cups {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px 14px;
-
-    margin-top: 28px;
-    width: 100%;
-}
-
-.stamp-card .stamp-cups .stamp {
-    display: block;
-
-    width: 100%;
-    max-width: 72px;
-    height: auto;
-
-    margin: 0 auto;
-
-    opacity: 0.22;
-}    
     
 /* 今日新品 */
    .daily-news {
@@ -647,7 +627,7 @@
   
 <!-- 集章 -->
    <section class="stamp-section">
-      <a href="stamps.html" class="stamp-card">
+      <div class="stamp-card" onclick="location.href='stamps.html'">
          <div class="stamp-top">
             <div>
               <h2 class="stamp-title">TARJETA DE SELLOS </h2>
@@ -668,7 +648,7 @@
            <img class="stamp" src="stamp-cup.png" alt="">
          </div>
       </div>
-    </a>
+    </div>
    </section>
 
   
