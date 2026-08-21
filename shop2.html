@@ -1337,12 +1337,8 @@ async function getCurrentMember() {
 
         if (insertError) {
 
-    console.error("❌ Error al crear member:", insertError);
-    console.log("❌ insertError message:", insertError.message);
-    console.log("❌ insertError details:", insertError.details);
-    console.log("❌ insertError hint:", insertError.hint);
-    console.log("❌ insertError code:", insertError.code);
-
+    console.error("Error al crear member:", insertError);
+    
     return {
         user,
         member: null
@@ -1537,8 +1533,7 @@ async function doCheckIn() {
 
 
     if (!member) {
-console.log("准备创建 member，当前 user.id =", user.id);
-console.log("当前 user.email =", user.email);
+
         alert(
             "No se pudieron cargar los datos de tu cuenta."
         );
@@ -1793,8 +1788,6 @@ window.addEventListener(
     "DOMContentLoaded",
     async function () {
         
-        console.log("✅ NEW SUPABASE CHECKIN CODE RUNNING");    
-
         const {
             user,
             member
