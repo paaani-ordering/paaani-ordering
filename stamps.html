@@ -260,6 +260,44 @@
 
     </div>
 
+<!-- =========================
+     集章 / 兑换记录入口
+========================= -->
+
+<div class="stamp-records">
+
+    <!-- 左边：集章记录 -->
+    <button
+        class="record-item"
+        type="button"
+        onclick="location.href='stamp-history.html'"
+    >
+
+        <!-- 集章记录小图标 -->
+        <span class="record-icon">▣</span>
+
+        <!-- 集章记录文字 -->
+        <span>Historial de sellos</span>
+
+    </button>
+
+
+    <!-- 右边：兑换记录 -->
+    <button
+        class="record-item"
+        type="button"
+        onclick="location.href='redeem-history.html'"
+    >
+
+        <!-- 兑换记录小图标 -->
+        <span class="record-icon">▣</span>
+
+        <!-- 兑换记录文字 -->
+        <span>Historial de canjes</span>
+
+    </button>
+
+</div>      
 
     <!-- 说明 -->
     <div class="reward-info">
@@ -402,44 +440,7 @@ async function loadStampCard() {
 }
 
 // 页面打开时读取
-loadStampCard();
-      
-<!-- 集章 / 兑换记录入口 -->
-
-<div class="stamp-records">
-
-    <!-- 左边：集章记录 -->
-    <button
-        class="record-item"
-        type="button"
-        onclick="location.href='stamp-history.html'"
-    >
-
-        <!-- 集章记录小图标 -->
-        <span class="record-icon">▣</span>
-
-        <!-- 集章记录文字 -->
-        <span>Historial de sellos</span>
-
-    </button>
-
-
-    <!-- 右边：兑换记录 -->
-    <button
-        class="record-item"
-        type="button"
-        onclick="location.href='redeem-history.html'"
-    >
-
-        <!-- 兑换记录小图标 -->
-        <span class="record-icon">▣</span>
-
-        <!-- 兑换记录文字 -->
-        <span>Historial de canjes</span>
-
-    </button>
-
-</div>      
+loadStampCard(); 
 
 </script>
       
