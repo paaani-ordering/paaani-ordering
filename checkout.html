@@ -889,31 +889,11 @@ document
     const orderNumber =
       'PAA-' + Date.now();
 
-
     // ========================
-    // 计算订单总金额
-    // ========================
+// 使用页面已经计算好的订单金额
+// ========================
 
-    const orderTotal =
-      cart.reduce((sum, item) => {
-
-        const quantity =
-          Number(
-            item.quantity ||
-            item.qty ||
-            1
-          );
-
-        const price =
-          Number(
-            item.finalPrice ??
-            item.price ??
-            0
-          );
-
-        return sum + (price * quantity);
-
-      }, 0);
+const orderTotal = Number(subtotal);
 
 
     // ========================
