@@ -797,8 +797,7 @@ loadMyCoupons();
 
 document
   .getElementById('submitOrder')
-  .addEventListener('click', () => {
-
+  .addEventListener('click', async () => {
     const name =
       document
         .getElementById('customerName')
@@ -850,10 +849,23 @@ document
     }
 
 
-    alert('Pedido listo para enviar');
+   const {
+  data: { user },
+  error: userError
+} = await supabaseClient.auth.getUser();
 
-    // 下一步这里连接 Supabase
+if (userError) {
+  console.error(userError);
+  alert('Error al comprobar tu cuenta.');
+  return;
+}
 
+if (!user) {
+  alert('Inicia sesión para realizar el pedido.');
+  return;
+}
+
+alert('Usuario detectado: ' + user.id);
   });
 
 </script>
