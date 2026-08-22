@@ -199,9 +199,19 @@ filter:
 
 
 /* 已获得 */
+/* 已获得：Paaani 蓝色 */
 .stamp.done {
     opacity: 1;
-    filter: none;
+
+    filter:
+        brightness(0)
+        saturate(100%)
+        invert(82%)
+        sepia(20%)
+        saturate(1074%)
+        hue-rotate(166deg)
+        brightness(101%)
+        contrast(95%);
 
     transform: rotate(-4deg) scale(1.05);
 }
