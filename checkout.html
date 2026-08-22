@@ -798,28 +798,20 @@ loadMyCoupons();
 document
   .getElementById('submitOrder')
   .addEventListener('click', async () => {
-    const name =
-      document
-        .getElementById('customerName')
-        .value
-        .trim();
 
-
-    if (!name) {
-
-      alert('Introduce tu nombre.');
-
-      return;
-    }
-
+    // ========================
+    // 堂食：检查桌号
+    // ========================
 
     if (orderType === 'dinein') {
 
+      const tableInput =
+        document.getElementById('tableNumber');
+
       const table =
-        document
-          .getElementById('tableNumber')
-          .value
-          .trim();
+        tableInput
+          ? tableInput.value.trim()
+          : '';
 
       if (!table) {
 
@@ -827,17 +819,22 @@ document
 
         return;
       }
-
     }
 
 
+    // ========================
+    // 外带：检查电话号码
+    // ========================
+
     if (orderType === 'takeaway') {
 
+      const phoneInput =
+        document.getElementById('phone');
+
       const phone =
-        document
-          .getElementById('phone')
-          .value
-          .trim();
+        phoneInput
+          ? phoneInput.value.trim()
+          : '';
 
       if (!phone) {
 
@@ -845,29 +842,64 @@ document
 
         return;
       }
-
     }
 
 
-   const {
-  data: { user },
-  error: userError
-} = await supabaseClient.auth.getUser();
+    // ========================
+    // 获取当前登录用户
+    // ========================
 
-if (userError) {
-  console.error(userError);
-  alert('Error al comprobar tu cuenta.');
-  return;
-}
+    const {
+      data: { user },
+      error: userError
+    } = await supabaseClient.auth.getUser();
 
-if (!user) {
-  alert('Inicia sesión para realizar el pedido.');
-  return;
-}
 
-alert('Usuario detectado: ' + user.id);
+    // 获取用户失败
+    if (userError) {
+
+      console.error(
+        'Error al obtener el usuario:',
+        userError
+      );
+
+      alert(
+        'Error al comprobar tu cuenta.'
+      );
+
+      return;
+    }
+
+
+    // ========================
+    // 没有登录
+    // ========================
+
+    if (!user) {
+
+      alert(
+        'Inicia sesión para realizar el pedido.'
+      );
+
+      return;
+    }
+
+
+    // ========================
+    // 测试 user.id
+    // ========================
+
+    console.log(
+      'Usuario actual:',
+      user.id
+    );
+
+
+    alert(
+      'Usuario detectado: ' + user.id
+    );
+
   });
-
 </script>
 
 </body>
