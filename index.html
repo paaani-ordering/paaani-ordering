@@ -311,19 +311,25 @@
        cursor: pointer;
 }
 
-    @media (max-width: 390px) {
-
-    .stamp-title {
-        font-size: 22px;
+/* 小屏手机适配 */
+   @media (max-width: 430px) {
+    .stamp-title {   /* 集章大标题缩小，防止挤到按钮 */
+        font-size: 20px;
+        line-height: 1.1;
     }
 
-    .stamp-btn {
-        font-size: 11px;
-        padding: 9px 12px;
-        min-width: 90px;
+    .stamp-subtitle {   /* 副标题稍微缩小 */
+        font-size: 10px;
+        letter-spacing: 0.5px;
     }
 
-    .stamp-top {
+    .stamp-btn {    /* 白色 PARTICIPAR 按钮缩小 */
+        font-size: 10px;
+        padding: 8px 11px;
+        min-width: 0;
+    }
+
+    .stamp-top {   /* 标题和按钮之间距离 */
         gap: 8px;
     }
 }
