@@ -799,6 +799,10 @@ document
   .getElementById('submitOrder')
   .addEventListener('click', async () => {
 
+    let table = '';
+    let phone = '';
+
+
     // ========================
     // 堂食：检查桌号
     // ========================
@@ -808,7 +812,7 @@ document
       const tableInput =
         document.getElementById('tableNumber');
 
-      const table =
+      table =
         tableInput
           ? tableInput.value.trim()
           : '';
@@ -831,7 +835,7 @@ document
       const phoneInput =
         document.getElementById('phone');
 
-      const phone =
+      phone =
         phoneInput
           ? phoneInput.value.trim()
           : '';
@@ -855,7 +859,6 @@ document
     } = await supabaseClient.auth.getUser();
 
 
-    // 获取用户失败
     if (userError) {
 
       console.error(
@@ -863,17 +866,11 @@ document
         userError
       );
 
-      alert(
-        'Error al comprobar tu cuenta.'
-      );
+      alert('Error al comprobar tu cuenta.');
 
       return;
     }
 
-
-    // ========================
-    // 没有登录
-    // ========================
 
     if (!user) {
 
@@ -886,17 +883,120 @@ document
 
 
     // ========================
-    // 测试 user.id
+    // 生成订单编号
+    // ========================
+
+    const orderNumber =
+      'PAA-' + Date.now();
+
+
+    // ========================
+    // 计算订单总金额
+    // ========================
+
+    const orderTotal =
+      cart.reduce((sum, item) => {
+
+        const quantity =
+          Number(
+            item.quantity ||
+            item.qty ||
+            1
+          );
+
+        const price =
+          Number(
+            item.finalPrice ??
+            item.price ??
+            0
+          );
+
+        return sum + (price * quantity);
+
+      }, 0);
+
+
+    // ========================
+    // 订单备注
+    // ========================
+
+    let orderNotes = '';
+
+    if (orderType === 'dinein') {
+
+      orderNotes =
+        'Mesa: ' + table;
+
+    } else {
+
+      orderNotes =
+        'Teléfono: ' + phone;
+    }
+
+
+    // ========================
+    // 写入 orders
+    // ========================
+
+    const {
+      data: newOrder,
+      error: orderError
+    } = await supabaseClient
+      .from('orders')
+      .insert({
+
+        order_number: orderNumber,
+
+        user_id: user.id,
+
+        order_type: orderType,
+
+        status: 'pending',
+
+        payment_status: 'pending',
+
+        stamp_awarded: false,
+
+        total_amount: orderTotal,
+
+        notes: orderNotes
+
+      })
+      .select()
+      .single();
+
+
+    // ========================
+    // 下单失败
+    // ========================
+
+    if (orderError) {
+
+      console.error(
+        'Error al crear el pedido:',
+        orderError
+      );
+
+      alert(
+        'No se pudo crear el pedido.'
+      );
+
+      return;
+    }
+
+
+    // ========================
+    // 下单成功
     // ========================
 
     console.log(
-      'Usuario actual:',
-      user.id
+      'Pedido creado:',
+      newOrder
     );
 
 
     alert(
-      'Usuario detectado: ' + user.id
+      'Pedido realizado correctamente.'
     );
 
   });
