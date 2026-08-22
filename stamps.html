@@ -281,9 +281,9 @@ filter:
         Has conseguido
     </h2>
 
-    <span class="stamp-count">
-        0
-    </span>
+    <span class="stamp-count" id="stampCount">
+    0
+</span>
 
     <div class="stamp-card-text">
         sellos
@@ -307,9 +307,9 @@ filter:
         </div>
 
 
-        <div class="stamp-progress">
-            0 / 8 sellos
-        </div>
+       <div class="stamp-progress" id="stampProgress">
+    0 / 8 sellos
+</div>
 
     </div>
 
@@ -326,5 +326,139 @@ filter:
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+  'https://oevwuadmtzujngtmkkbw.supabase.co';
+
+const SUPABASE_ANON_KEY =
+  'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+// ========================
+// 读取当前用户集章
+// ========================
+
+async function loadStampCard() {
+
+  const {
+    data: { user },
+    error: userError
+  } = await supabaseClient.auth.getUser();
+
+
+  if (userError) {
+
+    console.error(
+      'Error al obtener el usuario:',
+      userError
+    );
+
+    return;
+  }
+
+
+  // 没登录
+  if (!user) {
+
+    document
+      .getElementById('stampCount')
+      .textContent = '0';
+
+    document
+      .getElementById('stampProgress')
+      .textContent = '0 / 8 sellos';
+
+    return;
+  }
+
+
+  // ========================
+  // 查询这个用户的集章卡
+  // ========================
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from('stamp_cards')
+    .select('stamps')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+
+  if (error) {
+
+    console.error(
+      'Error al cargar los sellos:',
+      error
+    );
+
+    return;
+  }
+
+
+  const stampNumber =
+    Math.min(
+      Number(data?.stamps || 0),
+      8
+    );
+
+
+  // ========================
+  // 更新数字
+  // ========================
+
+  document
+    .getElementById('stampCount')
+    .textContent = stampNumber;
+
+
+  document
+    .getElementById('stampProgress')
+    .textContent =
+      `${stampNumber} / 8 sellos`;
+
+
+  // ========================
+  // 点亮对应数量的杯子
+  // ========================
+
+  const stampImages =
+    document.querySelectorAll('.stamp');
+
+
+  stampImages.forEach(
+    (img, index) => {
+
+      if (index < stampNumber) {
+
+        img.classList.add('done');
+
+      } else {
+
+        img.classList.remove('done');
+
+      }
+
+    }
+  );
+
+}
+
+
+// 页面打开时读取
+loadStampCard();
+
+</script>
+      
 </body>
 </html>
