@@ -632,6 +632,51 @@
   </div>
 </section>
   
+<!-- 首页同步集章数量 -->
+   async function loadHomeStamps() {
+       const {
+           data: { user }
+       } = await supabaseClient.auth.getUser();
+       if (!user) return;
+
+    <!-- 读取和集章详情页完全相同的数据 -->
+       const {
+           data,
+           error
+       } = await supabaseClient
+           .from('stamp_cards')
+           .select('stamps')
+           .eq('user_id', user.id)
+           .maybeSingle();
+
+       if (error) {
+           console.error('Error al cargar los sellos:', error);
+           return;
+       }
+
+       const stampNumber = Math.min(
+           Number(data?.stamps || 0),
+           8
+       );
+
+
+      <!-- 首页的 8 个章 -->
+       const stamps = document.querySelectorAll(
+           '.stamp-cups .stamp'
+       );
+
+       stamps.forEach((stamp, index) => {
+           if (index < stampNumber) {
+               stamp.classList.add('active');
+           } else {
+               stamp.classList.remove('active');
+           }
+       });
+   }
+
+   <!-- 页面打开时读取 -->
+   loadHomeStamps();
+  
 <!-- 今日新品 -->
    <section class="daily-news">
      <h2 class="daily-news-title">
