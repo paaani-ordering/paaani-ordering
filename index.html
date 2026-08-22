@@ -244,8 +244,12 @@
     .stamp-top {   /* 控制卡片顶部 */
        display: flex;   /* 左右横排 */
        justify-content: space-between;   /* 一个靠左一个靠右 */
-       align-items: flex-start;   /* 顶部对齐 */
-       gap: 15px;   /* 左右两部分至少留 */
+       align-items: center; 
+       gap: 10px;   /* 左右两部分至少留 */
+}
+    .stamp-top > div {
+       flex: 1;
+       min-width: 0;
 }
 
     .stamp-title {   /* 大标题 */
@@ -269,6 +273,8 @@
 }
     
     .stamp-btn {   /* 控制右边白色按钮 */
+       flex-shrink: 0;
+       width: auto;
        border: none;   /* 无边框 */
        background: #FFFFFF;
        color: #83D3F4;
@@ -304,6 +310,24 @@
        padding: 22px 20px 24px;
        cursor: pointer;
 }
+
+    @media (max-width: 390px) {
+
+    .stamp-title {
+        font-size: 22px;
+    }
+
+    .stamp-btn {
+        font-size: 11px;
+        padding: 9px 12px;
+        min-width: 90px;
+    }
+
+    .stamp-top {
+        gap: 8px;
+    }
+}
+
     
 /* 今日新品 */
    .daily-news {
