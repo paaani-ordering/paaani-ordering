@@ -158,38 +158,91 @@
       color: #9a9a9a;
       text-align: center;
 }
+/* =========================
+   集章 / 兑换记录 两个按钮区域
+========================= */
 
- /* 集章 / 兑换记录 整个白色卡片 */
-   .stamp-records {
-      margin: 18px 20px 0;   /* 和上面的集章卡距离 */
-      display: grid;   /* 一行分成左右两列 */
-      grid-template-columns: 1fr 1fr;    /* 左右各占一半 */
-      background: #ffffff;
-      border-radius: 22px;
-      overflow: hidden;    /* 防止里面内容跑出圆角 */
-}     
-      
-/* 左右按钮中间的竖线 */
-   .record-item:first-child {
-      border-right: 1px solid #eeeeee;   /* 给左边按钮右侧加一条线 */
+.stamp-records {
+    margin: 24px 32px 0;
+    /* ⭐ 上 / 左右 / 下
+       24px = 距离上面的集章卡
+       32px = 页面左右距离
+    */
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+    /* ⭐ 两个按钮一样宽 */
+
+    gap: 10px;
+    /* ⭐ 两个按钮之间的距离 */
+
+    background: transparent;
+    /* ⭐ 不需要外面的大白色卡片 */
+
+    border-radius: 0;
+
+    overflow: visible;
 }
-      
-/* 记录按钮的小图标 */
-   .record-icon {
-      font-size: 17px;    /* 图标大小 */
-      color: #8ed8f8;
-}  
-      
-/* 提示卡片 */
-   .reward-info {
-      margin-top: 20px;
-      padding: 18px;
-      background: rgba(255,255,255,.85);
-      border-radius: 20px;
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #777;
+
+
+/* =========================
+   单个按钮
+========================= */
+
+.record-item {
+    height: 42px;
+    /* ⭐ 按钮高度 */
+
+    border: none;
+
+    border-radius: 16px;
+    /* ⭐ 按钮圆角 */
+
+    background: #ffffff;
+    /* ⭐ 按钮底色 */
+
+    color: #59616c;
+    /* ⭐ 文字颜色 */
+
+    font-size: 14px;
+    /* ⭐ 文字大小 */
+
+    font-weight: 700;
+
+    font-family: 'Nunito', sans-serif;
+
+    display: flex;
+
+    align-items: center;
+    /* 文字上下居中 */
+
+    justify-content: center;
+    /* 文字左右居中 */
+
+    gap: 5px;
+
+    box-shadow: 0 4px 14px rgba(89, 97, 108, 0.08);
+    /* ⭐ 阴影 */
+}
+
+
+/* 删除原来的中间竖线 */
+.record-item:first-child {
+    border-right: none;
+}
+
+
+/* =========================
+   小图标
+========================= */
+
+.record-icon {
+    font-size: 16px;
+    /* ⭐ 图标大小 */
+
+    color: #8ed8f8;
+    /* ⭐ Paaani 蓝 */
 }
 
 </style>
