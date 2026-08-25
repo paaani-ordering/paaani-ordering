@@ -108,6 +108,344 @@
       orderId
     );
 
+ // ========================
+// 金额格式
+// ========================
+
+function formatPrice(value) {
+
+  return `${Number(value || 0)
+    .toFixed(2)
+    .replace('.', ',')} €`;
+
+}
+
+
+
+// ========================
+// 日期格式
+// ========================
+
+function formatDate(value) {
+
+  if (!value) {
+    return '';
+  }
+
+  const date =
+    new Date(value);
+
+  return date.toLocaleString(
+    'es-ES',
+    {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }
+  );
+
+}
+
+
+
+// ========================
+// 订单状态
+// ========================
+
+function getStatusText(order) {
+
+  if (
+    order.payment_status === 'paid'
+  ) {
+
+    return 'Completado';
+
+  }
+
+  return 'Pendiente';
+
+}
+
+
+
+// ========================
+// 读取订单详情
+// ========================
+
+async function loadOrderDetail() {
+
+
+  const orderDetail =
+    document.getElementById(
+      'orderDetail'
+    );
+
+
+  // ========================
+  // 没有订单 ID
+  // ========================
+
+  if (!orderId) {
+
+    orderDetail.innerHTML = `
+
+      <div>
+        Pedido no encontrado.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  try {
+
+
+    // ========================
+    // 当前用户
+    // ========================
+
+    const {
+      data: { user },
+      error: userError
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
+
+
+    if (userError) {
+
+      throw userError;
+
+    }
+
+
+    if (!user) {
+
+      orderDetail.innerHTML = `
+
+        <div>
+          Inicia sesión para ver
+          este pedido.
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+
+    // ========================
+    // 读取订单
+    // ========================
+
+    const {
+      data: order,
+      error: orderError
+    } =
+      await supabaseClient
+        .from('orders')
+        .select(`
+          id,
+          order_number,
+          order_type,
+          status,
+          payment_status,
+          total_amount,
+          created_at
+        `)
+        .eq(
+          'id',
+          orderId
+        )
+        .eq(
+          'user_id',
+          user.id
+        )
+        .single();
+
+
+    if (orderError) {
+
+      throw orderError;
+
+    }
+
+
+
+    // ========================
+    // 获得积分
+    // 金额 × 10
+    // ========================
+
+    const earnedPoints =
+      Math.floor(
+        Number(
+          order.total_amount || 0
+        ) * 10
+      );
+
+
+
+    // ========================
+    // 显示基本信息
+    // ========================
+
+    orderDetail.innerHTML = `
+
+
+      <section class="detail-card">
+
+
+        <div>
+
+          Estado
+
+        </div>
+
+
+        <strong>
+
+          ${
+            getStatusText(
+              order
+            )
+          }
+
+        </strong>
+
+
+
+        <hr>
+
+
+
+        <div>
+
+          Puntos obtenidos
+
+        </div>
+
+
+        <strong>
+
+          +${earnedPoints} pts
+
+        </strong>
+
+
+
+        <hr>
+
+
+
+        <div>
+
+          Total
+
+        </div>
+
+
+        <strong>
+
+          ${
+            formatPrice(
+              order.total_amount
+            )
+          }
+
+        </strong>
+
+
+
+        <hr>
+
+
+
+        <div>
+
+          Fecha del pedido
+
+        </div>
+
+
+        <strong>
+
+          ${
+            formatDate(
+              order.created_at
+            )
+          }
+
+        </strong>
+
+
+
+        <hr>
+
+
+
+        <div>
+
+          Número de pedido
+
+        </div>
+
+
+        <strong>
+
+          ${
+            order.order_number
+            || '-'
+          }
+
+        </strong>
+
+
+      </section>
+
+
+    `;
+
+
+  } catch (error) {
+
+
+    console.error(
+      'Error cargando pedido:',
+      error
+    );
+
+
+    orderDetail.innerHTML = `
+
+      <div>
+        No se pudo cargar
+        el pedido.
+      </div>
+
+    `;
+
+
+  }
+
+}
+
+
+
+// ========================
+// 页面打开
+// ========================
+
+loadOrderDetail();   
+
 
   </script>
 
