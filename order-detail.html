@@ -356,108 +356,99 @@ async function loadOrderDetail() {
 // 读取订单商品
 // ========================
 
-const {
-  data: items,
-  error: itemsError
-} =
-  await supabaseClient
-    .from('order_items')
-    .select(`
-      product_id,
-      product_name,
-      quantity,
-      unit_price,
-      line_total
-    `)
-    .eq(
-      'order_id',
-      orderId
-    );
+    const {
+      data: items,
+      error: itemsError
+    } =
+      await supabaseClient
+        .from('order_items')
+        .select(`
+          product_id,
+          product_name,
+          quantity,
+          unit_price,
+          line_total
+        `)
+        .eq(
+          'order_id',
+          orderId
+        );
 
-if (itemsError) {
-  throw itemsError;
-}
+    if (itemsError) {
+      throw itemsError;
+    }
 
 // ========================
 // 获取商品图片
 // ========================
 
-const productIds =
-  [
-    ...new Set(
-      (items || [])
-        .map(
-          item => item.product_id
+    const productIds =
+      [
+        ...new Set(
+          (items || [])
+            .map(
+              item => item.product_id
+            )
+           .filter(Boolean)
         )
-        .filter(Boolean)
-    )
-  ];
+      ];
 
-let imageMap = {};
-
-if (productIds.length > 0) {
-
-  const {
-    data: products,
-    error: productsError
-  } =
-    await supabaseClient
-      .from('products')
-      .select(`
-        id,
-        image_url
-      `)
-      .in(
-        'id',
-        productIds
-      );
-
-  if (!productsError) {
-
-    (products || [])
-      .forEach(product => {
-        imageMap[
-          product.id
-        ] =
-          product.image_url;
-
-      });
-  }
-}
+    let imageMap = {};
+    if (productIds.length > 0) {
+      const {
+        data: products,
+        error: productsError
+      } =
+        await supabaseClient
+          .from('products')
+          .select(`
+            id,
+            image_url
+          `)
+          .in(
+            'id',
+            productIds
+          );
+      if (!productsError) {
+        (products || [])
+          .forEach(product => {
+            imageMap[
+              product.id
+            ] =
+              product.image_url;
+          });
+      }
+    }
       
 // ========================
 // 生成商品 HTML
 // ========================
 
-let productsHTML = '';
-
-if (
-  items &&
-  items.length > 0
-) {
-
-  productsHTML =
-    items
-      .map(item => `
-        <div class="detail-product">
-
-  ${
-    imageMap[item.product_id]
-      ? `
-        <img
-          class="detail-product-image"
-          src="${imageMap[item.product_id]}"
-          alt="${item.product_name || ''}"
-        >
-      `
-      : `
-        <div class="detail-product-placeholder">
-          ☕
-        </div>
-      `
-  }
-
-  <div class="detail-product-left">
+    let productsHTML = '';
+    if (
+      items &&
+      items.length > 0
+    ) {
+      productsHTML =
+        items
+          .map(item => `
+            <div class="detail-product">
+       ${
+        imageMap[item.product_id]
+          ? `
+            <img
+              class="detail-product-image"
+              src="${imageMap[item.product_id]}"
+              alt="${item.product_name || ''}"
+            >
+          `
+          : `
+            <div class="detail-product-placeholder">
+              ☕
+            </div>
+          `
+     }
+      <div class="detail-product-left">
             <div class="detail-product-name">
               ${
                 item.product_name
@@ -491,91 +482,53 @@ if (
         </div>
       `)
       .join('');
-} else {
-  productsHTML = `
-    <div>
-      Sin productos.
-    </div>
-  `;
-}
+    } else {
+      productsHTML = `
+        <div>
+          Sin productos.
+        </div>
+      `;
+    }
 
 // ========================
 // 显示基本信息
 // ========================
     orderDetail.innerHTML = `
       <section class="detail-card">
-<div>
-  Productos
-</div>
-
-<div class="detail-products">
-
-  ${productsHTML}
-
-</div>
-
-
-<hr>
-
+    <div>
+      Productos
+    </div>
+    <div class="detail-products">
+      ${productsHTML}
+    </div>
+    <hr>
         <div>
-
           Estado
-
         </div>
-
-
         <strong>
-
           ${
             getStatusText(
               order
             )
           }
-
         </strong>
-
-
-
         <hr>
-
-
-
         <div>
-
           Puntos obtenidos
-
         </div>
-
-
         <strong>
-
           +${earnedPoints} pts
-
         </strong>
-
-
-
         <hr>
-${
-
+    ${
   order.coupon_code
-
     ? `
-
       <div>
-
         Cupón
-
       </div>
-
-
       <strong>
-
         Utilizado
-
       </strong>
-
-
       <div
         style="
           font-size:12px;
@@ -583,151 +536,77 @@ ${
           margin-top:3px;
         "
       >
-
         ${order.coupon_code}
-
       </div>
-
-
       <hr>
-
-
       <div>
-
         Descuento
-
       </div>
-
-
       <strong>
-
         -${formatPrice(
           order.discount_amount
         )}
-
       </strong>
-
-
       <hr>
-
     `
-
     : `
-
       <div>
-
         Cupón
-
       </div>
-
-
       <strong>
-
         No utilizado
-
       </strong>
-
-
       <hr>
-
     `
-
-}
-
-
+    }
         <div>
-
           Total
-
         </div>
-
-
         <strong>
-
           ${
             formatPrice(
               order.total_amount
             )
           }
-
         </strong>
-
-
-
         <hr>
-
-
-
         <div>
-
           Fecha del pedido
-
         </div>
-
-
         <strong>
-
           ${
             formatDate(
               order.created_at
             )
           }
-
         </strong>
-
-
-
         <hr>
-
-
-
         <div>
-
           Número de pedido
-
         </div>
-
-
         <strong>
-
           ${
             order.order_number
             || '-'
           }
-
         </strong>
-
-
       </section>
-
-
     `;
-
-
   } catch (error) {
-
-
     console.error(
       'Error cargando pedido:',
       error
     );
-
-
     orderDetail.innerHTML = `
-
       <div>
         No se pudo cargar
         el pedido.
       </div>
-
     `;
-
 
   }
 
 }
-
-
 
 // ========================
 // 页面打开
