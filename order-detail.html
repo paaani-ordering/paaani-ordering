@@ -283,7 +283,111 @@ async function loadOrderDetail() {
         ) * 10
       );
 
+// ========================
+// 读取订单商品
+// ========================
 
+const {
+  data: items,
+  error: itemsError
+} =
+  await supabaseClient
+    .from('order_items')
+    .select(`
+      product_id,
+      product_name,
+      quantity,
+      unit_price,
+      line_total
+    `)
+    .eq(
+      'order_id',
+      orderId
+    );
+
+
+if (itemsError) {
+
+  throw itemsError;
+
+}
+
+
+// ========================
+// 生成商品 HTML
+// ========================
+
+let productsHTML = '';
+
+
+if (
+  items &&
+  items.length > 0
+) {
+
+  productsHTML =
+    items
+      .map(item => `
+
+        <div class="detail-product">
+
+          <div class="detail-product-left">
+
+            <div class="detail-product-name">
+
+              ${
+                item.product_name
+                || 'Producto'
+              }
+
+            </div>
+
+
+            <div class="detail-product-info">
+
+              ${
+                formatPrice(
+                  item.unit_price
+                )
+              }
+
+              ×
+
+              ${
+                item.quantity || 1
+              }
+
+            </div>
+
+          </div>
+
+
+          <div class="detail-product-total">
+
+            ${
+              formatPrice(
+                item.line_total
+              )
+            }
+
+          </div>
+
+        </div>
+
+      `)
+      .join('');
+
+} else {
+
+  productsHTML = `
+
+    <div>
+      Sin productos.
+    </div>
+
+  `;
+
+}
 
     // ========================
     // 显示基本信息
@@ -294,6 +398,21 @@ async function loadOrderDetail() {
 
       <section class="detail-card">
 
+<div>
+
+  Productos
+
+</div>
+
+
+<div class="detail-products">
+
+  ${productsHTML}
+
+</div>
+
+
+<hr>
 
         <div>
 
