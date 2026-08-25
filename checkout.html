@@ -386,6 +386,7 @@ if (orderType === 'takeaway') {
 // ========================
 
 let orderSubtotal = 0;
+let orderTotal = 0;  
 let selectedUserCoupon = null;
   
 function renderOrder() {
@@ -591,18 +592,6 @@ function updateTotal() {
 
   }
 
-}
-
-  // 防止优惠金额超过订单金额
-  discount = Math.min(discount, orderSubtotal);
-
-  const finalTotal =
-    Math.max(0, orderSubtotal - discount);
-
-  document
-    .getElementById('totalPrice')
-    .textContent =
-      formatPrice(finalTotal);
 }
   
 async function loadMyCoupons() {
@@ -975,7 +964,7 @@ document
 // 使用页面已经计算好的订单金额
 // ========================
 
-const orderTotal = Number(orderSubtotal);
+updateTotal();
 
 
     // ========================
