@@ -7,6 +7,160 @@
     content="width=device-width, initial-scale=1.0"
   >
   <title>Paaani | Las Palmas</title>
+
+<style>
+
+/* ========================
+   页面基础
+======================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #59616c;
+  font-family: Arial, sans-serif;
+}
+
+
+/* ========================
+   顶部
+======================== */
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 20px 10px;
+}
+
+.detail-header h1 {
+  margin: 0;
+
+  font-size: 23px;
+  font-weight: 800;
+
+  color: #59616c;
+}
+
+.back-button {
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f5f5f5;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+.header-space {
+  width: 38px;
+}
+
+
+/* ========================
+   详情主体
+======================== */
+
+.order-detail {
+  padding: 16px 20px 40px;
+}
+
+
+/* ========================
+   商品区域
+======================== */
+
+.detail-products {
+  margin-top: 14px;
+}
+
+.detail-product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 0;
+}
+
+
+/* 商品图片 */
+
+.detail-product-image {
+  width: 72px;
+  height: 72px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border-radius: 14px;
+
+  background: #f7f7f7;
+}
+
+
+/* 没图片 */
+
+.detail-product-placeholder {
+  width: 72px;
+  height: 72px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #f7f7f7;
+
+  font-size: 25px;
+}
+
+
+/* 商品文字 */
+
+.detail-product-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.detail-product-name {
+  margin-bottom: 5px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #59616c;
+}
+
+.detail-product-info {
+  font-size: 12px;
+
+  color: #a0a0a0;
+}
+
+.detail-product-total {
+  flex-shrink: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #59616c;
+}
+
+</style>
+  
 </head>
 
 <body>
@@ -49,9 +203,9 @@
 
   <script>
 
-    // ========================
-    // Supabase
-    // ========================
+// ========================
+// Supabase
+// ========================
 
     const SUPABASE_URL =
       'https://oevwuadmtzujngtmkkbw.supabase.co';
@@ -65,10 +219,9 @@
         SUPABASE_KEY
       );
 
-
-    // ========================
-    // 获取订单 ID
-    // ========================
+// ========================
+// 获取订单 ID
+// ========================
 
     const params =
       new URLSearchParams(
@@ -83,16 +236,14 @@
       orderId
     );
 
- // ========================
+// ========================
 // 金额格式
 // ========================
 
 function formatPrice(value) {
-
   return `${Number(value || 0)
     .toFixed(2)
     .replace('.', ',')} €`;
-
 }
 
 // ========================
@@ -115,7 +266,6 @@ function formatDate(value) {
       minute: '2-digit'
     }
   );
-
 }
 
 // ========================
@@ -123,17 +273,12 @@ function formatDate(value) {
 // ========================
 
 function getStatusText(order) {
-
   if (
     order.payment_status === 'paid'
   ) {
-
     return 'Completado';
-
   }
-
-  return 'Pendiente';
-
+    return 'Pendiente';
 }
 
 // ========================
@@ -141,7 +286,6 @@ function getStatusText(order) {
 // ========================
 
 async function loadOrderDetail() {
-
   const orderDetail =
     document.getElementById(
       'orderDetail'
@@ -152,19 +296,13 @@ async function loadOrderDetail() {
 // ========================
 
   if (!orderId) {
-
     orderDetail.innerHTML = `
-
       <div>
         Pedido no encontrado.
       </div>
-
     `;
-
     return;
-
   }
-
     try {
 
 // ========================
@@ -226,10 +364,10 @@ async function loadOrderDetail() {
       throw orderError;
     }
 
-    // ========================
-    // 获得积分
-    // 金额 × 10
-    // ========================
+// ========================
+// 获得积分
+// 金额 × 10
+// ========================
 
     const earnedPoints =
       Math.floor(
@@ -260,11 +398,8 @@ const {
       orderId
     );
 
-
 if (itemsError) {
-
   throw itemsError;
-
 }
 
 // ========================
@@ -282,9 +417,7 @@ const productIds =
     )
   ];
 
-
 let imageMap = {};
-
 
 if (productIds.length > 0) {
 
@@ -303,21 +436,17 @@ if (productIds.length > 0) {
         productIds
       );
 
-
   if (!productsError) {
 
     (products || [])
       .forEach(product => {
-
         imageMap[
           product.id
         ] =
           product.image_url;
 
       });
-
   }
-
 }
       
 // ========================
@@ -325,7 +454,6 @@ if (productIds.length > 0) {
 // ========================
 
 let productsHTML = '';
-
 
 if (
   items &&
@@ -335,44 +463,31 @@ if (
   productsHTML =
     items
       .map(item => `
-
         <div class="detail-product">
-
 
   ${
     imageMap[item.product_id]
-
       ? `
-
         <img
           class="detail-product-image"
           src="${imageMap[item.product_id]}"
           alt="${item.product_name || ''}"
         >
-
       `
-
       : `
-
         <div class="detail-product-placeholder">
           ☕
         </div>
-
       `
   }
 
-
   <div class="detail-product-left">
-
             <div class="detail-product-name">
-
               ${
                 item.product_name
                 || 'Producto'
               }
-
             </div>
-
 
             <div class="detail-product-info">
 
@@ -381,17 +496,12 @@ if (
                   item.unit_price
                 )
               }
-
               ×
-
               ${
                 item.quantity || 1
               }
-
             </div>
-
           </div>
-
 
           <div class="detail-product-total">
 
@@ -402,39 +512,25 @@ if (
             }
 
           </div>
-
         </div>
-
       `)
       .join('');
-
 } else {
-
   productsHTML = `
-
     <div>
       Sin productos.
     </div>
-
   `;
-
 }
 
-    // ========================
-    // 显示基本信息
-    // ========================
-
+// ========================
+// 显示基本信息
+// ========================
     orderDetail.innerHTML = `
-
-
       <section class="detail-card">
-
 <div>
-
   Productos
-
 </div>
-
 
 <div class="detail-products">
 
