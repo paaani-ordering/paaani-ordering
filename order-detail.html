@@ -267,7 +267,59 @@ if (itemsError) {
 
 }
 
+// ========================
+// 获取商品图片
+// ========================
 
+const productIds =
+  [
+    ...new Set(
+      (items || [])
+        .map(
+          item => item.product_id
+        )
+        .filter(Boolean)
+    )
+  ];
+
+
+let imageMap = {};
+
+
+if (productIds.length > 0) {
+
+  const {
+    data: products,
+    error: productsError
+  } =
+    await supabaseClient
+      .from('products')
+      .select(`
+        id,
+        image_url
+      `)
+      .in(
+        'id',
+        productIds
+      );
+
+
+  if (!productsError) {
+
+    (products || [])
+      .forEach(product => {
+
+        imageMap[
+          product.id
+        ] =
+          product.image_url;
+
+      });
+
+  }
+
+}
+      
 // ========================
 // 生成商品 HTML
 // ========================
@@ -286,7 +338,31 @@ if (
 
         <div class="detail-product">
 
-          <div class="detail-product-left">
+
+  ${
+    imageMap[item.product_id]
+
+      ? `
+
+        <img
+          class="detail-product-image"
+          src="${imageMap[item.product_id]}"
+          alt="${item.product_name || ''}"
+        >
+
+      `
+
+      : `
+
+        <div class="detail-product-placeholder">
+          ☕
+        </div>
+
+      `
+  }
+
+
+  <div class="detail-product-left">
 
             <div class="detail-product-name">
 
