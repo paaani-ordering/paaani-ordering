@@ -12,29 +12,6 @@
 <body>
   <div class="order-detail-page">
 
-/* 手机主体 */
-    .app {
-      width: 100%;
-      max-width: 430px;
-      min-height: 100vh;
-      margin: 0 auto;
-      background: transparent;
-      padding-bottom: 30px;
-}
-    
-/* 背景 */    
-    body {
-      width: 100%;
-      max-width: 430px;
-      font-family: Arial, sans-serif;
-      margin: 0 auto;
-      background-image:   
-      linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
-      url("paaani-bg.png");
-      background-repeat: repeat;
-      background-size: 300px auto;
-      background-position: top left;
-}
     
 <!-- 顶部 -->
     <header class="detail-header">
@@ -159,24 +136,20 @@ function getStatusText(order) {
 
 }
 
-
-
 // ========================
 // 读取订单详情
 // ========================
 
 async function loadOrderDetail() {
 
-
   const orderDetail =
     document.getElementById(
       'orderDetail'
     );
 
-
-  // ========================
-  // 没有订单 ID
-  // ========================
+// ========================
+// 没有订单 ID
+// ========================
 
   if (!orderId) {
 
@@ -192,13 +165,11 @@ async function loadOrderDetail() {
 
   }
 
+    try {
 
-  try {
-
-
-    // ========================
-    // 当前用户
-    // ========================
+// ========================
+// 当前用户
+// ========================
 
     const {
       data: { user },
@@ -208,34 +179,23 @@ async function loadOrderDetail() {
         .auth
         .getUser();
 
-
     if (userError) {
-
       throw userError;
-
     }
 
-
     if (!user) {
-
       orderDetail.innerHTML = `
-
         <div>
           Inicia sesión para ver
           este pedido.
         </div>
-
       `;
-
       return;
-
     }
 
-
-
-    // ========================
-    // 读取订单
-    // ========================
+// ========================
+// 读取订单
+// ========================
 
     const {
       data: order,
@@ -262,14 +222,9 @@ async function loadOrderDetail() {
         )
         .single();
 
-
     if (orderError) {
-
       throw orderError;
-
     }
-
-
 
     // ========================
     // 获得积分
