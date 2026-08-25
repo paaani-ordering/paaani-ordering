@@ -485,31 +485,113 @@ function updateTotal() {
 
   let discount = 0;
 
-  if (selectedUserCoupon && selectedUserCoupon.coupons) {
 
-    const coupon = selectedUserCoupon.coupons;
+  // ========================
+  // 计算优惠券
+  // ========================
+
+  if (
+    selectedUserCoupon &&
+    selectedUserCoupon.coupons
+  ) {
+
+    const coupon =
+      selectedUserCoupon.coupons;
+
 
     const minimum =
-      Number(coupon.min_order || 0);
+      Number(
+        coupon.min_order || 0
+      );
 
-    if (orderSubtotal >= minimum) {
 
-      if (coupon.discount_type === 'percent') {
+    // 达到最低消费
+    if (
+      orderSubtotal >= minimum
+    ) {
+
+
+      // 百分比优惠
+      if (
+        coupon.discount_type === 'percent'
+      ) {
 
         discount =
           orderSubtotal *
-          Number(coupon.discount_value) / 100;
+          Number(
+            coupon.discount_value || 0
+          ) / 100;
 
-      } else {
+      }
+
+
+      // 固定金额优惠
+      else {
 
         discount =
-          Number(coupon.discount_value || 0);
+          Number(
+            coupon.discount_value || 0
+          );
 
       }
 
     }
 
   }
+
+
+
+  // ========================
+  // 优惠金额不能超过订单金额
+  // ========================
+
+  discount =
+    Math.min(
+      discount,
+      orderSubtotal
+    );
+
+
+
+  // ========================
+  // 最终付款金额
+  // ========================
+
+  orderTotal =
+    Math.max(
+      0,
+      orderSubtotal - discount
+    );
+
+
+  // 保留两位小数
+  orderTotal =
+    Math.round(
+      orderTotal * 100
+    ) / 100;
+
+
+
+  // ========================
+  // 更新页面总价
+  // ========================
+
+  const totalElement =
+    document.getElementById(
+      'totalPrice'
+    );
+
+
+  if (totalElement) {
+
+    totalElement.textContent =
+      `${orderTotal
+        .toFixed(2)
+        .replace('.', ',')} €`;
+
+  }
+
+}
 
   // 防止优惠金额超过订单金额
   discount = Math.min(discount, orderSubtotal);
