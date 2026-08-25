@@ -925,23 +925,73 @@ const orderTotal = Number(orderSubtotal);
       .from('orders')
       .insert({
 
-        order_number: orderNumber,
+  order_number: orderNumber,
 
-        user_id: user.id,
+  user_id: user.id,
 
-        order_type: orderType,
+  order_type: orderType,
 
-        status: 'new',
+  status: 'new',
 
-        payment_status: 'unpaid',
+  payment_status: 'unpaid',
 
-        stamp_awarded: false,
+  stamp_awarded: false,
 
-        total_amount: orderTotal,
 
-        notes: orderNotes
+  // ========================
+  // 优惠前金额
+  // ========================
 
-      })
+  subtotal_amount:
+    Number(
+      orderSubtotal || 0
+    ),
+
+
+  // ========================
+  // 优惠金额
+  // ========================
+
+  discount_amount:
+    Math.round(
+      Math.max(
+        0,
+        Number(orderSubtotal || 0) -
+        Number(orderTotal || 0)
+      ) * 100
+    ) / 100,
+
+
+  // ========================
+  // 使用的优惠券
+  // ========================
+
+  coupon_code:
+    selectedUserCoupon &&
+    selectedUserCoupon.coupons
+
+      ? (
+          selectedUserCoupon.coupons.code ||
+          selectedUserCoupon.coupons.name ||
+          'Cupón aplicado'
+        )
+
+      : null,
+
+
+  // ========================
+  // 最终付款金额
+  // ========================
+
+  total_amount:
+    Number(
+      orderTotal || 0
+    ),
+
+
+  notes: orderNotes
+
+})
       .select()
       .single();
 
