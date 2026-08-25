@@ -320,9 +320,12 @@ async function loadOrderDetail() {
           order_type,
           status,
           payment_status,
+          subtotal_amount,
+          discount_amount,
+          coupon_code,
           total_amount,
           created_at
-        `)
+         `)
         .eq(
           'id',
           orderId
