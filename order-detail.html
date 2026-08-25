@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Detalle del pedido</title>
+
+</head>
+
+
+<body>
+
+
+  <div class="order-detail-page">
+
+
+    <!-- 顶部 -->
+    <header class="detail-header">
+
+
+      <button
+        class="back-button"
+        type="button"
+        onclick="history.back()"
+      >
+        ←
+      </button>
+
+
+      <h1>
+        Detalle del pedido
+      </h1>
+
+
+      <div class="header-space"></div>
+
+
+    </header>
+
+
+
+    <!-- 订单详情 -->
+    <main
+      class="order-detail"
+      id="orderDetail"
+    >
+
+      <div class="loading">
+        Cargando pedido...
+      </div>
+
+    </main>
+
+
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+  <script>
+
+
+    // ========================
+    // Supabase
+    // ========================
+
+    const SUPABASE_URL =
+      'https://oevwuadmtzujngtmkkbw.supabase.co';
+
+
+    const SUPABASE_KEY =
+      'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
+
+
+    const supabaseClient =
+      supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+
+    // ========================
+    // 获取订单 ID
+    // ========================
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const orderId =
+      params.get('id');
+
+
+    console.log(
+      '当前订单 ID:',
+      orderId
+    );
+
+
+  </script>
+
+
+</body>
+
+</html>
