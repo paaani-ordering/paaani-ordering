@@ -556,7 +556,83 @@ if (
 
 
         <hr>
+${
 
+  order.coupon_code
+
+    ? `
+
+      <div>
+
+        Cupón
+
+      </div>
+
+
+      <strong>
+
+        Utilizado
+
+      </strong>
+
+
+      <div
+        style="
+          font-size:12px;
+          color:#aaa;
+          margin-top:3px;
+        "
+      >
+
+        ${order.coupon_code}
+
+      </div>
+
+
+      <hr>
+
+
+      <div>
+
+        Descuento
+
+      </div>
+
+
+      <strong>
+
+        -${formatPrice(
+          order.discount_amount
+        )}
+
+      </strong>
+
+
+      <hr>
+
+    `
+
+    : `
+
+      <div>
+
+        Cupón
+
+      </div>
+
+
+      <strong>
+
+        No utilizado
+
+      </strong>
+
+
+      <hr>
+
+    `
+
+}
 
 
         <div>
