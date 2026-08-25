@@ -1375,21 +1375,12 @@ function renderPointsOrders() {
 // 查看订单详情
 // ========================
 
-function openOrderDetail(
-  orderId
-) {
+function openOrderDetail(orderId) {
 
-
-  // 以后可以做单独详情页
-
-  console.log(
-    'ORDER:',
-    orderId
-  );
-
+  window.location.href =
+    `order-detail.html?id=${encodeURIComponent(orderId)}`;
 
 }
-
 
 
 // ========================
