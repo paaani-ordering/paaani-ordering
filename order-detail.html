@@ -11,11 +11,33 @@
 
 <body>
   <div class="order-detail-page">
+
+/* 手机主体 */
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: transparent;
+      padding-bottom: 30px;
+}
     
-    <!-- 顶部 -->
+/* 背景 */    
+    body {
+      width: 100%;
+      max-width: 430px;
+      font-family: Arial, sans-serif;
+      margin: 0 auto;
+      background-image:   
+      linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+      url("paaani-bg.png");
+      background-repeat: repeat;
+      background-size: 300px auto;
+      background-position: top left;
+}
+    
+<!-- 顶部 -->
     <header class="detail-header">
-
-
       <button
         class="back-button"
         type="button"
@@ -24,20 +46,15 @@
         ←
       </button>
 
-
       <h1>
         Detalle del pedido
       </h1>
 
-
       <div class="header-space"></div>
-
-
+      
     </header>
 
-
-
-    <!-- 订单详情 -->
+<!-- 订单详情 -->
     <main
       class="order-detail"
       id="orderDetail"
@@ -49,16 +66,11 @@
 
     </main>
 
-
   </div>
-
-
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
   <script>
-
 
     // ========================
     // Supabase
@@ -67,17 +79,14 @@
     const SUPABASE_URL =
       'https://oevwuadmtzujngtmkkbw.supabase.co';
 
-
     const SUPABASE_KEY =
       'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
-
 
     const supabaseClient =
       supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
       );
-
 
 
     // ========================
@@ -89,10 +98,8 @@
         window.location.search
       );
 
-
     const orderId =
       params.get('id');
-
 
     console.log(
       '当前订单 ID:',
@@ -111,21 +118,16 @@ function formatPrice(value) {
 
 }
 
-
-
 // ========================
 // 日期格式
 // ========================
 
 function formatDate(value) {
-
   if (!value) {
     return '';
   }
-
   const date =
     new Date(value);
-
   return date.toLocaleString(
     'es-ES',
     {
@@ -138,8 +140,6 @@ function formatDate(value) {
   );
 
 }
-
-
 
 // ========================
 // 订单状态
