@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mis pedidos</title>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
+  rel="stylesheet"
+>
+
+<style>
+
+/* =========================
+   基础
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+
+  font-family: 'Nunito', sans-serif;
+
+  background: #f7f7f7;
+
+  color: #30343b;
+}
+
+
+/* =========================
+   页面主体
+========================= */
+
+.app {
+  width: 100%;
+  max-width: 520px;
+
+  min-height: 100vh;
+
+  margin: 0 auto;
+
+  background: #f7f7f7;
+}
+
+
+/* =========================
+   顶部标题区域
+========================= */
+
+.orders-header {
+  height: 72px;
+
+  padding: 12px 18px;
+
+  background: #ffffff;
+
+  display: grid;
+
+  grid-template-columns:
+    46px
+    1fr
+    46px;
+
+  align-items: center;
+
+  border-bottom: 1px solid #f1f1f1;
+}
+
+
+/* 返回按钮 */
+
+.back-button {
+  width: 42px;
+  height: 42px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #59616c;
+
+  font-size: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 0;
+
+  cursor: pointer;
+}
+
+
+/* 页面标题 */
+
+.orders-header h1 {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 22px;
+
+  font-weight: 800;
+
+  color: #30343b;
+}
+
+
+/* 右侧占位 */
+
+.header-space {
+  width: 42px;
+}
+
+
+/* =========================
+   顶部分类
+========================= */
+
+.order-tabs {
+  height: 58px;
+
+  background: #ffffff;
+
+  display: flex;
+
+  align-items: stretch;
+
+  padding: 0 10px;
+
+  overflow-x: auto;
+
+  border-bottom: 1px solid #eeeeee;
+
+  scrollbar-width: none;
+}
+
+.order-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* 单个分类按钮 */
+
+.order-tab {
+  position: relative;
+
+  flex: 1;
+
+  min-width: max-content;
+
+  padding: 0 13px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #8a8a8a;
+
+  font-family: 'Nunito', sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* 当前选中 */
+
+.order-tab.active {
+  color: #30343b;
+}
+
+
+/* 当前选中底部蓝线 */
+
+.order-tab.active::after {
+  content: '';
+
+  position: absolute;
+
+  left: 28%;
+  right: 28%;
+
+  bottom: 0;
+
+  height: 3px;
+
+  border-radius: 999px;
+
+  background: #8ed8f8;
+}
+
+
+/* =========================
+   订单列表
+========================= */
+
+.orders-list {
+  padding: 16px 14px 50px;
+}
+
+
+/* =========================
+   单张订单卡片
+========================= */
+
+.order-card {
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 18px 16px;
+
+  margin-bottom: 14px;
+
+  box-shadow:
+    0 3px 14px
+    rgba(70, 78, 88, 0.04);
+}
+
+
+/* =========================
+   订单顶部
+========================= */
+
+.order-card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 17px;
+}
+
+
+/* 订单号 */
+
+.order-number {
+  font-size: 15px;
+
+  font-weight: 800;
+
+  color: #30343b;
+}
+
+
+/* 日期 */
+
+.order-date {
+  margin-top: 4px;
+
+  font-size: 11px;
+
+  color: #aaa;
+}
+
+
+/* 状态 */
+
+.order-status {
+  flex-shrink: 0;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  color: #666;
+}
+
+
+/* =========================
+   商品横向列表
+========================= */
+
+.order-products {
+  display: flex;
+
+  gap: 12px;
+
+  overflow-x: auto;
+
+  padding-bottom: 3px;
+
+  scrollbar-width: none;
+}
+
+.order-products::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================
+   单个商品
+========================= */
+
+.history-product {
+  width: 92px;
+
+  flex-shrink: 0;
+}
+
+
+/* 商品图片 */
+
+.history-product img {
+  width: 82px;
+
+  height: 82px;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+
+  background: #fafafa;
+}
+
+
+/* 商品名 */
+
+.history-product-name {
+  margin-top: 6px;
+
+  width: 82px;
+
+  font-size: 12px;
+
+  color: #777;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* 数量 */
+
+.history-product-quantity {
+  margin-top: 2px;
+
+  font-size: 11px;
+
+  color: #aaa;
+}
+
+
+/* =========================
+   没图片时
+========================= */
+
+.product-placeholder {
+  width: 82px;
+
+  height: 82px;
+
+  border-radius: 12px;
+
+  background: #f5f5f5;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 25px;
+}
+
+
+/* =========================
+   金额区域
+========================= */
+
+.order-summary {
+  margin-top: 16px;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: flex-end;
+
+  gap: 9px;
+}
+
+
+/* 总商品数量 */
+
+.order-count {
+  font-size: 12px;
+
+  color: #999;
+}
+
+
+/* 总金额 */
+
+.order-total {
+  font-size: 21px;
+
+  font-weight: 800;
+
+  color: #30343b;
+}
+
+
+/* =========================
+   底部按钮
+========================= */
+
+.order-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 15px;
+}
+
+
+.order-detail-btn {
+  min-width: 105px;
+
+  height: 39px;
+
+  padding: 0 17px;
+
+  border: 1px solid #dddddd;
+
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  color: #59616c;
+
+  font-family: 'Nunito', sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   空状态
+========================= */
+
+.empty-state {
+  margin-top: 25px;
+
+  padding: 45px 20px;
+
+  text-align: center;
+
+  color: #999;
+
+  font-size: 14px;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+}
+
+
+/* =========================
+   加载状态
+========================= */
+
+.loading {
+  padding: 45px 20px;
+
+  text-align: center;
+
+  color: #999;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+   错误状态
+========================= */
+
+.error-state {
+  margin-top: 25px;
+
+  padding: 35px 20px;
+
+  text-align: center;
+
+  color: #999;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+  <!-- =========================
+       顶部标题
+  ========================= -->
+
+  <header class="orders-header">
+
+
+    <!-- 返回 -->
+    <button
+      class="back-button"
+      type="button"
+      onclick="history.back()"
+    >
+      ←
+    </button>
+
+
+    <!-- 标题 -->
+    <h1>
+      Mis pedidos
+    </h1>
+
+
+    <!-- 右侧占位 -->
+    <div class="header-space"></div>
+
+
+  </header>
+
+
+
+  <!-- =========================
+       三个分类
+  ========================= -->
+
+  <div class="order-tabs">
+
+
+    <!-- 全部订单 -->
+    <button
+      class="order-tab active"
+      type="button"
+      data-type="all"
+    >
+      Todos
+    </button>
+
+
+    <!-- 门店订单 -->
+    <button
+      class="order-tab"
+      type="button"
+      data-type="store"
+    >
+      Pedidos de tienda
+    </button>
+
+
+    <!-- 积分商城 -->
+    <button
+      class="order-tab"
+      type="button"
+      data-type="points"
+    >
+      Tienda de puntos
+    </button>
+
+
+  </div>
+
+
+
+  <!-- =========================
+       订单列表
+  ========================= -->
+
+  <main
+    class="orders-list"
+    id="ordersList"
+  >
+
+    <div class="loading">
+      Cargando pedidos...
+    </div>
+
+  </main>
+
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+
+// ========================
+// Supabase
+// ========================
+
+const SUPABASE_URL =
+  'https://oevwuadmtzujngtmkkbw.supabase.co';
+
+
+const SUPABASE_KEY =
+  'sb_publishable_yL30qZT99AOR3N06YWyDWw_0be5OtGl';
+
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+
+// ========================
+// 当前分类
+// ========================
+
+let currentType = 'all';
+
+
+// 门店订单缓存
+let storeOrders = [];
+
+
+// 订单商品缓存
+let storeOrderItems = [];
+
+
+
+// ========================
+// 金额格式
+// ========================
+
+function formatPrice(value) {
+
+  return `${Number(value || 0)
+    .toFixed(2)
+    .replace('.', ',')} €`;
+
+}
+
+
+
+// ========================
+// 日期格式
+// ========================
+
+function formatDate(value) {
+
+  if (!value) {
+    return '';
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  return date.toLocaleString(
+    'es-ES',
+    {
+
+      day: '2-digit',
+
+      month: '2-digit',
+
+      year: 'numeric',
+
+      hour: '2-digit',
+
+      minute: '2-digit'
+
+    }
+  );
+
+}
+
+
+
+// ========================
+// 订单状态文字
+// ========================
+
+function getStatusText(order) {
+
+
+  // 已付款
+  if (
+    order.payment_status === 'paid'
+  ) {
+
+    return 'Completado';
+
+  }
+
+
+  // 未付款
+  return 'Pendiente';
+
+}
+
+
+
+// ========================
+// 读取门店订单
+// ========================
+
+async function loadStoreOrders() {
+
+
+  const ordersList =
+    document.getElementById(
+      'ordersList'
+    );
+
+
+  try {
+
+
+    // ========================
+    // 当前登录用户
+    // ========================
+
+    const {
+      data: { user },
+      error: userError
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
+
+
+    if (userError) {
+
+      throw userError;
+
+    }
+
+
+    // ========================
+    // 未登录
+    // ========================
+
+    if (!user) {
+
+      ordersList.innerHTML = `
+
+        <div class="empty-state">
+
+          Inicia sesión para ver
+          tus pedidos.
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+
+    // ========================
+    // 读取自己的 orders
+    // ========================
+
+    const {
+      data: orders,
+      error: ordersError
+    } =
+      await supabaseClient
+        .from('orders')
+        .select(`
+          id,
+          order_number,
+          order_type,
+          status,
+          payment_status,
+          total_amount,
+          created_at
+        `)
+        .eq(
+          'user_id',
+          user.id
+        )
+        .order(
+          'created_at',
+          {
+            ascending: false
+          }
+        );
+
+
+    if (ordersError) {
+
+      throw ordersError;
+
+    }
+
+
+    storeOrders =
+      orders || [];
+
+
+
+    // ========================
+    // 没有订单
+    // ========================
+
+    if (
+      storeOrders.length === 0
+    ) {
+
+      renderCurrentType();
+
+      return;
+
+    }
+
+
+
+    // ========================
+    // 获取订单 ID
+    // ========================
+
+    const orderIds =
+      storeOrders.map(
+        order => order.id
+      );
+
+
+
+    // ========================
+    // 读取 order_items
+    // ========================
+
+    const {
+      data: items,
+      error: itemsError
+    } =
+      await supabaseClient
+        .from('order_items')
+        .select(`
+          order_id,
+          product_id,
+          product_name,
+          quantity,
+          unit_price,
+          line_total
+        `)
+        .in(
+          'order_id',
+          orderIds
+        );
+
+
+    if (itemsError) {
+
+      console.error(
+        'Error order_items:',
+        itemsError
+      );
+
+    }
+
+
+    storeOrderItems =
+      items || [];
+
+
+
+    // ========================
+    // 获取商品图片
+    // ========================
+
+    const productIds =
+      [
+
+        ...new Set(
+
+          storeOrderItems
+            .map(
+              item =>
+                item.product_id
+            )
+            .filter(Boolean)
+
+        )
+
+      ];
+
+
+    if (
+      productIds.length > 0
+    ) {
+
+
+      const {
+        data: productData,
+        error: productError
+      } =
+        await supabaseClient
+          .from('products')
+          .select(`
+            id,
+            image_url
+          `)
+          .in(
+            'id',
+            productIds
+          );
+
+
+      if (!productError) {
+
+
+        const imageMap = {};
+
+
+        (productData || [])
+          .forEach(product => {
+
+            imageMap[
+              product.id
+            ] =
+              product.image_url;
+
+          });
+
+
+        storeOrderItems =
+          storeOrderItems.map(
+            item => ({
+
+              ...item,
+
+              image_url:
+                imageMap[
+                  item.product_id
+                ] || null
+
+            })
+          );
+
+
+      }
+
+    }
+
+
+
+    // ========================
+    // 显示订单
+    // ========================
+
+    renderCurrentType();
+
+
+  } catch (error) {
+
+
+    console.error(
+      'Error cargando pedidos:',
+      error
+    );
+
+
+    ordersList.innerHTML = `
+
+      <div class="error-state">
+
+        No se pudieron cargar
+        tus pedidos.
+
+      </div>
+
+    `;
+
+
+  }
+
+}
+
+
+
+// ========================
+// 显示当前分类
+// ========================
+
+function renderCurrentType() {
+
+
+  if (
+    currentType === 'points'
+  ) {
+
+    renderPointsOrders();
+
+    return;
+
+  }
+
+
+  renderStoreOrders();
+
+}
+
+
+
+// ========================
+// 显示门店订单
+// ========================
+
+function renderStoreOrders() {
+
+
+  const ordersList =
+    document.getElementById(
+      'ordersList'
+    );
+
+
+  // ========================
+  // 没订单
+  // ========================
+
+  if (
+    !storeOrders ||
+    storeOrders.length === 0
+  ) {
+
+    ordersList.innerHTML = `
+
+      <div class="empty-state">
+
+        Aún no tienes pedidos.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  // ========================
+  // 创建所有订单卡片
+  // ========================
+
+  ordersList.innerHTML =
+    storeOrders
+      .map(order => {
+
+
+        // ========================
+        // 当前订单商品
+        // ========================
+
+        const items =
+          storeOrderItems
+            .filter(
+              item =>
+                item.order_id ===
+                order.id
+            );
+
+
+
+        // ========================
+        // 商品总数量
+        // ========================
+
+        const totalQuantity =
+          items.reduce(
+            (sum, item) => {
+
+              return (
+                sum +
+                Number(
+                  item.quantity || 0
+                )
+              );
+
+            },
+            0
+          );
+
+
+
+        // ========================
+        // 商品 HTML
+        // ========================
+
+        let productsHTML = '';
+
+
+        if (
+          items.length > 0
+        ) {
+
+
+          productsHTML =
+            items
+              .map(item => `
+
+
+                <div class="history-product">
+
+
+                  ${
+                    item.image_url
+
+                    ? `
+
+                      <img
+                        src="${item.image_url}"
+                        alt="${item.product_name || ''}"
+                      >
+
+                    `
+
+                    : `
+
+                      <div class="product-placeholder">
+                        ☕
+                      </div>
+
+                    `
+                  }
+
+
+                  <div class="history-product-name">
+
+                    ${
+                      item.product_name
+                      || 'Producto'
+                    }
+
+                  </div>
+
+
+                  <div class="history-product-quantity">
+
+                    ×${item.quantity || 1}
+
+                  </div>
+
+
+                </div>
+
+
+              `)
+              .join('');
+
+
+        } else {
+
+
+          productsHTML = `
+
+            <div
+              style="
+                font-size:13px;
+                color:#aaa;
+              "
+            >
+
+              Sin detalles de productos.
+
+            </div>
+
+          `;
+
+        }
+
+
+
+        // ========================
+        // 返回订单卡片
+        // ========================
+
+        return `
+
+
+          <section class="order-card">
+
+
+            <!-- 顶部 -->
+            <div class="order-card-top">
+
+
+              <div>
+
+
+                <div class="order-number">
+
+                  ${
+                    order.order_number
+                    || 'Pedido'
+                  }
+
+                </div>
+
+
+                <div class="order-date">
+
+                  ${
+                    formatDate(
+                      order.created_at
+                    )
+                  }
+
+                </div>
+
+
+              </div>
+
+
+
+              <div class="order-status">
+
+                ${
+                  getStatusText(
+                    order
+                  )
+                }
+
+              </div>
+
+
+            </div>
+
+
+
+            <!-- 商品 -->
+            <div class="order-products">
+
+              ${productsHTML}
+
+            </div>
+
+
+
+            <!-- 金额 -->
+            <div class="order-summary">
+
+
+              <div class="order-count">
+
+                ${
+                  totalQuantity
+                }
+
+                ${
+                  totalQuantity === 1
+                    ? 'producto'
+                    : 'productos'
+                }
+
+              </div>
+
+
+              <div class="order-total">
+
+                ${
+                  formatPrice(
+                    order.total_amount
+                  )
+                }
+
+              </div>
+
+
+            </div>
+
+
+
+            <!-- 按钮 -->
+            <div class="order-actions">
+
+
+              <button
+                class="order-detail-btn"
+                type="button"
+                onclick="
+                  openOrderDetail(
+                    '${order.id}'
+                  )
+                "
+              >
+
+                Ver pedido
+
+              </button>
+
+
+            </div>
+
+
+          </section>
+
+
+        `;
+
+
+      })
+      .join('');
+
+}
+
+
+
+// ========================
+// 积分商城订单
+// 暂时显示空状态
+// ========================
+
+function renderPointsOrders() {
+
+
+  const ordersList =
+    document.getElementById(
+      'ordersList'
+    );
+
+
+  ordersList.innerHTML = `
+
+    <div class="empty-state">
+
+      Aún no tienes pedidos
+      en la tienda de puntos.
+
+    </div>
+
+  `;
+
+}
+
+
+
+// ========================
+// 查看订单详情
+// ========================
+
+function openOrderDetail(
+  orderId
+) {
+
+
+  // 以后可以做单独详情页
+
+  console.log(
+    'ORDER:',
+    orderId
+  );
+
+
+}
+
+
+
+// ========================
+// 分类按钮
+// ========================
+
+document
+  .querySelectorAll(
+    '.order-tab'
+  )
+  .forEach(button => {
+
+
+    button
+      .addEventListener(
+        'click',
+        () => {
+
+
+          // ========================
+          // 切换 active
+          // ========================
+
+          document
+            .querySelectorAll(
+              '.order-tab'
+            )
+            .forEach(tab => {
+
+              tab.classList
+                .remove(
+                  'active'
+                );
+
+            });
+
+
+          button
+            .classList
+            .add(
+              'active'
+            );
+
+
+
+          // ========================
+          // 当前分类
+          // ========================
+
+          currentType =
+            button.dataset.type;
+
+
+          renderCurrentType();
+
+
+        }
+      );
+
+
+  });
+
+
+
+// ========================
+// 页面打开
+// ========================
+
+loadStoreOrders();
+
+
+</script>
+
+
+</body>
+
+</html>  
