@@ -13,13 +13,13 @@
     
 /* 大插画 */
   .hero{
-     padding:20px 22px 15px;   
+     padding:12px 22px 0;   
 } 
     
  .hero-image{
-     width:95%;   /* 图片大小 */
+     width:86%;   /* 图片大小 */
      display:block;
-     margin:-5px auto -15px;  /* 上 / 左右 / 下 */
+     margin:0px auto -5px;  /* 上 / 左右 / 下 */
 }
     
 /* 网页尺寸计算 */
@@ -62,7 +62,7 @@
     .welcome{
       display:flex;
       align-items:center;   /* 居中对齐 */
-      padding:0px 22px 12px;   /* 控制这段与下面三个卡片的距离 */
+      padding:0px 22px 8px;   /* 控制这段与下面三个卡片的距离 */
 }
     
     .welcome h1 {    /* 大标题 */
@@ -76,9 +76,9 @@
 
    .welcome p {     /* 小字 */
       color: var(--muted);
-      margin: 6px 0 0;     /* 小字距上面标题距离 */
+      margin: 4px 0 0;     /* 小字距上面标题距离 */
       font-size: 12px;
-      line-height: 1.45;
+      line-height: 1.4;
 }
 
    .welcome-text{
@@ -93,15 +93,15 @@
     .dining-options{   /* 控制三个卡片外层 */
        display:grid;   /* 网格布局 */
        grid-template-columns:repeat(3,1fr);   /* 一行放三个且一样宽 */
-       gap:18px;   /* 三个卡片间距 */
-       padding:20px 22px 30px;   /* 外层区域内边距 */
+       gap:12px;   /* 三个卡片间距 */
+       padding:16px 22px 28px;   /* 外层区域内边距 */
        overflow:visible;   /* 允许里面内容超出区域后仍显示 */
 }
     .dining-card{    /* 控制每一个卡片 */
        width:100%;   /* 卡片占满所在列宽度 */
        height:145px;   /* 卡片高度 */
        background:#FFF6DE;   /* 默认背景 */
-       border-radius:30px;   /* 圆角 */
+       border-radius:24px;   /* 圆角 */
        display:flex;   
        flex-direction:column;    /* 卡片内部纵向排列 */
        align-items:center;   /* 内部元素水平居中 */
